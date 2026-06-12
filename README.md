@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ConectaPro
 
-## Getting Started
+ConectaPro es una Progressive Web App (PWA) de tipo marketplace de servicios (inspirada en Workana y Uber) diseñada especialmente para Venezuela. Conecta de forma rápida, segura y confiable a personas que necesitan un servicio con profesionales calificados, mediante un sistema de créditos prepago, chat interno y reputación.
 
-First, run the development server:
+## Stack Tecnológico
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Frontend:** Next.js 14 (App Router) + React 18 + TypeScript (modo estricto)
+- **Estilos:** Tailwind CSS
+- **BaaS (Backend):** Supabase (Auth, PostgreSQL, Storage, Realtime)
+- **Estado Global:** Zustand (estado de UI global)
+- **Componentes / Iconos:** Lucide React
+
+## Estructura del Proyecto
+
+```
+conectapro/
+├── src/
+│   ├── app/             # Rutas de Next.js App Router (grupos de rutas por rol)
+│   ├── features/        # Módulos funcionales independientes (auth, ordenes, chat, wallet, etc.)
+│   ├── components/      # Componentes UI compartidos y atómicos
+│   ├── lib/             # Cliente de Supabase y constantes
+│   ├── types/           # Definiciones de tipo globales de TypeScript
+│   └── hooks/           # Hooks personalizados de React globales
+├── docs/                # Documentación del proyecto (bitácora de cambios, decisiones)
+├── supabase/            # Migraciones de base de datos
+├── public/              # Assets estáticos y PWA manifest
+└── .env.local.example   # Plantilla de variables de entorno
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuración y Ejecución Local
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/luiggiberaldi/CONECTAPRO.git
+   cd conectapro
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. **Configurar variables de entorno:**
+   Copia el archivo de plantilla a tu entorno local:
+   ```bash
+   cp .env.local.example .env.local
+   ```
+   Abre `.env.local` y rellena las credenciales con tu instancia de Supabase.
 
-To learn more about Next.js, take a look at the following resources:
+4. **Levantar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Compilar y validar tipos:**
+   ```bash
+   npm run build
+   npx tsc --noEmit
+   ```
