@@ -4,7 +4,9 @@ import React, { useEffect } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShieldCheck, MessageSquare, Award, ArrowRight } from 'lucide-react';
+import ProfesionesSection from '@/components/shared/ProfesionesSection';
 
 export default function Home() {
   const { usuario, rol, initialized } = useAuth();
@@ -32,9 +34,16 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-40 w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md border-b border-zinc-200/50 dark:border-zinc-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <span className="text-xl font-black tracking-tight text-indigo-600 dark:text-indigo-400">
-            ConectaPro
-          </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="ConectaPro Logo"
+              width={192}
+              height={32}
+              priority
+              className="h-8 w-auto object-contain dark:brightness-110"
+            />
+          </Link>
           <div className="flex items-center gap-3">
             <Link
               href="/auth/login"
@@ -116,6 +125,9 @@ export default function Home() {
             </p>
           </div>
         </div>
+
+        {/* Profesiones Animadas */}
+        <ProfesionesSection />
       </main>
 
       {/* Footer */}

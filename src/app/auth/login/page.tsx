@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { Loader2, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const { login, loading } = useAuth();
@@ -39,10 +40,17 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-gradient-to-tr from-zinc-50 via-indigo-50/10 to-zinc-50 dark:from-zinc-950 dark:via-indigo-950/10 dark:to-zinc-950">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <h1 className="text-3xl font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400">
-          ConectaPro
-        </h1>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center">
+        <Link href="/" className="mb-4 flex justify-center">
+          <Image
+            src="/logo.png"
+            alt="ConectaPro Logo"
+            width={216}
+            height={36}
+            priority
+            className="h-9 w-auto object-contain dark:brightness-110"
+          />
+        </Link>
         <h2 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
           Inicia sesión en tu cuenta
         </h2>

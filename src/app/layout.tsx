@@ -12,6 +12,12 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "ConectaPro - Servicios Profesionales en Venezuela",
   description: "Conecta de forma rápida, segura y confiable con profesionales calificados en tu zona.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "ConectaPro",
+  },
 };
 
 export default function RootLayout({

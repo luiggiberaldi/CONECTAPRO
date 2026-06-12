@@ -3,21 +3,189 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ==========================================
+     RAW DESIGN PALETTES (ConectaPro Base System)
+     ========================================== */
+
+  /* Primary — Indigo Scale */
+  --indigo-50: #EEF2FF;
+  --indigo-100: #E0E7FF;
+  --indigo-200: #C7D2FE;
+  --indigo-300: #A5B4FC;
+  --indigo-400: #818CF8;
+  --indigo-500: #6366F1;
+  --indigo-600: #4F46E5;
+  --indigo-700: #4338CA;
+  --indigo-800: #3730A3;
+  --indigo-900: #312E81;
+
+  /* Accent — Rose Scale */
+  --rose-400: #FB7185;
+  --rose-500: #F43F5E;
+  --rose-600: #E11D48;
+
+  /* Base — Zinc Scale */
+  --zinc-50: #FAFAFA;
+  --zinc-100: #F4F4F5;
+  --zinc-200: #E4E4E7;
+  --zinc-300: #D4D4D8;
+  --zinc-400: #A1A1AA;
+  --zinc-500: #71717A;
+  --zinc-600: #52525B;
+  --zinc-700: #3F3F46;
+  --zinc-800: #27272A;
+  --zinc-900: #18181B;
+  --zinc-950: #09090B;
+
+  /* State — Status Raw Colors */
+  --status-success-raw: #10B981;
+  --status-warning-raw: #F59E0B;
+  --status-error-raw: #F43F5E;
+  --status-info-raw: #4338CA;
+
+  /* ==========================================
+     SEMANTIC VARIABLES (Light Mode Fallbacks)
+     ========================================== */
+
+  /* Brand */
+  --brand-primary: var(--indigo-700);
+  --brand-accent: var(--rose-500);
+
+  /* Typography */
+  --text-primary: var(--zinc-900);
+  --text-secondary: var(--zinc-600);
+  --text-muted: var(--zinc-400);
+  --text-inverse: var(--zinc-50);
+
+  /* Backgrounds */
+  --bg-base: var(--zinc-50);
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-dark: var(--zinc-900);
+
+  /* Borders */
+  --border-default: var(--zinc-200);
+  --border-subtle: var(--zinc-100);
+  --border-strong: var(--zinc-300);
+
+  /* Status Colors */
+  --status-success: var(--status-success-raw);
+  --status-warning: var(--status-warning-raw);
+  --status-error: var(--status-error-raw);
+  --status-info: var(--status-info-raw);
+
+  /* Badge Semantic Colors */
+  --badge-cliente-bg: var(--indigo-50);
+  --badge-cliente-text: var(--indigo-700);
+  --badge-cliente-border: var(--indigo-200);
+
+  --badge-profesional-bg: #ECFDF5;
+  --badge-profesional-text: #047857;
+  --badge-profesional-border: #A7F3D0;
+
+  --badge-admin-bg: #FFF1F2;
+  --badge-admin-text: var(--rose-600);
+  --badge-admin-border: #FECDD3;
+
+  /* Orden Semantic Colors */
+  --orden-pendiente-bg: #FEF3C7;
+  --orden-pendiente-text: #B45309;
+  --orden-pendiente-border: #FDE68A;
+
+  --orden-en-proceso-bg: #E0F2FE;
+  --orden-en-proceso-text: #0369A1;
+  --orden-en-proceso-border: #BAE6FD;
+
+  --orden-completada-bg: #D1FAE5;
+  --orden-completada-text: #065F46;
+  --orden-completada-border: #A7F3D0;
+
+  --orden-cancelada-bg: var(--zinc-100);
+  --orden-cancelada-text: var(--zinc-600);
+  --orden-cancelada-border: var(--zinc-200);
+
+  /* Elevation (Shadows) */
+  --shadow-sm: 0 1px 2px 0 rgba(18, 18, 27, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(18, 18, 27, 0.08), 0 2px 4px -2px rgba(18, 18, 27, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(18, 18, 27, 0.1), 0 4px 6px -4px rgba(18, 18, 27, 0.1);
+
+  /* Next.js theme compat fallbacks */
+  --background: var(--bg-base);
+  --foreground: var(--text-primary);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* ==========================================
+       SEMANTIC VARIABLES (Dark Mode Fallbacks)
+       ========================================== */
+
+    /* Brand */
+    --brand-primary: var(--indigo-500);
+    --brand-accent: var(--rose-400);
+
+    /* Typography */
+    --text-primary: var(--zinc-50);
+    --text-secondary: var(--zinc-300);
+    --text-muted: var(--zinc-500);
+    --text-inverse: var(--zinc-900);
+
+    /* Backgrounds */
+    --bg-base: var(--zinc-950);
+    --bg-surface: var(--zinc-900);
+    --bg-elevated: var(--zinc-800);
+    --bg-dark: var(--zinc-950);
+
+    /* Borders */
+    --border-default: var(--zinc-800);
+    --border-subtle: var(--zinc-900);
+    --border-strong: var(--zinc-700);
+
+    /* Badge Semantic Colors */
+    --badge-cliente-bg: rgba(67, 56, 202, 0.15);
+    --badge-cliente-text: var(--indigo-300);
+    --badge-cliente-border: rgba(67, 56, 202, 0.30);
+
+    --badge-profesional-bg: rgba(16, 185, 129, 0.15);
+    --badge-profesional-text: #34D399;
+    --badge-profesional-border: rgba(16, 185, 129, 0.30);
+
+    --badge-admin-bg: rgba(244, 63, 94, 0.15);
+    --badge-admin-text: var(--rose-400);
+    --badge-admin-border: rgba(244, 63, 94, 0.30);
+
+    /* Orden Semantic Colors */
+    --orden-pendiente-bg: rgba(245, 158, 11, 0.15);
+    --orden-pendiente-text: #FBBF24;
+    --orden-pendiente-border: rgba(245, 158, 11, 0.30);
+
+    --orden-en-proceso-bg: rgba(56, 189, 248, 0.15);
+    --orden-en-proceso-text: #38BDF8;
+    --orden-en-proceso-border: rgba(56, 189, 248, 0.30);
+
+    --orden-completada-bg: rgba(16, 185, 129, 0.15);
+    --orden-completada-text: #34D399;
+    --orden-completada-border: rgba(16, 185, 129, 0.30);
+
+    --orden-cancelada-bg: rgba(113, 113, 122, 0.15);
+    --orden-cancelada-text: var(--zinc-400);
+    --orden-cancelada-border: rgba(113, 113, 122, 0.30);
+
+    /* Elevation (Shadows) */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.6);
+
+    /* Next.js theme compat fallbacks */
+    --background: var(--bg-base);
+    --foreground: var(--text-primary);
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-base);
+  font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
 }
 
 @layer utilities {

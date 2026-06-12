@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { supabaseBrowser } from '@/lib/supabase';
 import { useAuthStore, obtenerUsuarioPerfil } from '../hooks/useAuth';
+import Image from 'next/image';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -70,11 +71,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-3xl animate-pulse-glow" />
 
         <div className="relative flex flex-col items-center max-w-sm w-full px-8 text-center">
-          {/* Logo animado y circular */}
-          <div className="relative flex items-center justify-center w-20 h-20 mb-6 bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/80 rounded-3xl shadow-lg ring-4 ring-indigo-500/5">
-            <span className="text-2xl font-black tracking-tighter text-indigo-600 dark:text-indigo-400">
-              CP
-            </span>
+          {/* Logo animado */}
+          <div className="relative flex items-center justify-center px-6 py-4 w-52 h-16 mb-6 bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-lg ring-4 ring-indigo-500/5">
+            <Image
+              src="/logo.png"
+              alt="ConectaPro Logo"
+              width={144}
+              height={24}
+              priority
+              className="h-6 w-auto object-contain dark:brightness-110"
+            />
             <div className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-indigo-500"></span>
@@ -82,10 +88,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           </div>
 
           {/* Textos */}
-          <h2 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
-            ConectaPro
-          </h2>
-          <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 mt-1.5 tracking-wide max-w-[240px] leading-relaxed animate-pulse">
+          <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 mt-2 tracking-wide max-w-[240px] leading-relaxed animate-pulse">
             Verificando tu sesión de forma segura...
           </p>
 

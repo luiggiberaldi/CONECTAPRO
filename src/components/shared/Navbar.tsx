@@ -4,6 +4,7 @@ import React from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { LogOut, User, LayoutDashboard, PlusCircle, Wallet } from 'lucide-react';
 
 export default function Navbar() {
@@ -37,9 +38,16 @@ export default function Navbar() {
             <div className="flex-shrink-0 flex items-center">
               <Link
                 href={rol === 'cliente' ? '/cliente/ordenes' : rol === 'profesional' ? '/profesional/ordenes' : '/admin'}
-                className="text-lg font-black tracking-tight text-indigo-600 dark:text-indigo-400"
+                className="flex items-center"
               >
-                ConectaPro
+                <Image
+                  src="/logo.png"
+                  alt="ConectaPro Logo"
+                  width={192}
+                  height={32}
+                  priority
+                  className="h-8 w-auto object-contain dark:brightness-110"
+                />
               </Link>
             </div>
 
