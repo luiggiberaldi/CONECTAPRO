@@ -9,7 +9,7 @@ import { Loader2, RefreshCw } from 'lucide-react';
 export default function AdminRecargasPage() {
   const [recargas, setRecargas] = useState<AdminRecarga[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const loadRecargas = useCallback(async () => {
     setLoading(true);
@@ -25,23 +25,27 @@ export default function AdminRecargasPage() {
   }, [loadRecargas]);
 
   const handleAprobar = async (id: string) => {
-    setActionLoading(true);
-    const success = await aprobarRecarga(id);
-    if (success) {
-      // Recargar listado local
-      await loadRecargas();
+    setActionLoading(id);
+    try {
+      const success = await aprobarRecarga(id);
+      if (success) {
+        await loadRecargas();
+      }
+    } finally {
+      setActionLoading(null);
     }
-    setActionLoading(false);
   };
 
   const handleRechazar = async (id: string) => {
-    setActionLoading(true);
-    const success = await rechazarRecarga(id);
-    if (success) {
-      // Recargar listado local
-      await loadRecargas();
+    setActionLoading(id);
+    try {
+      const success = await rechazarRecarga(id);
+      if (success) {
+        await loadRecargas();
+      }
+    } finally {
+      setActionLoading(null);
     }
-    setActionLoading(false);
   };
 
   return (

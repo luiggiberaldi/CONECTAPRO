@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import RouteGuard from '@/components/shared/RouteGuard';
-import Navbar from '@/components/shared/Navbar';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { OrdenCard } from '@/features/ordenes';
@@ -38,9 +36,7 @@ export default function ClienteOrdenesPage() {
   });
 
   return (
-    <RouteGuard allowedRoles={['cliente']}>
-      <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-black text-zinc-900 dark:text-zinc-100">
@@ -118,7 +114,6 @@ export default function ClienteOrdenesPage() {
             ))}
           </div>
         )}
-      </main>
-    </RouteGuard>
+    </main>
   );
 }

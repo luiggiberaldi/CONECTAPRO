@@ -1,17 +1,13 @@
 'use client';
 
 import React from 'react';
-import RouteGuard from '@/components/shared/RouteGuard';
-import Navbar from '@/components/shared/Navbar';
 import { CrearOrdenForm } from '@/features/ordenes';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 export default function NuevaOrdenPage() {
   return (
-    <RouteGuard allowedRoles={['cliente']}>
-      <Navbar />
-      <main className="max-w-xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main className="max-w-xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-6">
           <Link
             href="/cliente/ordenes"
@@ -31,7 +27,6 @@ export default function NuevaOrdenPage() {
         <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md px-6 py-8 border border-white/20 dark:border-zinc-800/30 rounded-2xl shadow-xl">
           <CrearOrdenForm />
         </div>
-      </main>
-    </RouteGuard>
+    </main>
   );
 }

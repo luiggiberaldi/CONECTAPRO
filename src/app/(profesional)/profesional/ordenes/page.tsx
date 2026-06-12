@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import RouteGuard from '@/components/shared/RouteGuard';
-import Navbar from '@/components/shared/Navbar';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { OrdenCard } from '@/features/ordenes';
@@ -81,20 +79,15 @@ export default function ProfesionalOrdenesPage() {
 
   if (loadingProf) {
     return (
-      <RouteGuard allowedRoles={['profesional']}>
-        <Navbar />
-        <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
-          <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando perfil profesional...</p>
-        </div>
-      </RouteGuard>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
+        <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando perfil profesional...</p>
+      </div>
     );
   }
 
   return (
-    <RouteGuard allowedRoles={['profesional']}>
-      <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Encabezado con estadísticas rápidas */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
@@ -173,7 +166,6 @@ export default function ProfesionalOrdenesPage() {
             ))}
           </div>
         )}
-      </main>
-    </RouteGuard>
+    </main>
   );
 }

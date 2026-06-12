@@ -39,7 +39,7 @@ export function useChat(ordenid: string, usuarioid: string) {
     if (!ordenid) return;
 
     const channel = supabaseBrowser
-      .channel(`chat_orden_${ordenid}`)
+      .channel(`chat-orden-${ordenid}`)
       .on(
         'postgres_changes',
         {

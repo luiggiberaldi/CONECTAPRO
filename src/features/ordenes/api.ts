@@ -22,9 +22,11 @@ export async function crearOrden(payload: CrearOrdenPayload): Promise<Orden | nu
 
     if (error) throw error;
 
-    if (data?.id) {
-      toast.success('Orden publicada exitosamente');
+    if (!data?.id) {
+      throw new Error('La orden fue creada pero no se recibio confirmacion de ID.');
     }
+
+    toast.success('Orden publicada exitosamente');
     return data;
   } catch (error) {
     console.error('[crearOrden]', error);
@@ -119,6 +121,18 @@ export async function aceptarOrdenRPC(ordenid: string, profesionalid: string): P
     
     const response = data as AceptarOrdenResponse;
     if (response.success) {
+      const { data: ordenConfirmada, error: confirmError } = await supabaseBrowser
+        .from('ordenes')
+        .select('id')
+        .eq('id', ordenid)
+        .eq('profesionalid', profesionalid)
+        .eq('estado', 'en_proceso')
+        .single();
+
+      if (confirmError || !ordenConfirmada?.id) {
+        throw confirmError || new Error('La orden no quedo confirmada como aceptada.');
+      }
+
       toast.success(response.message);
     } else {
       toast.error(response.message);
@@ -134,24 +148,32 @@ export async function aceptarOrdenRPC(ordenid: string, profesionalid: string): P
 export async function marcarOrdenCompletada(ordenid: string, usuarioid: string): Promise<boolean> {
   try {
     // 1. Actualizar el estado de la orden a 'completada'
-    const { error: updateError } = await supabaseBrowser
+    const { data: ordenActualizada, error: updateError } = await supabaseBrowser
       .from('ordenes')
       .update({ estado: 'completada', updatedat: new Date().toISOString() })
-      .eq('id', ordenid);
+      .eq('id', ordenid)
+      .select('id')
+      .single();
 
-    if (updateError) throw updateError;
+    if (updateError || !ordenActualizada?.id) {
+      throw updateError || new Error('La orden no quedo confirmada como completada.');
+    }
 
     // 2. Insertar mensaje de sistema en la orden informando la finalización
-    const { error: msgError } = await supabaseBrowser
+    const { data: mensajeSistema, error: msgError } = await supabaseBrowser
       .from('mensajes')
       .insert({
         ordenid,
         autorid: usuarioid,
         contenido: 'El servicio ha sido marcado como COMPLETADO. Las opciones de calificación ya se encuentran disponibles.',
         tipo: 'sistema',
-      });
+      })
+      .select('id')
+      .single();
 
-    if (msgError) throw msgError;
+    if (msgError || !mensajeSistema?.id) {
+      throw msgError || new Error('No se pudo confirmar el mensaje de cierre.');
+    }
 
     toast.success('Servicio finalizado exitosamente');
     return true;

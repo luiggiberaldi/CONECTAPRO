@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import RouteGuard from '@/components/shared/RouteGuard';
-import Navbar from '@/components/shared/Navbar';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import {
   useWallet,
@@ -55,9 +53,7 @@ export default function ProfesionalWalletPage() {
   };
 
   return (
-    <RouteGuard allowedRoles={['profesional']}>
-      <Navbar />
-      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Encabezado */}
         <div className="mb-8">
           <h1 className="text-2xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
@@ -103,7 +99,6 @@ export default function ProfesionalWalletPage() {
             </div>
           </div>
         )}
-      </main>
-    </RouteGuard>
+    </main>
   );
 }

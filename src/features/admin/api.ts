@@ -2,6 +2,32 @@ import { supabaseBrowser } from '@/lib/supabase';
 import { toast } from '@/hooks/use-toast';
 import { AdminKPIs, AdminRecarga, AdminOrden, AdminUsuario, OrdenFilterEstado } from './types';
 
+interface AdminActionResponse {
+  success: boolean;
+  id?: string;
+  message: string;
+}
+
+async function postAdminAction(endpoint: string, id: string): Promise<boolean> {
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id }),
+  });
+
+  const result = (await response.json()) as AdminActionResponse;
+
+  if (!response.ok || !result.success || !result.id) {
+    toast.error(result.message || 'No se pudo completar la accion solicitada.');
+    return false;
+  }
+
+  toast.success(result.message);
+  return true;
+}
+
 /**
  * Obtiene métricas clave del sistema para el dashboard del administrador.
  */
@@ -74,22 +100,7 @@ export async function getRecargasPendientes(): Promise<AdminRecarga[] | null> {
  */
 export async function aprobarRecarga(id: string): Promise<boolean> {
   try {
-    const { data, error } = await supabaseBrowser.rpc('aprobar_recarga', {
-      p_recargaid: id,
-    });
-
-    if (error) throw error;
-
-    // La RPC devuelve { success: boolean, message: string }
-    const response = data as { success: boolean; message: string };
-    
-    if (response.success) {
-      toast.success(response.message);
-      return true;
-    } else {
-      toast.error(response.message);
-      return false;
-    }
+    return await postAdminAction('/api/admin/aprobar-recarga', id);
   } catch (error) {
     console.error('[aprobarRecarga]', error);
     toast.error((error as Error).message);
@@ -102,20 +113,7 @@ export async function aprobarRecarga(id: string): Promise<boolean> {
  */
 export async function rechazarRecarga(id: string): Promise<boolean> {
   try {
-    const { data, error } = await supabaseBrowser
-      .from('recargas')
-      .update({ estado: 'rechazada', aprobadoat: null })
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    if (data?.id) {
-      toast.success('Solicitud de recarga rechazada.');
-      return true;
-    }
-    return false;
+    return await postAdminAction('/api/admin/rechazar-recarga', id);
   } catch (error) {
     console.error('[rechazarRecarga]', error);
     toast.error((error as Error).message);
@@ -184,20 +182,7 @@ export async function getTodosUsuarios(): Promise<AdminUsuario[] | null> {
  */
 export async function suspenderUsuario(id: string): Promise<boolean> {
   try {
-    const { data, error } = await supabaseBrowser
-      .from('usuarios')
-      .update({ estado: 'suspendido' })
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    if (data?.id) {
-      toast.success(`El usuario ${data.nombre} ha sido suspendido.`);
-      return true;
-    }
-    return false;
+    return await postAdminAction('/api/admin/suspender-usuario', id);
   } catch (error) {
     console.error('[suspenderUsuario]', error);
     toast.error((error as Error).message);
@@ -210,20 +195,7 @@ export async function suspenderUsuario(id: string): Promise<boolean> {
  */
 export async function activarUsuario(id: string): Promise<boolean> {
   try {
-    const { data, error } = await supabaseBrowser
-      .from('usuarios')
-      .update({ estado: 'activo' })
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    if (data?.id) {
-      toast.success(`El usuario ${data.nombre} ha sido reactivado.`);
-      return true;
-    }
-    return false;
+    return await postAdminAction('/api/admin/activar-usuario', id);
   } catch (error) {
     console.error('[activarUsuario]', error);
     toast.error((error as Error).message);

@@ -9,7 +9,7 @@ import { Loader2, RefreshCw } from 'lucide-react';
 export default function AdminUsuariosPage() {
   const [usuarios, setUsuarios] = useState<AdminUsuario[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState(false);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const loadUsuarios = useCallback(async () => {
     setLoading(true);
@@ -25,23 +25,27 @@ export default function AdminUsuariosPage() {
   }, [loadUsuarios]);
 
   const handleSuspender = async (id: string) => {
-    setActionLoading(true);
-    const success = await suspenderUsuario(id);
-    if (success) {
-      // Recargar listado local
-      await loadUsuarios();
+    setActionLoading(id);
+    try {
+      const success = await suspenderUsuario(id);
+      if (success) {
+        await loadUsuarios();
+      }
+    } finally {
+      setActionLoading(null);
     }
-    setActionLoading(false);
   };
 
   const handleActivar = async (id: string) => {
-    setActionLoading(true);
-    const success = await activarUsuario(id);
-    if (success) {
-      // Recargar listado local
-      await loadUsuarios();
+    setActionLoading(id);
+    try {
+      const success = await activarUsuario(id);
+      if (success) {
+        await loadUsuarios();
+      }
+    } finally {
+      setActionLoading(null);
     }
-    setActionLoading(false);
   };
 
   return (

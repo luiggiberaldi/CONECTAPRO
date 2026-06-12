@@ -75,3 +75,40 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   * Se modificó la carga de órdenes disponibles (`getOrdenesDisponibles`) en [api.ts](file:///c:/Users/luigg/Desktop/conectapro/src/features/ordenes/api.ts) para usar la vista y ordenar resultados por `cliente_reputacion DESC`.
 
 
+## [12 de junio de 2026]
+
+### [fix] BUG-1 — RouteGuard con flash de contenido protegido
+* **Causa raiz:** El guard estaba montado en paginas individuales, permitiendo que el JSX de la pagina existiera antes del redirect.
+* **Archivos modificados:** `src/app/(cliente)/layout.tsx`, `src/app/(profesional)/layout.tsx`, paginas bajo `src/app/(cliente)/cliente/**` y `src/app/(profesional)/profesional/**`.
+* **Validacion realizada:** `RouteGuard` quedo solo en layouts de cliente/profesional/admin; `npm run build` compilo correctamente. La verificacion visual con navegador integrado no pudo completarse por inestabilidad del navegador local.
+
+### [fix] BUG-2 — actionLoading global congela toda la tabla admin
+* **Causa raiz:** Una bandera booleana bloqueaba todas las filas durante una accion.
+* **Archivos modificados:** `src/app/(admin)/admin/recargas/page.tsx`, `src/app/(admin)/admin/usuarios/page.tsx`, `src/features/admin/components/RecargasTable.tsx`, `src/features/admin/components/UsuariosTable.tsx`.
+* **Validacion realizada:** Busqueda local sin `setActionLoading(true)`, `loadingAction: boolean` ni `disabled={!!actionLoading}` en admin; `npm run build` compilo correctamente.
+
+### [fix] BUG-3 — loadData sin useCallback en AdminDashboard
+* **Causa raiz:** `loadData` podia recrearse y ejecutar refrescos concurrentes.
+* **Archivos modificados:** `src/app/(admin)/admin/page.tsx`.
+* **Validacion realizada:** `loadData` quedo en `useCallback` con guard por ref contra concurrencia y dependencia estable en `useEffect`; `npm run build` compilo correctamente.
+
+### [fix] BUG-4 — Race condition en CalificacionForm al navegar entre ordenes
+* **Causa raiz:** La verificacion de calificacion podia conservar estado de la orden previa.
+* **Archivos modificados:** `src/app/(cliente)/cliente/ordenes/[id]/page.tsx`, `src/app/(profesional)/profesional/ordenes/[id]/page.tsx`.
+* **Validacion realizada:** Los efectos dependen de `id` y `usuario?.id`, cancelan respuestas tardias y limpian `yaCalifico`; `npm run build` compilo correctamente.
+
+### [fix] BUG-5 — RPCs admin ejecutadas desde el cliente
+* **Causa raiz:** Acciones administrativas sensibles se ejecutaban desde codigo de navegador con acceso directo a Supabase.
+* **Archivos modificados:** `src/app/api/admin/_utils.ts`, `src/app/api/admin/aprobar-recarga/route.ts`, `src/app/api/admin/rechazar-recarga/route.ts`, `src/app/api/admin/suspender-usuario/route.ts`, `src/app/api/admin/activar-usuario/route.ts`, `src/features/admin/api.ts`, `src/lib/supabase.ts`.
+* **Validacion realizada:** `src/features/admin/api.ts` ahora usa `fetch('/api/admin/...')`; la ruta `/api/admin/aprobar-recarga` sin sesion devolvio `401`; `npm run build` compilo correctamente.
+
+### [fix] BUG-6 — Memory leak y mensajes duplicados en useChat Realtime
+* **Causa raiz:** El canal realtime podia no estar aislado por orden o quedar duplicado si no se limpiaba correctamente.
+* **Archivos modificados:** `src/features/chat/hooks/useChat.ts`.
+* **Validacion realizada:** El canal usa `chat-orden-${ordenid}`, la suscripcion vive dentro de `useEffect([ordenid])` y se limpia con `supabaseBrowser.removeChannel(channel)`; `npm run build` compilo correctamente.
+
+### [qa] Cierre de auditoria BUG-1 al BUG-6
+* **Revision cruzada:** No hay archivos en `src/` con mas de 600 lineas; no hay usos de `window.alert`, `window.confirm`, `window.prompt`, `alert`, `confirm` o `prompt`; los imports de Supabase se mantienen centralizados a traves de `src/lib/supabase.ts`.
+* **Toasts de exito:** Se verificaron las acciones con persistencia y se reforzo `crearOrden()` para lanzar error si la insercion no retorna un `id` real antes de mostrar `toast.success`.
+* **Archivos modificados:** `src/features/ordenes/api.ts`, `docs/bitacora.md`.
+* **Validacion realizada:** `npm run lint` paso con una advertencia existente de `@next/next/no-img-element` en `src/features/profesionales/components/ResenasList.tsx`; `npm run build` compilo correctamente. La validacion visual en navegador integrado quedo limitada porque el entorno no permitio mantener vivo el servidor local de desarrollo en un puerto disponible.

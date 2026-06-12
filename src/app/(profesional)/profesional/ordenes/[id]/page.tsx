@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import RouteGuard from '@/components/shared/RouteGuard';
-import Navbar from '@/components/shared/Navbar';
 import { useOrdenDetalle } from '@/features/ordenes/hooks/useOrdenDetalle';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { AceptarOrdenButton } from '@/features/ordenes';
@@ -56,15 +54,27 @@ export default function ProfesionalOrdenDetallePage() {
   }, [id, cargarDetalle]);
 
   useEffect(() => {
+    let active = true;
+
     async function checkRating() {
       if (id && usuario?.id) {
+        setCheckingCalificacion(true);
         const rated = await haCalificadoOrden(id, usuario.id);
-        setYaCalifico(rated);
+        if (active) {
+          setYaCalifico(rated);
+          setCheckingCalificacion(false);
+        }
+      } else {
         setCheckingCalificacion(false);
       }
     }
     checkRating();
-  }, [id, usuario]);
+
+    return () => {
+      active = false;
+      setYaCalifico(false);
+    };
+  }, [id, usuario?.id]);
 
   const handleAceptarSuccess = async (oid: string, pid: string): Promise<boolean> => {
     return await aceptarOrden(oid, pid);
@@ -78,20 +88,15 @@ export default function ProfesionalOrdenDetallePage() {
 
   if (loading || loadingProf) {
     return (
-      <RouteGuard allowedRoles={['profesional']}>
-        <Navbar />
         <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
           <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
           <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando detalles de la orden...</p>
         </div>
-      </RouteGuard>
     );
   }
 
   if (!orden) {
     return (
-      <RouteGuard allowedRoles={['profesional']}>
-        <Navbar />
         <div className="max-w-md mx-auto mt-12 p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-center rounded-2xl shadow-xl">
           <AlertCircle className="h-12 w-12 text-rose-500 mx-auto mb-4" />
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Orden no encontrada</h2>
@@ -100,7 +105,6 @@ export default function ProfesionalOrdenDetallePage() {
             Volver a trabajos disponibles
           </Link>
         </div>
-      </RouteGuard>
     );
   }
 
@@ -129,8 +133,6 @@ export default function ProfesionalOrdenDetallePage() {
   const esAsignadoAmi = orden.profesionalid === usuario?.id;
 
   return (
-    <RouteGuard allowedRoles={['profesional']}>
-      <Navbar />
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-6">
           <Link
@@ -315,6 +317,5 @@ export default function ProfesionalOrdenDetallePage() {
           loading={actionLoading}
         />
       </main>
-    </RouteGuard>
   );
 }

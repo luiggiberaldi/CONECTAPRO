@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import RouteGuard from '@/components/shared/RouteGuard';
-import Navbar from '@/components/shared/Navbar';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { getReputacionProfesional } from '@/features/profesionales/api';
 import { ReputacionProfesional } from '@/features/profesionales/types';
@@ -31,9 +29,7 @@ export default function ProfesionalReputacionPage() {
   }, [loadReputacion]);
 
   return (
-    <RouteGuard allowedRoles={['profesional']}>
-      <Navbar />
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-6">
         {/* Encabezado */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -79,7 +75,6 @@ export default function ProfesionalReputacionPage() {
             <ResenasList resenas={reputacion?.resenas ?? []} />
           </div>
         )}
-      </main>
-    </RouteGuard>
+    </main>
   );
 }

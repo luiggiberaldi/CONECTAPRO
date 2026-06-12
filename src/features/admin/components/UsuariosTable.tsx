@@ -11,7 +11,7 @@ interface UsuariosTableProps {
   usuarios: AdminUsuario[];
   onSuspender: (id: string) => Promise<void>;
   onActivar: (id: string) => Promise<void>;
-  loadingAction: boolean;
+  loadingAction: string | null;
 }
 
 type RoleFilterType = 'todos' | 'cliente' | 'profesional' | 'admin';
@@ -200,6 +200,7 @@ export default function UsuariosTable({
                         user.estado === 'activo' ? (
                           <button
                             onClick={() => setConfirmAction({ id: user.id, action: 'suspender', nombre: user.nombre })}
+                            disabled={loadingAction === user.id}
                             className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg border border-rose-200 dark:border-rose-950/30 text-rose-650 hover:bg-rose-50 dark:hover:bg-rose-950/20 font-semibold transition-all active:scale-95"
                           >
                             <UserX className="h-3 w-3" />
@@ -208,6 +209,7 @@ export default function UsuariosTable({
                         ) : (
                           <button
                             onClick={() => setConfirmAction({ id: user.id, action: 'activar', nombre: user.nombre })}
+                            disabled={loadingAction === user.id}
                             className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg border border-emerald-200 dark:border-emerald-950/30 text-emerald-650 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 font-semibold transition-all active:scale-95"
                           >
                             <UserCheck className="h-3 w-3" />
@@ -257,7 +259,7 @@ export default function UsuariosTable({
         isOpen={confirmAction !== null}
         onClose={() => setConfirmAction(null)}
         onConfirm={handleConfirmAction}
-        loading={loadingAction}
+        loading={confirmAction ? loadingAction === confirmAction.id : false}
         title={confirmAction?.action === 'suspender' ? '¿Suspender Cuenta de Usuario?' : '¿Reactivar Cuenta de Usuario?'}
         description={
           confirmAction?.action === 'suspender'

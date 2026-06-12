@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { getKPIs } from '@/features/admin/api';
 import { AdminKPIs } from '@/features/admin/types';
 import KPICard from '@/features/admin/components/KPICard';
@@ -9,19 +9,27 @@ import { ClipboardList, Users, DollarSign, Loader2, Sparkles, RefreshCw } from '
 export default function AdminDashboardPage() {
   const [kpis, setKpis] = useState<AdminKPIs | null>(null);
   const [loading, setLoading] = useState(true);
+  const loadingRef = useRef(false);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
+    if (loadingRef.current) return;
+
+    loadingRef.current = true;
     setLoading(true);
-    const data = await getKPIs();
-    if (data) {
-      setKpis(data);
+    try {
+      const data = await getKPIs();
+      if (data) {
+        setKpis(data);
+      }
+    } finally {
+      loadingRef.current = false;
+      setLoading(false);
     }
-    setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   if (loading && !kpis) {
     return (

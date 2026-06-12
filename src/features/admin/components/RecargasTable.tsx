@@ -9,7 +9,7 @@ interface RecargasTableProps {
   recargas: AdminRecarga[];
   onAprobar: (id: string) => Promise<void>;
   onRechazar: (id: string) => Promise<void>;
-  loadingAction: boolean;
+  loadingAction: string | null;
 }
 
 export default function RecargasTable({ recargas, onAprobar, onRechazar, loadingAction }: RecargasTableProps) {
@@ -132,6 +132,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                     <div className="inline-flex items-center gap-1.5">
                       <button
                         onClick={() => setConfirmAction({ id: recarga.id, type: 'aprobar' })}
+                        disabled={loadingAction === recarga.id}
                         className="p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-950/30 bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/50 transition-colors"
                         title="Aprobar Recarga"
                       >
@@ -139,6 +140,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       </button>
                       <button
                         onClick={() => setConfirmAction({ id: recarga.id, type: 'rechazar' })}
+                        disabled={loadingAction === recarga.id}
                         className="p-1.5 rounded-lg border border-rose-200 dark:border-rose-950/30 bg-rose-50/50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 hover:bg-rose-100 dark:hover:hover:bg-rose-950/50 transition-colors"
                         title="Rechazar Recarga"
                       >
@@ -249,7 +251,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
         isOpen={confirmAction !== null}
         onClose={() => setConfirmAction(null)}
         onConfirm={handleConfirmAction}
-        loading={loadingAction}
+        loading={confirmAction ? loadingAction === confirmAction.id : false}
         title={confirmAction?.type === 'aprobar' ? '¿Aprobar Recarga de Créditos?' : '¿Rechazar Recarga de Créditos?'}
         description={
           confirmAction?.type === 'aprobar'
