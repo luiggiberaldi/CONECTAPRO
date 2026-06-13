@@ -67,7 +67,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
     <div className="space-y-4">
       <div className="overflow-x-auto bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm">
         <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             <tr>
               <th scope="col" className="px-6 py-4">Profesional</th>
               <th scope="col" className="px-6 py-4">Paquete</th>
@@ -99,7 +99,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       </div>
                       <div className="flex flex-col text-left">
                         <span className="font-bold text-xs">{recarga.usuarios?.nombre || 'Profesional'}</span>
-                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{recarga.usuarios?.email}</span>
+                        <span className="text-xs text-zinc-400 dark:text-zinc-500">{recarga.usuarios?.email}</span>
                       </div>
                     </div>
                   </td>
@@ -109,7 +109,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                   <td className="px-6 py-4 font-medium">
                     ${Number(recarga.montousd).toFixed(2)}
                   </td>
-                  <td className="px-6 py-4 uppercase font-bold text-[10px] tracking-wide text-zinc-500 dark:text-zinc-450">
+                  <td className="px-6 py-4 uppercase font-bold text-xs tracking-wide text-zinc-500 dark:text-zinc-450">
                     {formatMetodo(recarga.metodopago)}
                   </td>
                   <td className="px-6 py-4 font-mono font-medium text-[11px] text-zinc-500 dark:text-zinc-400">
@@ -193,7 +193,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             <div className="px-5 py-4 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
               <div>
                 <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-150">Comprobante de Pago</h3>
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
                   Ref: {selectedRecarga.referencia} | Profesional: {selectedRecarga.usuarios?.nombre}
                 </p>
               </div>
@@ -219,7 +219,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             {/* Footer con Acciones */}
             <div className="px-5 py-4 border-t border-zinc-100 dark:border-zinc-800/60 flex justify-between items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/20">
               <div className="text-left">
-                <span className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500">Monto del Paquete</span>
+                <span className="text-xs uppercase font-bold text-zinc-450 dark:text-zinc-500">Monto del Paquete</span>
                 <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
                   {selectedRecarga.paquete} Créditos (${Number(selectedRecarga.montousd).toFixed(2)} USD)
                 </p>

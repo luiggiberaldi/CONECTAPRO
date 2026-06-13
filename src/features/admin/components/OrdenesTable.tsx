@@ -42,13 +42,13 @@ export default function OrdenesTable({
   const getUrgencyBadge = (urgencia: string) => {
     if (urgencia === 'hoy') {
       return (
-        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-450 dark:border-rose-900/30">
+        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-450 dark:border-rose-900/30">
           Urgente
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border bg-zinc-100 text-zinc-650 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border bg-zinc-100 text-zinc-650 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700">
         Esta semana
       </span>
     );
@@ -58,25 +58,25 @@ export default function OrdenesTable({
     switch (estado) {
       case 'pendiente':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900/30">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900/30">
             Pendiente
           </span>
         );
       case 'en_proceso':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
             En Proceso
           </span>
         );
       case 'completada':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
             Completada
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border bg-zinc-100 text-zinc-650 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-550 dark:border-zinc-700">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-zinc-100 text-zinc-650 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-550 dark:border-zinc-700">
             Cancelada
           </span>
         );
@@ -108,7 +108,7 @@ export default function OrdenesTable({
 
         {/* Filtro de estado */}
         <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-          <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider shrink-0">Estado:</span>
+          <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wide shrink-0">Estado:</span>
           <CustomSelect
             options={estadoOptions}
             value={filterEstado}
@@ -125,7 +125,7 @@ export default function OrdenesTable({
       {/* Tabla */}
       <div className="overflow-x-auto bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm">
         <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             <tr>
               <th scope="col" className="px-6 py-4">Orden / Categoría</th>
               <th scope="col" className="px-6 py-4">Cliente</th>
@@ -154,7 +154,7 @@ export default function OrdenesTable({
                       <span className="font-bold text-xs truncate max-w-[200px]" title={orden.titulo}>
                         {orden.titulo}
                       </span>
-                      <span className="inline-flex self-start mt-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-600 dark:bg-indigo-950/35 dark:text-indigo-400">
+                      <span className="inline-flex self-start mt-1 px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-600 dark:bg-indigo-950/35 dark:text-indigo-400">
                         {orden.categoria?.nombre || 'Categoría'}
                       </span>
                     </div>
@@ -162,14 +162,14 @@ export default function OrdenesTable({
                   <td className="px-6 py-4">
                     <div className="flex flex-col text-left">
                       <span className="font-bold text-xs">{orden.cliente?.nombre || 'Cliente'}</span>
-                      <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{orden.cliente?.email}</span>
+                      <span className="text-xs text-zinc-400 dark:text-zinc-500">{orden.cliente?.email}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     {orden.profesional ? (
                       <div className="flex flex-col text-left">
                         <span className="font-bold text-xs text-zinc-800 dark:text-zinc-200">{orden.profesional.nombre}</span>
-                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{orden.profesional.email}</span>
+                        <span className="text-xs text-zinc-400 dark:text-zinc-500">{orden.profesional.email}</span>
                       </div>
                     ) : (
                       <span className="text-zinc-400 dark:text-zinc-500 italic">No asignado</span>

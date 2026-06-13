@@ -138,8 +138,8 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
         </div>
 
         {/* Instrucciones de Pago Dinámicas */}
-        <div className="bg-zinc-50 dark:bg-zinc-850/40 rounded-xl p-3 border border-zinc-150 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed space-y-1">
-          <p className="font-bold text-[10px] text-zinc-500 dark:text-zinc-450 uppercase tracking-wider mb-1.5">
+        <div className="bg-zinc-50 dark:bg-zinc-850/40 rounded-xl p-3 border border-zinc-150 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed space-y-1">
+          <p className="font-bold text-xs text-zinc-500 dark:text-zinc-450 uppercase tracking-wide mb-1.5">
             Instrucciones para transferir
           </p>
           {metodo === 'pagomovil' && (
@@ -147,28 +147,38 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Banco:</span> Banesco (0134)</div>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Teléfono:</span> 0412-5551234</div>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">RIF:</span> J-45678901-2</div>
-              <p className="text-[9px] text-zinc-400 mt-1 font-medium">Nota: Calcule el monto en Bs. a la tasa oficial del BCV del día.</p>
             </>
           )}
           {metodo === 'zelle' && (
             <>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Correo:</span> pagos@conectapro.com</div>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Titular:</span> ConectaPro C.A.</div>
-              <p className="text-[9px] text-zinc-400 mt-1 font-medium">Nota: Indique su nombre y apellido en la descripción del Zelle.</p>
             </>
           )}
           {metodo === 'usdt' && (
             <>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Red:</span> Tron (TRC-20)</div>
               <div className="break-all"><span className="font-semibold text-zinc-800 dark:text-zinc-250">Dirección:</span> TYPsdgHJG35fs7sdFGsdfSDF78sdf78sd9</div>
-              <p className="text-[9px] text-zinc-400 mt-1 font-medium">Nota: Envíe exactamente la cantidad neta libre de comisiones de red.</p>
             </>
           )}
         </div>
 
+        {/* Banner informativo unificado */}
+        <div className="bg-amber-50 dark:bg-amber-950/15 border border-amber-250/20 dark:border-amber-900/30 rounded-xl p-3.5">
+          <h5 className="text-xs font-bold text-amber-800 dark:text-amber-400 flex items-center gap-1.5 mb-1">
+            <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-450" />
+            Información importante de recarga:
+          </h5>
+          <ul className="list-disc pl-4 text-xs text-amber-700/90 dark:text-amber-400/80 space-y-1 font-medium">
+            {metodo === 'pagomovil' && <li><strong>Pago Móvil:</strong> Calcule el monto en Bs. a la tasa oficial del BCV del día.</li>}
+            {metodo === 'zelle' && <li><strong>Zelle:</strong> Indique su nombre y apellido en la descripción del Zelle.</li>}
+            {metodo === 'usdt' && <li><strong>Cripto (USDT):</strong> Envíe exactamente la cantidad neta libre de comisiones de red.</li>}
+          </ul>
+        </div>
+
         {/* Campo Referencia */}
         <div className="space-y-1">
-          <label htmlFor="ref" className="text-[10px] font-bold text-zinc-500 dark:text-zinc-450 uppercase tracking-wide">
+          <label htmlFor="ref" className="text-xs font-bold text-zinc-500 dark:text-zinc-450 uppercase tracking-wide">
             Número de Referencia
           </label>
           <input
@@ -185,7 +195,7 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
 
         {/* Upload de Captura */}
         <div className="space-y-1">
-          <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-450 uppercase tracking-wide block">
+          <span className="text-xs font-bold text-zinc-500 dark:text-zinc-450 uppercase tracking-wide block">
             Adjuntar Captura de Pantalla
           </span>
           <div className="flex gap-4 items-center">
@@ -194,10 +204,10 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
             }`}>
               <div className="flex flex-col items-center justify-center p-3 text-center">
                 <Upload className="h-5 w-5 text-zinc-400 mb-1" />
-                <span className="text-[9px] font-bold text-zinc-650 dark:text-zinc-400">
+                <span className="text-xs font-bold text-zinc-650 dark:text-zinc-400">
                   {capturaFile ? capturaFile.name : 'Seleccionar captura'}
                 </span>
-                <span className="text-[8px] text-zinc-400 mt-0.5">JPG, PNG (máx. 5MB)</span>
+                <span className="text-[10px] text-zinc-400 mt-0.5">JPG, PNG (máx. 5MB)</span>
               </div>
               <input
                 type="file"

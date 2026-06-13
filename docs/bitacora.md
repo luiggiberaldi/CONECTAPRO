@@ -208,3 +208,19 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - Se añadieron las clases responsivas `text-xs sm:text-sm` y la propiedad `whitespace-nowrap` a ambos botones para evitar que el texto o el icono se envuelvan y permanezcan siempre alineados en una sola línea.
   - Se estandarizó el uso de sombras premium (`shadow-md shadow-indigo-600/10`) y clases nativas de Tailwind CSS.
 * **Validación realizada:** Limpieza de caché de Next.js (`.next`) y ejecución exitosa de `npm run build` sin errores.
+
+### [arch] Optimización de Escala Tipográfica y Accesibilidad
+* **Decisión:** Refactorizar la escala de fuentes de toda la plataforma para eliminar el uso de tipografías minúsculas (`9px` y `10px`) que perjudicaban la accesibilidad y lectura, estandarizando un tamaño mínimo de `12px` (text-xs) para metadatos y etiquetas, y `14px` (text-sm) para enlaces y texto secundario.
+* **Archivos modificados:**
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx) (Landing/Home page)
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(cliente)/cliente/ordenes/[id]/page.tsx) (Detalle de orden cliente)
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(profesional)/profesional/ordenes/[id]/page.tsx) (Detalle de orden profesional)
+  - [OrdenesTable.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/OrdenesTable.tsx) (Tabla admin de órdenes)
+  - [RecargasTable.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/RecargasTable.tsx) (Tabla admin de recargas)
+  - [RecargaForm.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/RecargaForm.tsx) (Formulario de recargas)
+* **Detalles:**
+  - **Landing Page**: Subidos los botones de Iniciar Sesión y Registro de `text-xs` a `text-sm font-semibold`. Subidos los textos y badges de las tarjetas flotantes de Carlos Medina y Solicitud Activa de `9px/10px` a `xs/sm`. Subidas las métricas a `text-xs sm:text-sm`.
+  - **Detalle de Orden (Cliente & Profesional)**: Escalados badges de Estado y Urgencia a `text-xs font-bold`. Subidos textos de descripción e instrucciones secundarias a `text-xs`.
+  - **Tablas Admin**: Escaladas las cabeceras de tabla (`thead`) de `text-[10px]` a `text-xs font-bold`. Subidos correos de clientes y profesionales a `text-xs`.
+  - **Formulario de Recarga**: Reemplazadas las notas pequeñas individuales de 9px por un banner interactivo de advertencia unificado con `text-xs` y fondo alert-accent, haciendo dinámicas las instrucciones de Pago Móvil, Zelle y USDT. Escalados los labels a `text-xs`.
+* **Validación realizada:** Limpieza de caché de Next.js (`Remove-Item -Recurse -Force .next`) y compilación limpia exitosa de las 19 rutas del build.

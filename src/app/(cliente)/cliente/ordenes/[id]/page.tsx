@@ -119,7 +119,7 @@ export default function ClienteOrdenDetallePage() {
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50/50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400">
                   <span className="capitalize">{categoria?.nombre}</span>
                 </span>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border capitalize ${getStatusBadgeColor()}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border capitalize ${getStatusBadgeColor()}`}>
                   {estado.replace('_', ' ')}
                 </span>
               </div>
@@ -150,7 +150,7 @@ export default function ClienteOrdenDetallePage() {
 
               <div className="border-t border-zinc-100 dark:border-zinc-800/60 pt-4 flex items-center justify-between">
                 <span className="text-xs text-zinc-500 dark:text-zinc-400">Prioridad:</span>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${getUrgencyBadgeColor()}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${getUrgencyBadgeColor()}`}>
                   {urgencia === 'hoy' ? 'Urgente (Hoy)' : 'Esta semana'}
                 </span>
               </div>
@@ -174,8 +174,8 @@ export default function ClienteOrdenDetallePage() {
               <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-blue-500/10 rounded-2xl p-5 shadow-sm text-center">
                 <AlertCircle className="h-8 w-8 text-blue-500 mx-auto mb-2" />
                 <h3 className="text-xs font-bold text-blue-700 dark:text-blue-450">Buscando profesional</h3>
-                <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                  Tu orden está en espera. Los profesionales calificados de la categoría <span className="font-semibold">{categoria?.nombre}</span> ya pueden verla y aceptarla. Te notificaremos de inmediato.
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
+                  Tu orden está en espera. Los profesionales calificados de la categoría <span className="font-semibold text-zinc-700 dark:text-zinc-300">{categoria?.nombre}</span> ya pueden verla y aceptarla. Te notificaremos de inmediato.
                 </p>
               </div>
             )}
@@ -192,7 +192,7 @@ export default function ClienteOrdenDetallePage() {
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{profesional.nombre}</h4>
-                    <span className="text-[10px] text-zinc-500 dark:text-zinc-400 capitalize">{categoria?.nombre}</span>
+                    <span className="text-xs text-zinc-500 dark:text-zinc-400 capitalize">{categoria?.nombre}</span>
                   </div>
                 </div>
 
@@ -231,7 +231,7 @@ export default function ClienteOrdenDetallePage() {
                   <div className="bg-emerald-50/35 dark:bg-emerald-950/15 border border-emerald-500/15 rounded-2xl p-5 shadow-sm text-center">
                     <CheckCircle className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
                     <h3 className="text-xs font-bold text-emerald-700 dark:text-emerald-400">Servicio Completado</h3>
-                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
                       ¡Ya has calificado este servicio! Gracias por compartir tu reseña para ayudar a mantener la confianza en ConectaPro.
                     </p>
                   </div>

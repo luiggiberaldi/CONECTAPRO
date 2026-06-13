@@ -92,13 +92,13 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Link
               href="/auth/login"
-              className="px-4 py-2 text-xs font-bold text-zinc-655 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100 transition-colors"
+              className="px-4 py-2 text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100 transition-colors"
             >
               Iniciar Sesión
             </Link>
             <Link
               href="/auth/registro"
-              className="px-4 py-2.5 rounded-xl text-xs font-extrabold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md hover:shadow-indigo-500/20 transition-all active:scale-95"
+              className="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md hover:shadow-indigo-500/20 transition-all active:scale-95"
             >
               Registrarse
             </Link>
@@ -119,8 +119,8 @@ export default function Home() {
                 CM
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <p className="text-xs font-black text-zinc-900 dark:text-white truncate">Carlos Medina</p>
-                <p className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400">Plomería General</p>
+                <p className="text-sm font-bold text-zinc-900 dark:text-white truncate">Carlos Medina</p>
+                <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Plomería General</p>
               </div>
             </div>
             <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5">
@@ -129,8 +129,8 @@ export default function Home() {
                   <span key={i} className="text-amber-500 text-xs">★</span>
                 ))}
               </div>
-              <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
-                <ShieldCheck className="h-2.5 w-2.5" />
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
+                <ShieldCheck className="h-3 w-3" />
                 Verificado
               </span>
             </div>
@@ -139,17 +139,17 @@ export default function Home() {
           {/* Floating Order Card (Right) */}
           <div className="absolute right-[-10%] top-[25%] hidden xl:flex flex-col p-4 w-56 rounded-2xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl backdrop-blur-md animate-float-delayed pointer-events-none select-none">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/30">
-                <Zap className="h-2.5 w-2.5 animate-pulse" />
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/30">
+                <Zap className="h-3 w-3" />
                 Solicitud Activa
               </span>
-              <span className="text-[10px] font-bold text-zinc-400">Hace 5m</span>
+              <span className="text-xs font-semibold text-zinc-400">Hace 5m</span>
             </div>
-            <p className="mt-2 text-xs font-black text-zinc-900 dark:text-white text-left">Instalación Eléctrica</p>
-            <p className="text-[10px] font-medium text-zinc-500 dark:text-zinc-400 text-left">Caracas, Chacao</p>
-            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5 text-[10px]">
-              <span className="font-bold text-zinc-400">Trato</span>
-              <span className="font-extrabold text-indigo-600 dark:text-indigo-400">Directo sin Comisión</span>
+            <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-white text-left">Instalación Eléctrica</p>
+            <p className="text-xs font-normal text-zinc-500 dark:text-zinc-400 text-left">Caracas, Chacao</p>
+            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5 text-xs">
+              <span className="font-semibold text-zinc-400">Trato</span>
+              <span className="font-bold text-indigo-600 dark:text-indigo-400">Directo sin Comisión</span>
             </div>
           </div>
 
@@ -187,7 +187,7 @@ export default function Home() {
             </div>
 
             {/* Quick Metrics */}
-            <div className="flex flex-wrap items-center justify-center gap-y-3 gap-x-8 pt-12 text-xs font-bold text-zinc-450 dark:text-zinc-500">
+            <div className="flex flex-wrap items-center justify-center gap-y-3 gap-x-8 pt-12 text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-450">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 +10,000 Trabajos Resueltos

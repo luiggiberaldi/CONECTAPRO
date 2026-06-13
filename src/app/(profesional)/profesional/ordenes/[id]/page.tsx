@@ -154,7 +154,7 @@ export default function ProfesionalOrdenDetallePage() {
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50/50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400">
                   <span className="capitalize">{categoria?.nombre}</span>
                 </span>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border capitalize ${getStatusBadgeColor()}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border capitalize ${getStatusBadgeColor()}`}>
                   {estado.replace('_', ' ')}
                 </span>
               </div>
@@ -185,7 +185,7 @@ export default function ProfesionalOrdenDetallePage() {
 
               <div className="border-t border-zinc-100 dark:border-zinc-800/60 pt-4 flex items-center justify-between">
                 <span className="text-xs text-zinc-500 dark:text-zinc-400">Nivel de urgencia:</span>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${getUrgencyBadgeColor()}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${getUrgencyBadgeColor()}`}>
                   {urgencia === 'hoy' ? 'Urgente (Hoy)' : 'Esta semana'}
                 </span>
               </div>
@@ -210,7 +210,7 @@ export default function ProfesionalOrdenDetallePage() {
                 <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide mb-4">
                   Acción requerida
                 </h3>
-                <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mb-4 leading-relaxed">
+                <p className="text-xs text-zinc-650 dark:text-zinc-400 mb-4 leading-relaxed">
                   Para acceder al chat interno y contactar al cliente, debes aceptar el trabajo. Esto tiene un costo de 1 crédito.
                 </p>
                 <AceptarOrdenButton
@@ -234,7 +234,7 @@ export default function ProfesionalOrdenDetallePage() {
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">{cliente.nombre}</h4>
-                    <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Cliente contratista</span>
+                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Cliente contratista</span>
                   </div>
                 </div>
 
@@ -267,7 +267,7 @@ export default function ProfesionalOrdenDetallePage() {
               <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-zinc-150 rounded-2xl p-5 shadow-sm text-center">
                 <AlertCircle className="h-8 w-8 text-zinc-400 mx-auto mb-2" />
                 <h3 className="text-xs font-bold text-zinc-800">Servicio en Curso</h3>
-                <p className="text-[10px] text-zinc-500 mt-1.5 leading-relaxed">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 leading-relaxed">
                   Esta orden ya ha sido asignada a otro profesional y se encuentra en desarrollo.
                 </p>
               </div>
@@ -283,7 +283,7 @@ export default function ProfesionalOrdenDetallePage() {
                   <div className="bg-emerald-50/35 dark:bg-emerald-950/15 border border-emerald-500/15 rounded-2xl p-5 shadow-sm text-center">
                     <CheckCircle className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
                     <h3 className="text-xs font-bold text-emerald-700 dark:text-emerald-450 font-extrabold">Trabajo Finalizado</h3>
-                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                    <p className="text-xs text-zinc-650 dark:text-zinc-450 mt-2 leading-relaxed">
                       ¡Buen trabajo! Has completado este servicio y calificado al cliente. Tu reputación ha sido actualizada en tu perfil.
                     </p>
                   </div>
