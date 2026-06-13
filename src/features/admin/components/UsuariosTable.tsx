@@ -388,12 +388,12 @@ export default function UsuariosTable({
                           <img
                             src={user.avatar_url}
                             alt={user.nombre}
-                            className="h-9 w-9 rounded-full object-cover border border-zinc-200 dark:border-zinc-700 shrink-0 shadow-sm"
+                            className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-700 shrink-0 shadow-sm"
                             onClick={(e) => { e.stopPropagation(); setSelectedUser(user); }}
                           />
                         ) : (
                           <div 
-                            className={`h-9 w-9 rounded-full flex items-center justify-center text-[11px] font-black border shadow-sm shrink-0 ${
+                            className={`h-8 w-8 rounded-full flex items-center justify-center text-[11px] font-black border shadow-sm shrink-0 ${
                               user.rol === 'admin' 
                                 ? 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-100 dark:border-rose-900/40' 
                                 : user.rol === 'profesional'
