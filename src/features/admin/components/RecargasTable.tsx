@@ -70,14 +70,14 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
           <table className="w-full table-fixed min-w-[1000px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider">
             <tr>
-              <th scope="col" className="px-4 py-4 w-[22%]">Profesional</th>
-              <th scope="col" className="px-4 py-4 w-[11%]">Paquete</th>
-              <th scope="col" className="px-4 py-4 w-[12%]">Monto (USD)</th>
-              <th scope="col" className="px-4 py-4 w-[13%]">Método</th>
-              <th scope="col" className="px-4 py-4 w-[12%]">Referencia</th>
-              <th scope="col" className="px-4 py-4 w-[11%]">Fecha</th>
-              <th scope="col" className="px-4 py-4 w-[11%]">Soporte</th>
-              <th scope="col" className="px-4 py-4 w-[8%] text-right">Acciones</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[22%]">Profesional</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[11%]">Paquete</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[12%]">Monto (USD)</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[13%]">Método</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[12%]">Referencia</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[11%]">Fecha</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[11%]">Soporte</th>
+              <th scope="col" className="px-4 pt-8 pb-4 w-[8%] text-right">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-150 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
