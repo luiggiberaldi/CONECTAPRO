@@ -322,12 +322,25 @@ export default function OrdenesTable({
                   className="hover:bg-zinc-50/40 dark:hover:bg-zinc-950/15 transition-all duration-200 group cursor-pointer"
                   onClick={() => setSelectedOrden(orden)}
                 >
-                  {/* Título & Categoría */}
                   <td className="px-4 py-5 max-w-xs">
                     <div className="flex flex-col text-left min-w-0">
-                      <span className="block truncate font-black text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" title={orden.titulo}>
-                        {orden.titulo}
-                      </span>
+                      <div className="relative group/title inline-block max-w-full">
+                        <span className="block truncate font-black text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-650 dark:group-hover:text-indigo-400 transition-colors">
+                          {orden.titulo}
+                        </span>
+                        {/* Tooltip Premium Glassmorphic */}
+                        <div className="absolute left-0 bottom-full mb-2 hidden group-hover/title:block z-30 w-80 bg-zinc-950/95 dark:bg-zinc-900/95 border border-zinc-800 text-white rounded-2xl p-3.5 shadow-2xl backdrop-blur-md text-xs leading-normal animate-fade-in pointer-events-none transition-all">
+                          <div className="flex flex-col gap-1.5 text-left">
+                            <div className="flex items-center gap-1.5 pb-1.5 border-b border-zinc-850">
+                              <ClipboardList className="h-3.5 w-3.5 text-indigo-400" />
+                              <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Título Completo</span>
+                            </div>
+                            <span className="font-semibold text-zinc-100 mt-1 whitespace-normal break-words">{orden.titulo}</span>
+                          </div>
+                          {/* Flecha del Tooltip */}
+                          <div className="absolute top-full left-5 -mt-1 border-4 border-transparent border-t-zinc-950/95 dark:border-t-zinc-900/95" />
+                        </div>
+                      </div>
                       <span className="inline-flex self-start mt-1.5 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-indigo-50/70 border border-indigo-150 text-indigo-650 dark:bg-indigo-950/30 dark:text-indigo-400 dark:border-indigo-900/35">
                         {orden.categoria?.nombre || 'Servicio'}
                       </span>
