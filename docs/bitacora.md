@@ -291,3 +291,12 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Muro de Solicitudes**: Se cambió el grid a `sm:grid-cols-2 lg:grid-cols-3` y se configuró para que la tercera tarjeta (loading shimmer, feed y fallbacks) ocupe `sm:col-span-2 lg:col-span-1` en tablets para balancear el layout y evitar espacios vacíos asimétricos.
 * **Validación realizada:** Compilación de producción exitosa con `npm run build` sin advertencias de linter ni errores de TypeScript.
 
+### [feature] Confirmación y Visibilidad de Contraseña en Crear Cuenta
+* **Decisión:** Agregar confirmación de contraseña y botones para alternar la visibilidad de la contraseña en el formulario de creación de cuenta (`/auth/registro`) para mejorar la UX y mitigar errores tipográficos al registrarse.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/auth/registro/page.tsx)
+* **Detalles:**
+  - **Confirmación:** Añadido el campo "Confirmar contraseña" y su correspondiente validador en `handleSubmit` que muestra un error si las contraseñas no coinciden.
+  - **Visibilidad:** Integrado botón absoluto con iconos `Eye` y `EyeOff` en ambos campos de contraseña para alternar dinámicamente el atributo `type` entre `"password"` y `"text"`. Se ajustó el padding derecho a `pr-10` en los inputs para evitar solapamiento de texto con el botón.
+* **Validación realizada:** Compilación limpia y exitosa de Next.js (`Compiled successfully`) con `npm run build`.
+
+

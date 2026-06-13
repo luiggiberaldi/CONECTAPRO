@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { User, Mail, Lock, Sparkles, Briefcase, MapPin, Award, UserPlus, ArrowLeft } from 'lucide-react';
+import { User, Mail, Lock, Sparkles, Briefcase, MapPin, Award, UserPlus, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import Loader from '@/components/shared/Loader';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -17,6 +17,9 @@ export default function RegistroPage() {
   // Campos comunes
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [nombre, setNombre] = useState('');
   const [rol, setRol] = useState<'cliente' | 'profesional'>('cliente');
 
@@ -40,8 +43,13 @@ export default function RegistroPage() {
     setFormError(null);
 
     // Validar comunes
-    if (!email || !password || !nombre) {
+    if (!email || !password || !confirmPassword || !nombre) {
       setFormError('Por favor completa todos los campos comunes.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setFormError('Las contraseñas no coinciden.');
       return;
     }
 
@@ -192,7 +200,7 @@ export default function RegistroPage() {
 
               {/* Contraseña */}
               <div>
-                <label htmlFor="pass" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                <label htmlFor="pass" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-350">
                   Contraseña
                 </label>
                 <div className="relative mt-1">
@@ -202,13 +210,49 @@ export default function RegistroPage() {
                   <input
                     id="pass"
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full rounded-xl border-zinc-200 dark:border-zinc-800 pl-10 pr-4 py-2.5 bg-white/50 dark:bg-zinc-950/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all border outline-none focus:ring-1"
+                    className="block w-full rounded-xl border-zinc-200 dark:border-zinc-800 pl-10 pr-10 py-2.5 bg-white/50 dark:bg-zinc-950/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all border outline-none focus:ring-1"
                     placeholder="Mínimo 6 caracteres"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-355 transition-colors focus:outline-none"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Confirmar Contraseña */}
+              <div>
+                <label htmlFor="confirm-pass" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-350">
+                  Confirmar contraseña
+                </label>
+                <div className="relative mt-1">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
+                    <Lock className="h-4 w-4" />
+                  </div>
+                  <input
+                    id="confirm-pass"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="block w-full rounded-xl border-zinc-200 dark:border-zinc-800 pl-10 pr-10 py-2.5 bg-white/50 dark:bg-zinc-950/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all border outline-none focus:ring-1"
+                    placeholder="Repite tu contraseña"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-355 transition-colors focus:outline-none"
+                  >
+                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
                 </div>
               </div>
             </div>
