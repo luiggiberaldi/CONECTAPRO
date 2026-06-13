@@ -321,7 +321,7 @@ export default function UsuariosTable({
         <table className="w-full table-fixed min-w-[900px] text-left text-xs">
           <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="pl-5 pr-4 py-3.5 w-[28%]">
+              <th scope="col" className="pl-8 pr-4 py-3.5 w-[28%]">
                 <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Usuario</span>
               </th>
               <th scope="col" className="px-4 py-3.5 w-[14%]">
@@ -344,7 +344,7 @@ export default function UsuariosTable({
           <tbody className="text-zinc-700 dark:text-zinc-300">
             {paginatedUsuarios.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-16 text-center text-zinc-400 dark:text-zinc-500">
+                <td colSpan={6} className="px-6 py-16 text-center text-zinc-400 dark:text-zinc-550">
                   <div className="flex flex-col items-center justify-center gap-3 max-w-sm mx-auto">
                     <div className="h-12 w-12 rounded-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 flex items-center justify-center text-zinc-300">
                       <AlertCircle className="h-6 w-6" />
@@ -369,7 +369,7 @@ export default function UsuariosTable({
                 const profData = user.rol === 'profesional' && user.profesionales && user.profesionales.length > 0
                   ? user.profesionales[0]
                   : null;
-
+ 
                 // Color accent bar per role/status
                 const accentColor = user.estado === 'suspendido'
                   ? 'bg-amber-400'
@@ -378,7 +378,7 @@ export default function UsuariosTable({
                   : user.rol === 'profesional'
                   ? 'bg-emerald-400'
                   : 'bg-indigo-400';
-
+ 
                 return (
                   <tr 
                     key={user.id} 
@@ -386,7 +386,7 @@ export default function UsuariosTable({
                     onClick={() => setSelectedUser(user)}
                   >
                     {/* Perfil & Avatar — border-left como accent bar */}
-                    <td className={`pl-5 pr-4 py-3.5 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}>
+                    <td className={`pl-8 pr-4 py-3.5 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}>
                       <div className="flex items-center gap-3">
                         {user.avatar_url ? (
                           <img
