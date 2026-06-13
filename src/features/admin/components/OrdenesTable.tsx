@@ -200,34 +200,41 @@ export default function OrdenesTable({
       </div>
 
       {/* 2. Barra de Búsqueda y Filtros */}
-      <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full md:w-auto">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           {/* Búsqueda */}
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => {
-                onSearchQueryChange(e.target.value);
-                setCurrentPage(1);
-              }}
-              placeholder="Buscar por título..."
-              className="w-full pl-9 pr-8 py-2 border border-zinc-200 dark:border-zinc-850 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-850 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
-            />
-            {searchQuery && (
-              <button 
-                onClick={() => onSearchQueryChange('')}
-                className="absolute right-2.5 top-2.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
+          <div className="md:col-span-3 flex flex-col gap-1.5">
+            <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+              Buscar Orden
+            </label>
+            <div className="relative w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  onSearchQueryChange(e.target.value);
+                  setCurrentPage(1);
+                }}
+                placeholder="Buscar por título..."
+                className="w-full pl-10 pr-9 py-2.5 border border-zinc-200 dark:border-zinc-850 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => onSearchQueryChange('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-655 dark:hover:text-zinc-350"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Filtro Estado */}
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider shrink-0">Estado</span>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider">
+              Filtrar por Estado
+            </label>
             <CustomSelect
               options={estadoOptions}
               value={filterEstado}
@@ -235,20 +242,22 @@ export default function OrdenesTable({
                 onFilterEstadoChange(val as OrdenFilterEstado);
                 setCurrentPage(1);
               }}
-              className="w-full sm:w-44 shrink-0"
+              className="w-full"
             />
           </div>
         </div>
 
         {/* Limpieza de Filtros */}
         {(searchQuery || filterEstado !== 'todos') && (
-          <button
-            onClick={resetFilters}
-            className="flex items-center justify-center gap-1.5 self-end md:self-auto px-4 py-2 text-xs font-black text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-850 transition-all active:scale-95"
-          >
-            <FilterX className="h-4 w-4" />
-            Limpiar filtros
-          </button>
+          <div className="flex justify-end pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <button
+              onClick={resetFilters}
+              className="flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-black text-zinc-600 dark:text-zinc-350 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/20 dark:hover:text-rose-455 transition-all active:scale-95"
+            >
+              <FilterX className="h-4 w-4" />
+              Limpiar todos los filtros
+            </button>
+          </div>
         )}
       </div>
 
@@ -299,7 +308,7 @@ export default function OrdenesTable({
                   onClick={() => setSelectedOrden(orden)}
                 >
                   {/* Título & Categoría */}
-                  <td className="px-6 py-4 max-w-xs">
+                  <td className="px-6 py-5 max-w-xs">
                     <div className="flex flex-col text-left">
                       <span className="font-black text-zinc-900 dark:text-zinc-150 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" title={orden.titulo}>
                         {orden.titulo}
@@ -311,16 +320,16 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Cliente */}
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-5">
                     <div className="flex items-center gap-2.5">
                       {orden.cliente?.avatar_url ? (
                         <img
                           src={orden.cliente.avatar_url}
                           alt={orden.cliente.nombre}
-                          className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850"
+                          className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850 shrink-0 shadow-sm"
                         />
                       ) : (
-                        <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/35 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-extrabold text-[10px]">
+                        <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/35 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-extrabold text-[10px] shrink-0">
                           {orden.cliente?.nombre.substring(0, 2).toUpperCase() || 'CL'}
                         </div>
                       )}
@@ -332,17 +341,17 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Profesional */}
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-5">
                     {orden.profesional ? (
                       <div className="flex items-center gap-2.5">
                         {orden.profesional.avatar_url ? (
                           <img
                             src={orden.profesional.avatar_url}
                             alt={orden.profesional.nombre}
-                            className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850"
+                            className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850 shrink-0 shadow-sm"
                           />
                         ) : (
-                          <div className="h-8 w-8 rounded-full bg-emerald-50 dark:bg-emerald-950/35 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-center text-emerald-750 dark:text-emerald-400 font-extrabold text-[10px]">
+                          <div className="h-8 w-8 rounded-full bg-emerald-50 dark:bg-emerald-950/35 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-center text-emerald-750 dark:text-emerald-400 font-extrabold text-[10px] shrink-0">
                             {orden.profesional.nombre.substring(0, 2).toUpperCase()}
                           </div>
                         )}
@@ -352,7 +361,7 @@ export default function OrdenesTable({
                         </div>
                       </div>
                     ) : (
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[10px] font-black border uppercase tracking-wider bg-zinc-50 text-zinc-400 border-zinc-200 dark:bg-zinc-950/20 dark:text-zinc-500 dark:border-zinc-900/30">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[10px] font-black border uppercase tracking-wider bg-zinc-50 text-zinc-400 border-zinc-200 dark:bg-zinc-950/20 dark:text-zinc-500 dark:border-zinc-900/30 shrink-0">
                         <User className="h-3 w-3" />
                         Sin asignar
                       </span>
@@ -360,7 +369,7 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Ubicación */}
-                  <td className="px-6 py-4 font-medium text-zinc-500 dark:text-zinc-400">
+                  <td className="px-6 py-5 font-medium text-zinc-500 dark:text-zinc-400">
                     <div className="flex items-center gap-1.5">
                       <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
                       <span className="truncate max-w-[140px] text-xs">
@@ -370,17 +379,17 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Urgencia */}
-                  <td className="px-6 py-4 align-middle">
+                  <td className="px-6 py-5 align-middle">
                     {getUrgencyBadge(orden.urgencia)}
                   </td>
 
                   {/* Estado */}
-                  <td className="px-6 py-4 align-middle">
+                  <td className="px-6 py-5 align-middle">
                     {getStatusBadge(orden.estado)}
                   </td>
 
                   {/* Detalles Acción */}
-                  <td className="px-6 py-4 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                  <td className="px-6 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => setSelectedOrden(orden)}
                       className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"

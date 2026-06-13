@@ -237,34 +237,41 @@ export default function UsuariosTable({
       </div>
 
       {/* 2. Barra de Filtros y Búsqueda */}
-      <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-        <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full md:w-auto">
-          {/* Input de Búsqueda */}
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setCurrentPage(1);
-              }}
-              placeholder="Buscar por nombre o correo..."
-              className="w-full pl-9 pr-8 py-2 border border-zinc-200 dark:border-zinc-850 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-850 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
-            />
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-2.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+          {/* Búsqueda */}
+          <div className="md:col-span-2 flex flex-col gap-1.5">
+            <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+              Buscar Usuario
+            </label>
+            <div className="relative w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                placeholder="Buscar por nombre o correo..."
+                className="w-full pl-10 pr-9 py-2.5 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-655 dark:hover:text-zinc-350"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Select de Roles */}
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider shrink-0">Rol</span>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+              Filtrar por Rol
+            </label>
             <CustomSelect
               options={roleOptions}
               value={roleFilter}
@@ -272,13 +279,15 @@ export default function UsuariosTable({
                 setRoleFilter(val as RoleFilterType);
                 setCurrentPage(1);
               }}
-              className="w-full sm:w-40 shrink-0"
+              className="w-full"
             />
           </div>
 
           {/* Select de Estados */}
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider shrink-0">Estado</span>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+              Filtrar por Estado
+            </label>
             <CustomSelect
               options={statusOptions}
               value={statusFilter}
@@ -286,20 +295,22 @@ export default function UsuariosTable({
                 setStatusFilter(val as StatusFilterType);
                 setCurrentPage(1);
               }}
-              className="w-full sm:w-40 shrink-0"
+              className="w-full"
             />
           </div>
         </div>
 
         {/* Limpieza de Filtros */}
         {(searchQuery || roleFilter !== 'todos' || statusFilter !== 'todos') && (
-          <button
-            onClick={resetFilters}
-            className="flex items-center justify-center gap-1.5 self-end md:self-auto px-4 py-2 text-xs font-black text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-850 transition-all active:scale-95"
-          >
-            <FilterX className="h-4 w-4" />
-            Limpiar filtros
-          </button>
+          <div className="flex justify-end pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <button
+              onClick={resetFilters}
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-black text-zinc-600 dark:text-zinc-350 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/20 dark:hover:text-rose-455 transition-all active:scale-95"
+            >
+              <FilterX className="h-4 w-4" />
+              Limpiar todos los filtros
+            </button>
+          </div>
         )}
       </div>
 
@@ -352,18 +363,18 @@ export default function UsuariosTable({
                     onClick={() => setSelectedUser(user)}
                   >
                     {/* Perfil & Avatar */}
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
                         {user.avatar_url ? (
                           <img
                             src={user.avatar_url}
                             alt={user.nombre}
-                            className="h-10 w-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-800"
+                            className="h-10 w-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-800 shrink-0 shadow-sm"
                             onClick={(e) => { e.stopPropagation(); setSelectedUser(user); }}
                           />
                         ) : (
                           <div 
-                            className={`h-10 w-10 rounded-full flex items-center justify-center text-xs font-black border shadow-sm ${
+                            className={`h-10 w-10 rounded-full flex items-center justify-center text-xs font-black border shadow-sm shrink-0 ${
                               user.rol === 'admin' 
                                 ? 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-100 dark:border-rose-900/40' 
                                 : user.rol === 'profesional'
@@ -387,12 +398,12 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Badge Rol */}
-                    <td className="px-6 py-4 align-middle">
+                    <td className="px-6 py-5 align-middle">
                       {getRoleBadge(user.rol)}
                     </td>
 
                     {/* Ciudad */}
-                    <td className="px-6 py-4 align-middle font-medium text-zinc-500 dark:text-zinc-400">
+                    <td className="px-6 py-5 align-middle font-medium text-zinc-500 dark:text-zinc-400">
                       <div className="flex items-center gap-1.5">
                         <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
                         <span className="truncate">
@@ -402,14 +413,14 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Detalle Profesional / Reputación */}
-                    <td className="px-6 py-4 align-middle">
+                    <td className="px-6 py-5 align-middle">
                       {profData ? (
                         <div className="flex flex-col gap-1 text-left">
                           <span className="capitalize font-extrabold text-indigo-650 dark:text-indigo-400 text-xs">
                             {profData.especialidad}
                           </span>
                           <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
-                            <div className="flex items-center text-amber-500">
+                            <div className="flex items-center gap-0.5 text-amber-500 shrink-0">
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <Star 
                                   key={star} 
@@ -424,17 +435,17 @@ export default function UsuariosTable({
                           </div>
                         </div>
                       ) : (
-                        <span className="text-zinc-400 dark:text-zinc-600 italic">No aplica</span>
+                        <span className="text-zinc-400 dark:text-zinc-650 italic">-</span>
                       )}
                     </td>
 
                     {/* Estado */}
-                    <td className="px-6 py-4 align-middle">
+                    <td className="px-6 py-5 align-middle">
                       {getStatusBadge(user.estado)}
                     </td>
 
                     {/* Acciones */}
-                    <td className="px-6 py-4 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                    <td className="px-6 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center justify-end gap-2">
                         {/* Botón Ver Ficha */}
                         <button
@@ -445,8 +456,8 @@ export default function UsuariosTable({
                           <Eye className="h-4 w-4" />
                         </button>
 
-                        {/* Botón Moderación (Activar/Suspender) */}
-                        {user.rol !== 'admin' && (
+                        {/* Botón Moderación (Activar/Suspender o espaciador) */}
+                        {user.rol !== 'admin' ? (
                           user.estado === 'activo' ? (
                             <button
                               onClick={() => setConfirmAction({ id: user.id, action: 'suspender', nombre: user.nombre })}
@@ -474,6 +485,11 @@ export default function UsuariosTable({
                               )}
                             </button>
                           )
+                        ) : (
+                          // Botón invisible para alinear perfectamente la columna de acciones
+                          <div className="invisible p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 shrink-0" aria-hidden="true">
+                            <UserX className="h-4 w-4" />
+                          </div>
                         )}
                       </div>
                     </td>
