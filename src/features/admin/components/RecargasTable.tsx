@@ -218,7 +218,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[92vh] animate-slide-in">
             {/* Header del Modal */}
-            <div className="px-6 pt-6 pb-4 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-6 pb-4 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20" style={{ paddingTop: '32px' }}>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
                 <div className="text-left">
@@ -379,7 +379,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             </div>
 
             {/* Footer con Acciones */}
-            <div className="px-6 pt-4 pb-8 border-t border-zinc-150 dark:border-zinc-800/60 flex justify-between items-center gap-3 bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-6 border-t border-zinc-150 dark:border-zinc-800/60 flex justify-between items-center gap-3 bg-zinc-50/50 dark:bg-zinc-950/20" style={{ paddingTop: '24px', paddingBottom: '40px' }}>
               <div className="text-left">
                 <span className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-555 tracking-wider">Acreditar Paquete</span>
                 <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 mt-1">
