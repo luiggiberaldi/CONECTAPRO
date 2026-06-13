@@ -295,22 +295,22 @@ export default function UsuariosTable({
           <table className="w-full table-fixed min-w-[950px] text-left text-xs">
           <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="pr-4 py-4 w-[28%]" style={{ paddingLeft: '24px' }}>
+              <th scope="col" className="pr-4 pb-4 w-[28%]" style={{ paddingLeft: '24px', paddingTop: '28px' }}>
                 <span className="flex items-center gap-1"><Users className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Usuario</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[14%]">
+              <th scope="col" className="px-4 pb-4 w-[14%]" style={{ paddingTop: '28px' }}>
                 <span className="flex items-center gap-1"><Shield className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Rol</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[14%]">
+              <th scope="col" className="px-4 pb-4 w-[14%]" style={{ paddingTop: '28px' }}>
                 <span className="flex items-center gap-1"><MapPin className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[20%]">
+              <th scope="col" className="px-4 pb-4 w-[20%]" style={{ paddingTop: '28px' }}>
                 <span className="flex items-center gap-1"><Briefcase className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Profesión / Reputación</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[12%]">
+              <th scope="col" className="px-4 pb-4 w-[12%]" style={{ paddingTop: '28px' }}>
                 <span className="flex items-center gap-1"><Activity className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[12%] text-right">
+              <th scope="col" className="px-4 pb-4 w-[12%] text-right" style={{ paddingTop: '28px' }}>
                 <span className="flex items-center justify-end gap-1"><Sliders className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Acciones</span>
               </th>
             </tr>
@@ -361,7 +361,7 @@ export default function UsuariosTable({
                   >
                     {/* Perfil & Avatar — border-left como accent bar */}
                     <td 
-                      className={`pr-4 py-4 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}
+                      className={`pr-4 py-5 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}
                       style={{ paddingLeft: '24px' }}
                     >
                       <div className="flex items-center gap-3">
@@ -398,12 +398,12 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Badge Rol */}
-                    <td className="px-4 py-4 align-middle">
+                    <td className="px-4 py-5 align-middle">
                       {getRoleBadge(user.rol)}
                     </td>
 
                     {/* Ciudad */}
-                    <td className="px-4 py-4 align-middle">
+                    <td className="px-4 py-5 align-middle">
                       <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
                         <MapPin className="h-3 w-3 text-zinc-350 dark:text-zinc-550 shrink-0" />
                         <span className="block truncate" title={user.ciudad || ''}>
@@ -413,7 +413,7 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Detalle Profesional / Reputación */}
-                    <td className="px-4 py-4 align-middle">
+                    <td className="px-4 py-5 align-middle">
                       {profData ? (
                         <div className="flex flex-col gap-1 text-left">
                           <span className="capitalize font-bold text-indigo-600 dark:text-indigo-400 text-[12px] leading-tight">
@@ -440,12 +440,12 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Estado */}
-                    <td className="px-4 py-4 align-middle">
+                    <td className="px-4 py-5 align-middle">
                       {getStatusBadge(user.estado)}
                     </td>
 
                     {/* Acciones - visible solo en hover */}
-                    <td className="px-4 py-4 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                    <td className="px-4 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity duration-150">
                         {/* Botón Ver Ficha */}
                         <button

@@ -264,171 +264,160 @@ export default function OrdenesTable({
       </div>
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
-        <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[760px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
-            <tr>
-              <th scope="col" className="px-4 py-4 w-[22%]">
-                <span className="flex items-center gap-2"><ClipboardList className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Orden / Categoría</span>
-              </th>
-              <th scope="col" className="px-4 py-4 w-[15%]">
-                <span className="flex items-center gap-2"><User className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Cliente</span>
-              </th>
-              <th scope="col" className="px-4 py-4 w-[15%]">
-                <span className="flex items-center gap-2"><Briefcase className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Profesional</span>
-              </th>
-              <th scope="col" className="px-2 py-4 w-[15%]">
-                <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Ubicación</span>
-              </th>
-              <th scope="col" className="px-2 py-4 w-[12%]">
-                <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Urgencia</span>
-              </th>
-              <th scope="col" className="px-2 py-4 w-[11%]">
-                <span className="flex items-center gap-2"><Activity className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Estado</span>
-              </th>
-              <th scope="col" className="pr-6 pl-2 py-4 w-[10%] text-right border-zinc-200 dark:border-zinc-800">
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
-            {paginatedOrdenes.length === 0 ? (
+        <div className="overflow-x-auto">
+          <table className="w-full table-fixed min-w-[900px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+            <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
               <tr>
-                <td colSpan={7} className="px-4 py-16 text-center text-zinc-400 dark:text-zinc-550">
-                  <div className="flex flex-col items-center justify-center gap-3 max-w-sm mx-auto">
-                    <div className="h-12 w-12 rounded-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 flex items-center justify-center text-zinc-300">
-                      <Inbox className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-extrabold text-sm text-zinc-855 dark:text-zinc-250">No hay órdenes</h3>
-                      <p className="text-xs text-zinc-400 mt-1">
-                        No se encontraron solicitudes de trabajo bajo esta búsqueda o estado.
-                      </p>
-                    </div>
-                    {(searchQuery || filterEstado !== 'todos') && (
-                      <button
-                        onClick={resetFilters}
-                        className="px-4 py-2 text-xs font-black text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors"
-                      >
-                        Restablecer todos los filtros
-                      </button>
-                    )}
-                  </div>
-                </td>
+                <th scope="col" className="px-4 pb-4 w-[22%]" style={{ paddingTop: '28px' }}>
+                  <span className="flex items-center gap-2"><ClipboardList className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Orden / Categoría</span>
+                </th>
+                <th scope="col" className="px-4 pb-4 w-[15%]" style={{ paddingTop: '28px' }}>
+                  <span className="flex items-center gap-2"><User className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Cliente</span>
+                </th>
+                <th scope="col" className="px-4 pb-4 w-[15%]" style={{ paddingTop: '28px' }}>
+                  <span className="flex items-center gap-2"><Briefcase className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Profesional</span>
+                </th>
+                <th scope="col" className="px-2 pb-4 w-[15%]" style={{ paddingTop: '28px' }}>
+                  <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Ubicación</span>
+                </th>
+                <th scope="col" className="px-2 pb-4 w-[12%]" style={{ paddingTop: '28px' }}>
+                  <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Urgencia</span>
+                </th>
+                <th scope="col" className="px-2 pb-4 w-[11%]" style={{ paddingTop: '28px' }}>
+                  <span className="flex items-center gap-2"><Activity className="h-4 w-4 text-zinc-400 dark:text-zinc-55" /> Estado</span>
+                </th>
+                <th scope="col" className="pr-6 pl-2 pb-4 w-[10%] text-right border-zinc-200 dark:border-zinc-800" style={{ paddingTop: '28px' }}>
+                </th>
               </tr>
-            ) : (
-              paginatedOrdenes.map((orden) => (
-                <tr 
-                  key={orden.id} 
-                  className="hover:bg-zinc-50/40 dark:hover:bg-zinc-950/15 transition-all duration-200 group cursor-pointer"
-                  onClick={() => setSelectedOrden(orden)}
-                >
-                  <td className="px-4 py-4 max-w-xs">
-                    <div className="flex flex-col text-left min-w-0">
-                      <div className="relative group/title inline-block max-w-full">
-                        <span className="block truncate font-semibold text-xs text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-655 dark:group-hover:text-indigo-400 transition-colors">
-                          {orden.titulo}
-                        </span>
-                        {/* Tooltip Premium Glassmorphic */}
-                        <div className="absolute left-0 bottom-full mb-2 hidden group-hover/title:block z-30 w-[320px] bg-zinc-950/95 dark:bg-zinc-900/95 border border-zinc-800 text-white rounded-2xl p-4 shadow-2xl backdrop-blur-md text-xs leading-normal animate-fade-in pointer-events-none transition-all">
-                          <div className="flex flex-col gap-2 text-left">
-                            <div className="flex items-center gap-2 pb-2 border-b border-zinc-850">
-                              <ClipboardList className="h-4 w-4 text-indigo-400" />
-                              <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Título Completo</span>
-                            </div>
-                            <span className="font-semibold text-zinc-100 mt-1 whitespace-normal break-words">{orden.titulo}</span>
-                          </div>
-                          {/* Flecha del Tooltip */}
-                          <div className="absolute top-full left-5 -mt-1 border-4 border-transparent border-t-zinc-950/95 dark:border-t-zinc-900/95" />
-                        </div>
+            </thead>
+            <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
+              {paginatedOrdenes.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-16 text-center text-zinc-400 dark:text-zinc-550">
+                    <div className="flex flex-col items-center justify-center gap-3 max-w-sm mx-auto">
+                      <div className="h-12 w-12 rounded-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 flex items-center justify-center text-zinc-300">
+                        <Inbox className="h-6 w-6" />
                       </div>
-                      <span className="text-[10px] font-bold text-zinc-450 dark:text-zinc-500 uppercase tracking-wider mt-1">
-                        {orden.categoria?.nombre || 'Servicio'}
+                      <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">
+                        No hay órdenes registradas.
                       </span>
                     </div>
                   </td>
-                  {/* Cliente */}
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-2 min-w-0">
-                      {orden.cliente?.avatar_url ? (
-                        <img
-                          src={orden.cliente.avatar_url}
-                          alt={orden.cliente.nombre}
-                          className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850 shrink-0 shadow-sm"
-                        />
-                      ) : (
-                        <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/35 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-extrabold text-[10px] shrink-0">
-                          {orden.cliente?.nombre.substring(0, 2).toUpperCase() || 'CL'}
+                </tr>
+              ) : (
+                paginatedOrdenes.map((orden) => (
+                  <tr 
+                    key={orden.id} 
+                    className="hover:bg-zinc-50/40 dark:hover:bg-zinc-950/15 transition-all duration-200 group cursor-pointer"
+                    onClick={() => setSelectedOrden(orden)}
+                  >
+                    <td className="px-4 py-5 max-w-xs">
+                      <div className="flex flex-col text-left min-w-0">
+                        <div className="relative group/title inline-block max-w-full">
+                          <span className="block truncate font-semibold text-xs text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-655 dark:group-hover:text-indigo-400 transition-colors">
+                            {orden.titulo}
+                          </span>
+                          {/* Tooltip Premium Glassmorphic */}
+                          <div className="absolute left-0 bottom-full mb-2 hidden group-hover/title:block z-30 w-[320px] bg-zinc-950/95 dark:bg-zinc-900/95 border border-zinc-800 text-white rounded-2xl p-4 shadow-2xl backdrop-blur-md text-xs leading-normal animate-fade-in pointer-events-none transition-all">
+                            <div className="flex flex-col gap-2 text-left">
+                              <div className="flex items-center gap-2 pb-2 border-b border-zinc-850">
+                                <ClipboardList className="h-4 w-4 text-indigo-400" />
+                                <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Título Completo</span>
+                              </div>
+                              <span className="font-semibold text-zinc-100 mt-1 whitespace-normal break-words">{orden.titulo}</span>
+                            </div>
+                            {/* Flecha del Tooltip */}
+                            <div className="absolute top-full left-5 -mt-1 border-4 border-transparent border-t-zinc-950/95 dark:border-t-zinc-900/95" />
+                          </div>
                         </div>
-                      )}
-                      <span className="block truncate font-bold text-xs text-zinc-800 dark:text-zinc-200 max-w-[120px]" title={orden.cliente?.nombre}>
-                        {orden.cliente?.nombre || 'Cliente'}
-                      </span>
-                    </div>
-                  </td>
-
-                  {/* Profesional */}
-                  <td className="px-4 py-4">
-                    {orden.profesional ? (
-                      <div className="flex items-center gap-2 min-w-0">
-                        {orden.profesional.avatar_url ? (
+                        <span className="text-[10px] font-bold text-zinc-450 dark:text-zinc-500 uppercase tracking-wider mt-1.5">
+                          {orden.categoria?.nombre || 'Servicio'}
+                        </span>
+                      </div>
+                    </td>
+                    {/* Cliente */}
+                    <td className="px-4 py-5">
+                      <div className="flex items-center gap-3 min-w-0">
+                        {orden.cliente?.avatar_url ? (
                           <img
-                            src={orden.profesional.avatar_url}
-                            alt={orden.profesional.nombre}
+                            src={orden.cliente.avatar_url}
+                            alt={orden.cliente.nombre}
                             className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850 shrink-0 shadow-sm"
                           />
                         ) : (
-                          <div className="h-8 w-8 rounded-full bg-emerald-50 dark:bg-emerald-950/35 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-center text-emerald-750 dark:text-emerald-455 font-extrabold text-[10px] shrink-0">
-                            {orden.profesional.nombre.substring(0, 2).toUpperCase()}
+                          <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/35 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-extrabold text-[10px] shrink-0">
+                            {orden.cliente?.nombre.substring(0, 2).toUpperCase() || 'CL'}
                           </div>
                         )}
-                        <span className="block truncate font-bold text-xs text-zinc-800 dark:text-zinc-200 max-w-[120px]" title={orden.profesional.nombre}>
-                          {orden.profesional.nombre}
+                        <span className="block truncate font-bold text-xs text-zinc-800 dark:text-zinc-200 max-w-[120px]" title={orden.cliente?.nombre}>
+                          {orden.cliente?.nombre || 'Cliente'}
                         </span>
                       </div>
-                    ) : (
-                      <span className="inline-flex items-center gap-2 px-2 py-1 rounded text-[10px] font-black border uppercase tracking-wider bg-zinc-50 text-zinc-400 border-zinc-200 dark:bg-zinc-950/20 dark:text-zinc-500 dark:border-zinc-900/30 shrink-0">
-                        <User className="h-4 w-4" />
-                        Sin asignar
-                      </span>
-                    )}
-                  </td>
+                    </td>
 
-                  {/* Ubicación */}
-                  <td className="px-2 py-4 font-medium text-zinc-500 dark:text-zinc-400">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <MapPin className="h-4 w-4 text-zinc-400 shrink-0" />
-                      <span className="block truncate max-w-[140px] text-xs" title={`${orden.ciudad}, ${orden.zona}`}>
-                        {orden.ciudad}, {orden.zona}
-                      </span>
-                    </div>
-                  </td>
+                    {/* Profesional */}
+                    <td className="px-4 py-5">
+                      {orden.profesional ? (
+                        <div className="flex items-center gap-3 min-w-0">
+                          {orden.profesional.avatar_url ? (
+                            <img
+                              src={orden.profesional.avatar_url}
+                              alt={orden.profesional.nombre}
+                              className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-850 shrink-0 shadow-sm"
+                            />
+                          ) : (
+                            <div className="h-8 w-8 rounded-full bg-emerald-50 dark:bg-emerald-950/35 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-center text-emerald-750 dark:text-emerald-455 font-extrabold text-[10px] shrink-0">
+                              {orden.profesional.nombre.substring(0, 2).toUpperCase()}
+                            </div>
+                          )}
+                          <span className="block truncate font-bold text-xs text-zinc-800 dark:text-zinc-200 max-w-[120px]" title={orden.profesional.nombre}>
+                            {orden.profesional.nombre}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="inline-flex items-center gap-2 px-2 py-1 rounded text-[10px] font-black border uppercase tracking-wider bg-zinc-50 text-zinc-400 border-zinc-200 dark:bg-zinc-950/20 dark:text-zinc-500 dark:border-zinc-900/30 shrink-0">
+                          <User className="h-4 w-4" />
+                          Sin asignar
+                        </span>
+                      )}
+                    </td>
 
-                  {/* Urgencia */}
-                  <td className="px-2 py-4 align-middle">
-                    {getUrgencyBadge(orden.urgencia)}
-                  </td>
+                    {/* Ubicación */}
+                    <td className="px-2 py-5 font-medium text-zinc-500 dark:text-zinc-400">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <MapPin className="h-4 w-4 text-zinc-400 shrink-0" />
+                        <span className="block truncate max-w-[140px] text-xs" title={`${orden.ciudad}, ${orden.zona}`}>
+                          {orden.ciudad}, {orden.zona}
+                        </span>
+                      </div>
+                    </td>
 
-                  {/* Estado */}
-                  <td className="px-2 py-4 align-middle">
-                    {getStatusBadge(orden.estado)}
-                  </td>
+                    {/* Urgencia */}
+                    <td className="px-2 py-5 align-middle">
+                      {getUrgencyBadge(orden.urgencia)}
+                    </td>
 
-                  {/* Detalles Acción */}
-                  <td className="pr-6 pl-2 py-4 align-middle text-right" onClick={(e) => e.stopPropagation()}>
-                    <button
-                      onClick={() => setSelectedOrden(orden)}
-                      className="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-655 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
-                      title="Ver ficha de orden"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+                    {/* Estado */}
+                    <td className="px-2 py-5 align-middle">
+                      {getStatusBadge(orden.estado)}
+                    </td>
+
+                    {/* Detalles Acción */}
+                    <td className="pr-6 pl-2 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        onClick={() => setSelectedOrden(orden)}
+                        className="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-655 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
+                        title="Ver ficha de orden"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* 4. Controles Paginación */}
