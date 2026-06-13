@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { AdminRecarga } from '../types';
-import { Eye, Check, X, AlertCircle, Calendar, User, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Eye, Check, X, AlertCircle, Calendar, User, ChevronLeft, ChevronRight, Copy, FileText, ImageOff, CreditCard, Clock, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
@@ -19,10 +19,14 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   
-  // Modales
+  // Modales y estados de visualización
   const [selectedRecarga, setSelectedRecarga] = useState<AdminRecarga | null>(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState<{ id: string; type: 'aprobar' | 'rechazar' } | null>(null);
+  
+  // Estados para mejor UX del modal
+  const [imageError, setImageError] = useState(false);
+  const [copiedRef, setCopiedRef] = useState(false);
 
   // Derivados
   const totalPages = Math.max(1, Math.ceil(recargas.length / pageSize));
@@ -31,7 +35,15 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
 
   const handleOpenViewer = (recarga: AdminRecarga) => {
     setSelectedRecarga(recarga);
+    setImageError(false);
+    setCopiedRef(false);
     setIsViewerOpen(true);
+  };
+
+  const handleCopyRef = (ref: string) => {
+    navigator.clipboard.writeText(ref);
+    setCopiedRef(true);
+    setTimeout(() => setCopiedRef(false), 2000);
   };
 
   const handleConfirmAction = async () => {
@@ -201,54 +213,189 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
         </div>
       )}
 
-      {/* Modal Visor de Captura (Lightbox Glassmorphic) */}
+      {/* Modal Visor de Captura (Lightbox Premium) */}
       {isViewerOpen && selectedRecarga && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md animate-fade-in">
-          <div className="bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-850 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl shadow-zinc-950/20 animate-slide-in flex flex-col max-h-[85vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[92vh] animate-slide-in">
             {/* Header del Modal */}
-            <div className="px-5 py-4 border-b border-zinc-200/50 dark:border-zinc-800/50 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
-              <div>
-                <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-150">Comprobante de Pago</h3>
-                <p className="text-xs text-zinc-500 dark:text-zinc-450 mt-0.5 font-medium">
-                  Ref: {selectedRecarga.referencia} | Profesional: {selectedRecarga.usuarios?.nombre}
-                </p>
+            <div className="px-6 py-4 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
+              <div className="flex items-center gap-2.5">
+                <div className="h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse" />
+                <div className="text-left">
+                  <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-50">Revisión de Comprobante</h3>
+                  <p className="text-[10px] text-zinc-450 dark:text-zinc-500 mt-0.5">Verifica detalladamente el reporte antes de acreditar</p>
+                </div>
               </div>
               <button
                 onClick={() => setIsViewerOpen(false)}
-                className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+                className="p-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-zinc-450 hover:text-zinc-750 dark:hover:text-zinc-250 transition-all active:scale-95"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Contenido (Imagen) */}
-            <div className="flex-1 p-4 bg-zinc-950/90 flex items-center justify-center min-h-[300px] relative w-full aspect-[4/3] max-h-[50vh] overflow-hidden">
-              <div className="relative w-full h-full rounded-lg overflow-hidden border border-zinc-800/80">
-                <Image
-                  src={selectedRecarga.captura_url}
-                  alt={`Comprobante de referencia ${selectedRecarga.referencia}`}
-                  fill
-                  className="object-contain p-2"
-                  sizes="(max-width: 768px) 100vw, 500px"
-                />
+            {/* Contenido del Modal (Scrollable) */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-5">
+              
+              {/* Contenedor del Comprobante (Imagen o Fallback Digital) */}
+              <div className="relative w-full h-[260px] bg-zinc-950/5 dark:bg-zinc-950/40 border border-zinc-200/60 dark:border-zinc-800/80 rounded-2xl overflow-hidden flex items-center justify-center group shadow-inner">
+                {!imageError ? (
+                  <>
+                    <Image
+                      src={selectedRecarga.captura_url}
+                      alt={`Comprobante de referencia ${selectedRecarga.referencia}`}
+                      fill
+                      className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.02]"
+                      sizes="(max-width: 768px) 100vw, 450px"
+                      onError={() => setImageError(true)}
+                    />
+                    {/* Botón Flotante para Abrir en Nueva Pestaña */}
+                    <a
+                      href={selectedRecarga.captura_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-3 right-3 px-3 py-1.5 bg-zinc-950/80 hover:bg-zinc-950 text-white rounded-xl backdrop-blur-md shadow border border-zinc-800/50 transition-all active:scale-95 opacity-0 group-hover:opacity-100 duration-200 flex items-center gap-1.5 text-[11px] font-bold"
+                      title="Abrir en pestaña nueva"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      <span>Ver original</span>
+                    </a>
+                  </>
+                ) : (
+                  /* Fallback de Boleto/Ticket Digital */
+                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-zinc-50 to-zinc-100/50 dark:from-zinc-900/60 dark:to-zinc-950/40 relative overflow-hidden text-left">
+                    {/* Marca de agua decorativa */}
+                    <FileText className="absolute -right-8 -bottom-8 h-36 w-36 text-zinc-200/30 dark:text-zinc-800/10 pointer-events-none" />
+                    
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/50 dark:border-amber-900/30 flex items-center justify-center text-amber-500 shrink-0">
+                        <ImageOff className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold text-amber-600 dark:text-amber-400">Captura no disponible</span>
+                        <p className="text-[10px] text-zinc-450 dark:text-zinc-500 mt-0.5">La imagen del comprobante no pudo cargarse o no está disponible en este servidor.</p>
+                      </div>
+                    </div>
+
+                    <div className="my-auto py-4 border-y border-dashed border-zinc-200/80 dark:border-zinc-800/80">
+                      <span className="text-[10px] uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Verificación de Transacción</span>
+                      <div className="mt-2.5 space-y-1.5 text-xs font-medium text-zinc-650 dark:text-zinc-400">
+                        <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Referencia de Pago:</span><span className="font-mono text-zinc-850 dark:text-zinc-150 font-bold">{selectedRecarga.referencia}</span></div>
+                        <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Monto Reportado:</span><span className="text-zinc-850 dark:text-zinc-150 font-bold">${Number(selectedRecarga.montousd).toFixed(2)} USD</span></div>
+                        <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Paquete Adquirido:</span><span className="text-indigo-600 dark:text-indigo-400 font-black">{selectedRecarga.paquete} Créditos</span></div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-center text-[10px] text-zinc-400 dark:text-zinc-500">
+                      <span>ConectaPro Digital Voucher</span>
+                      <span className="font-mono">{new Date(selectedRecarga.createdat).toLocaleString('es-VE')}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Grid de Detalles Administrativos */}
+              <div className="bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-150 dark:border-zinc-850 rounded-2xl p-5 text-left space-y-4">
+                <h4 className="text-xs uppercase font-bold text-zinc-400 dark:text-zinc-500 tracking-wider">Detalles de la Transacción</h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Profesional */}
+                  <div className="flex gap-2.5 min-w-0">
+                    <div className="h-8 w-8 rounded-xl bg-zinc-100 dark:bg-zinc-850 border border-zinc-250/60 dark:border-zinc-800 flex items-center justify-center text-zinc-500 shrink-0">
+                      <User className="h-4 w-4" />
+                    </div>
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[10px] text-zinc-450 dark:text-zinc-500">Profesional</span>
+                      <span className="text-xs font-black text-zinc-800 dark:text-zinc-200 truncate" title={selectedRecarga.usuarios?.nombre}>
+                        {selectedRecarga.usuarios?.nombre}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate" title={selectedRecarga.usuarios?.email}>
+                        {selectedRecarga.usuarios?.email}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Método de Pago */}
+                  <div className="flex gap-2.5">
+                    <div className="h-8 w-8 rounded-xl bg-zinc-100 dark:bg-zinc-850 border border-zinc-250/60 dark:border-zinc-800 flex items-center justify-center text-zinc-500 shrink-0">
+                      <CreditCard className="h-4 w-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-zinc-450 dark:text-zinc-500">Método de Pago</span>
+                      <div className="mt-0.5">
+                        {selectedRecarga.metodopago === 'pagomovil' && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+                            Pago Móvil
+                          </span>
+                        )}
+                        {selectedRecarga.metodopago === 'usdt' && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
+                            USDT (Tether)
+                          </span>
+                        )}
+                        {selectedRecarga.metodopago !== 'pagomovil' && selectedRecarga.metodopago !== 'usdt' && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black bg-purple-50 text-purple-700 border border-purple-200 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-900/30">
+                            {formatMetodo(selectedRecarga.metodopago)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Referencia */}
+                  <div className="flex gap-2.5 min-w-0">
+                    <div className="h-8 w-8 rounded-xl bg-zinc-100 dark:bg-zinc-850 border border-zinc-250/60 dark:border-zinc-800 flex items-center justify-center text-zinc-500 shrink-0">
+                      <FileText className="h-4 w-4" />
+                    </div>
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="text-[10px] text-zinc-450 dark:text-zinc-500">Referencia</span>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="text-xs font-mono font-bold text-zinc-800 dark:text-zinc-200 truncate">{selectedRecarga.referencia}</span>
+                        <button
+                          onClick={() => handleCopyRef(selectedRecarga.referencia)}
+                          className="p-1 hover:bg-zinc-150 dark:hover:bg-zinc-800 text-zinc-400 hover:text-zinc-650 dark:hover:text-zinc-300 rounded-lg transition-colors shrink-0"
+                          title="Copiar Referencia"
+                        >
+                          {copiedRef ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Fecha de Envío */}
+                  <div className="flex gap-2.5">
+                    <div className="h-8 w-8 rounded-xl bg-zinc-100 dark:bg-zinc-850 border border-zinc-250/60 dark:border-zinc-800 flex items-center justify-center text-zinc-500 shrink-0">
+                      <Clock className="h-4 w-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-zinc-450 dark:text-zinc-500">Fecha de Reporte</span>
+                      <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-255 mt-0.5">
+                        {new Date(selectedRecarga.createdat).toLocaleString('es-VE', { dateStyle: 'short', timeStyle: 'short' })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Footer con Acciones */}
-            <div className="px-5 py-4 border-t border-zinc-200/50 dark:border-zinc-800/50 flex justify-between items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-6 py-4 border-t border-zinc-150 dark:border-zinc-800/60 flex justify-between items-center gap-3 bg-zinc-50/50 dark:bg-zinc-950/20">
               <div className="text-left">
-                <span className="text-xs uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Monto del Paquete</span>
-                <p className="text-sm font-black text-indigo-600 dark:text-indigo-400">
-                  {selectedRecarga.paquete} Créditos (${Number(selectedRecarga.montousd).toFixed(2)} USD)
+                <span className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-550 tracking-wider">Acreditar Paquete</span>
+                <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 mt-0.5">
+                  +{selectedRecarga.paquete} Créditos
+                  <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500 ml-1.5">
+                    (${Number(selectedRecarga.montousd).toFixed(2)} USD)
+                  </span>
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <button
                   onClick={() => {
                     setIsViewerOpen(false);
                     setConfirmAction({ id: selectedRecarga.id, type: 'rechazar' });
                   }}
-                  className="px-3.5 py-2 border border-rose-200 dark:border-rose-900/30 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-xl text-xs font-bold transition-all active:scale-95"
+                  className="px-4 py-2 border border-rose-200 dark:border-rose-900/40 text-rose-600 dark:text-rose-455 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-xl text-xs font-bold transition-all active:scale-95"
                 >
                   Rechazar
                 </button>
@@ -257,9 +404,10 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                     setIsViewerOpen(false);
                     setConfirmAction({ id: selectedRecarga.id, type: 'aprobar' });
                   }}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-500/10 transition-all active:scale-95"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 transition-all active:scale-95 flex items-center gap-1"
                 >
-                  Aprobar Créditos
+                  <Check className="h-3.5 w-3.5" />
+                  <span>Aprobar</span>
                 </button>
               </div>
             </div>
