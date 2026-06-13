@@ -141,22 +141,15 @@ export default function UsuarioDrawer({
                     {selectedUser.nombre.substring(0, 2).toUpperCase()}
                   </div>
                 )}
-                
-                {/* Status Indicator Dot */}
-                <span className="absolute bottom-0 right-0 block h-5 w-5 rounded-full border-2 border-white dark:border-zinc-950 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center">
-                  {selectedUser.estado === 'activo' ? (
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                  ) : (
-                    <span className="h-2 w-2 rounded-full bg-rose-500"></span>
-                  )}
-                </span>
               </div>
 
               <div>
-                <h3 className="text-lg font-black text-zinc-900 dark:text-zinc-100">{selectedUser.nombre}</h3>
+                <h3 className="text-lg font-black text-zinc-900 dark:text-zinc-100 flex items-center justify-center gap-1.5">
+                  {selectedUser.nombre}
+                  <span className={`inline-block h-2.5 w-2.5 rounded-full shrink-0 ${
+                    selectedUser.estado === 'activo' ? 'bg-emerald-500' : 'bg-rose-500'
+                  }`} title={selectedUser.estado === 'activo' ? 'Usuario Activo' : 'Usuario Suspendido'} />
+                </h3>
                 <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">{selectedUser.email}</p>
               </div>
               
