@@ -247,7 +247,7 @@ export default function UsuariosTable({
               Buscar Usuario
             </label>
             <div className="relative w-full">
-              <Search className="absolute left-[24px] top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
               <input
                 type="text"
                 value={searchQuery}
@@ -256,7 +256,7 @@ export default function UsuariosTable({
                   setCurrentPage(1);
                 }}
                 placeholder="Buscar por nombre o correo..."
-                className="w-full pl-[56px] pr-9 py-2.5 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full pl-9 pr-9 py-2.5 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               />
               {searchQuery && (
                 <button 
