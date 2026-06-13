@@ -307,5 +307,14 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Sincronización:** Se envía la ciudad en el payload de registro. El trigger de base de datos `handle_new_user()` guarda este dato en la columna `ciudad` de la tabla `public.usuarios` para clientes y profesionales, manteniendo compatibilidad de esquema.
 * **Validación realizada:** Verificación estática con `npx tsc --noEmit` y `npx eslint src/app/auth/registro/page.tsx` con 0 errores y advertencias.
 
+### [style] Rediseño Estético y de Conversión en la Sección Final (Bottom CTA)
+* **Decisión:** Rediseñar la sección final (Bottom CTA) del Home para hacerla visualmente impactante (estilo glassmorphic con rejilla tecnológica e iconos grandes), cambiar el copy a "generar ingresos" con un gradiente moderno y estructurar los beneficios en un listado scannable.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
+* **Detalles:**
+  - **Estética & Copy:** Modificada la frase original de "ganar dinero" a "generar ingresos" e integrada con un gradiente translúcido de colores. Añadidos efectos de halo de luz e iluminación de fondo y un patrón tecnológico de puntos radiales.
+  - **Estructura:** Implementado estilo glassmorphic de cristal en ambas tarjetas de rol (`bg-white/[0.03] backdrop-blur-xl border-white/10 hover:border-indigo-500/30 shadow-2xl`), iconos Lucide de gran formato en burbujas degradadas (`Users` y `Briefcase`), y listas con checks para resumir los beneficios clave en lugar de texto corrido.
+* **Validación realizada:** Compilación y visualización limpia comprobando la correcta renderización sintáctica de las etiquetas JSX de Next.js y Tailwind CSS.
+
+
 
 

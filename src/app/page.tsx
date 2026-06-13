@@ -830,50 +830,94 @@ export default function Home() {
         </section>
 
         {/* Bottom CTA Block */}
-        <section className="py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900 via-indigo-950 to-zinc-950 pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[140px] pointer-events-none" />
+        <section className="py-24 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-zinc-950 to-indigo-950 pointer-events-none" />
+          {/* Dot Grid Background */}
+          <div className="absolute inset-0 pointer-events-none opacity-10 bg-[radial-gradient(#e4e4e7_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_at_center,white,transparent_80%)]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-indigo-500/15 rounded-full blur-[140px] pointer-events-none" />
           
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-8">
-            <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight">
-              ¿Listo para comenzar a resolver o ganar dinero?
-            </h2>
-            <p className="text-sm sm:text-base text-indigo-200 max-w-xl mx-auto leading-relaxed">
-              Únete gratis a la comunidad técnica más grande y confiable de Venezuela hoy mismo.
-            </p>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-10">
+            <div className="space-y-4">
+              <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight">
+                ¿Listo para comenzar a resolver o{' '}
+                <span className="bg-gradient-to-r from-indigo-400 via-indigo-300 to-rose-400 bg-clip-text text-transparent">
+                  generar ingresos
+                </span>
+                ?
+              </h2>
+              <p className="text-sm sm:text-base text-indigo-200 max-w-xl mx-auto leading-relaxed">
+                Únete gratis a la comunidad técnica más grande y confiable de Venezuela hoy mismo.
+              </p>
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto pt-4">
               {/* Opción Cliente */}
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-left flex flex-col justify-between space-y-6">
-                <div>
-                  <h4 className="text-base font-bold text-white">¿Necesitas ayuda en casa?</h4>
-                  <p className="text-xs text-indigo-200 mt-1.5 leading-relaxed">
-                    Publica solicitudes de plomería, enfermería o electricidad y encuentra al técnico perfecto sin comisiones intermedias.
-                  </p>
+              <div className="group bg-white/[0.03] hover:bg-white/[0.06] backdrop-blur-xl border border-white/10 hover:border-indigo-500/30 p-8 rounded-3xl text-left flex flex-col justify-between space-y-8 shadow-2xl transition-all duration-300">
+                <div className="space-y-6">
+                  {/* Icon */}
+                  <div className="p-3.5 bg-indigo-500/10 text-indigo-300 rounded-2xl w-fit border border-indigo-500/20 shadow-inner">
+                    <Users className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-lg font-bold text-white">¿Necesitas ayuda en casa?</h4>
+                    <p className="text-xs text-indigo-200/80 leading-relaxed">
+                      Encuentra al profesional ideal para solucionar fallas en minutos sin pagar de más.
+                    </p>
+                  </div>
+                  {/* Checklist */}
+                  <ul className="space-y-2.5 text-xs text-indigo-200/90 font-medium pt-2">
+                    <li className="flex items-center gap-2">
+                      <span className="text-indigo-400 font-bold">✓</span> Publica solicitudes 100% gratis
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-indigo-400 font-bold">✓</span> Trato directo (sin comisiones intermedias)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-indigo-400 font-bold">✓</span> Perfiles verificados y calificados
+                    </li>
+                  </ul>
                 </div>
                 <Link
                   href="/auth/registro"
-                  className="flex items-center justify-center gap-1.5 w-full rounded-xl bg-white hover:bg-zinc-100 text-indigo-950 py-2.5 text-xs font-bold transition-all active:scale-98"
+                  className="flex items-center justify-center gap-1.5 w-full rounded-xl bg-white hover:bg-zinc-100 text-indigo-950 py-3 text-xs font-bold transition-all active:scale-98 shadow-md hover:shadow-lg group-hover:shadow-indigo-500/5"
                 >
                   Publicar un Servicio
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
 
               {/* Opción Profesional */}
-              <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-left flex flex-col justify-between space-y-6">
-                <div>
-                  <h4 className="text-base font-bold text-white">¿Ofreces tus servicios?</h4>
-                  <p className="text-xs text-indigo-200 mt-1.5 leading-relaxed">
-                    Postúlate a ofertas activas de tu área, acuerda tus propios precios directamente y quédate con el 100% de tus ingresos.
-                  </p>
+              <div className="group bg-white/[0.03] hover:bg-white/[0.06] backdrop-blur-xl border border-white/10 hover:border-indigo-500/30 p-8 rounded-3xl text-left flex flex-col justify-between space-y-8 shadow-2xl transition-all duration-300">
+                <div className="space-y-6">
+                  {/* Icon */}
+                  <div className="p-3.5 bg-indigo-500/10 text-indigo-300 rounded-2xl w-fit border border-indigo-500/20 shadow-inner">
+                    <Briefcase className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-lg font-bold text-white">¿Ofreces tus servicios?</h4>
+                    <p className="text-xs text-indigo-200/80 leading-relaxed">
+                      Postúlate a ofertas de trabajo en tu ciudad y expande tu cartera de clientes de inmediato.
+                    </p>
+                  </div>
+                  {/* Checklist */}
+                  <ul className="space-y-2.5 text-xs text-indigo-200/90 font-medium pt-2">
+                    <li className="flex items-center gap-2">
+                      <span className="text-indigo-400 font-bold">✓</span> Quédate con el 100% de tus ingresos
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-indigo-400 font-bold">✓</span> Abre chats de contacto por solo 1 crédito
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-indigo-400 font-bold">✓</span> Recargas inmediatas y soporte técnico
+                    </li>
+                  </ul>
                 </div>
                 <Link
                   href="/auth/registro"
-                  className="flex items-center justify-center gap-1.5 w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 text-xs font-bold transition-all border border-indigo-500/25 active:scale-98"
+                  className="flex items-center justify-center gap-1.5 w-full rounded-xl bg-indigo-650 hover:bg-indigo-600 text-white py-3 text-xs font-bold transition-all border border-indigo-500/25 active:scale-98 shadow-md hover:shadow-indigo-500/20 hover:shadow-lg group-hover:shadow-indigo-500/10"
                 >
                   Registrarme como Experto
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </div>
