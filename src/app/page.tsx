@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import {
   ShieldCheck,
   MessageSquare,
   Award,
   ArrowRight,
-  Sparkles,
-  CheckCircle2,
   ChevronDown,
   HelpCircle,
   Zap,
@@ -19,6 +18,10 @@ import {
   Briefcase
 } from 'lucide-react';
 import ProfesionesSection from '@/components/shared/ProfesionesSection';
+
+const Home3DCanvas = dynamic(() => import('@/components/shared/Home3DCanvas'), {
+  ssr: false,
+});
 
 export default function Home() {
   const { usuario, rol, initialized } = useAuth();
@@ -44,6 +47,33 @@ export default function Home() {
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
+
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const heroSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = heroSectionRef.current;
+      if (!heroSection) return;
+
+      const rect = heroSection.getBoundingClientRect();
+      const totalHeight = heroSection.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // El scrollable es la altura total de la sección menos el alto de la pantalla visible
+      const scrollable = totalHeight - windowHeight;
+      const progress = scrollable <= 0
+        ? 0
+        : Math.min(1, Math.max(0, -rect.top / scrollable));
+
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Si ya se está verificando la sesión y hay usuario, se redirige.
   if (initialized && usuario) {
@@ -106,101 +136,207 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section con 3D Scrollytelling */}
       <main className="flex-1">
-        <section className="max-w-5xl mx-auto px-4 pt-20 pb-16 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
-          {/* Dot Grid Background */}
-          <div className="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(#e4e4e7_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#27272a_1.5px,transparent_1.5px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_at_center,white,transparent_80%)] opacity-70" />
+        <section ref={heroSectionRef} className="relative w-full h-[280vh] bg-zinc-950 text-white overflow-hidden">
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+            {/* Lienzo WebGL 3D (Ocupa todo el fondo/lado derecho) */}
+            <div className="absolute inset-0 z-0 opacity-60 dark:opacity-85 md:w-3/5 md:left-2/5 h-full">
+              <Home3DCanvas progress={scrollProgress} mode={activeRole} />
+            </div>
 
-          {/* Floating Professional Card (Left) */}
-          <div className="absolute left-[-10%] top-[15%] hidden xl:flex flex-col p-4 w-56 rounded-2xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl backdrop-blur-md animate-float pointer-events-none select-none">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-indigo-500 to-rose-500 flex items-center justify-center text-white text-sm font-black shadow-inner">
-                CM
+            {/* Degradados de ambiente */}
+            <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/75 to-transparent z-5 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(99,102,241,0.06)_0%,transparent_50%)] pointer-events-none" />
+
+            {/* HUD Indicators (Elementos Estilo Stark/Iron-Man) */}
+            <div className="absolute top-24 left-6 md:left-10 z-10 flex items-center gap-2 pointer-events-none">
+              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-ping" />
+              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400">
+                TELEMETRY LINK // LIVE // MODE: {activeRole.toUpperCase()}
+              </span>
+            </div>
+
+            <div className="absolute top-24 right-6 md:right-10 z-10 flex items-center gap-2 pointer-events-none text-right">
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400">
+                SCROLL PROGRESS:
+              </span>
+              <span className="font-mono text-[9px] text-indigo-400 font-bold">
+                {Math.round(scrollProgress * 100)}%
+              </span>
+            </div>
+
+            {/* Barra de progreso inferior del Hero */}
+            <div className="absolute bottom-16 inset-x-6 md:inset-x-10 z-10">
+              <div className="h-[2px] w-full bg-white/10 relative">
+                <div 
+                  className="h-full bg-indigo-500 transition-all duration-75 origin-left"
+                  style={{ transform: `scaleX(${scrollProgress})` }}
+                />
               </div>
-              <div className="flex-1 min-w-0 text-left">
-                <p className="text-sm font-bold text-zinc-900 dark:text-white truncate">Carlos Medina</p>
-                <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Plomería General</p>
+              <div className="flex justify-between items-center mt-2 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.25em] text-zinc-500 pointer-events-none">
+                <span>CONECTAPRO V1.0</span>
+                <span>SYSTEM STATUS: OPERATIONAL</span>
+                <span>SCROLL &darr; DISCOVER</span>
               </div>
             </div>
-            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-amber-500 text-xs">★</span>
-                ))}
+
+            {/* Contenido Izquierdo (Sticky e Interactivo) */}
+            <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full h-full flex flex-col justify-center text-left">
+              <div className="max-w-xl space-y-6">
+                {/* Selector de Rol Dinámico */}
+                <div className="inline-flex rounded-xl bg-white/5 border border-white/10 p-1 backdrop-blur-md">
+                  <button
+                    type="button"
+                    onClick={() => setActiveRole('cliente')}
+                    className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                      activeRole === 'cliente' 
+                        ? 'bg-indigo-650 text-white shadow-md' 
+                        : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    Contratar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveRole('profesional')}
+                    className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                      activeRole === 'profesional' 
+                        ? 'bg-rose-650 text-white shadow-md' 
+                        : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    Ser Contratado
+                  </button>
+                </div>
+
+                {/* Copys e Interacciones Dinámicas */}
+                <div className="space-y-4">
+                  {activeRole === 'cliente' ? (
+                    <>
+                      <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-none text-white transition-all duration-300">
+                        Consigue talento de confianza{' '}
+                        <span className="bg-gradient-to-r from-indigo-500 to-cyan-400 bg-clip-text text-transparent">
+                          al instante
+                        </span>
+                      </h1>
+                      <p className="text-xs md:text-sm text-zinc-400 leading-relaxed max-w-md transition-all duration-300">
+                        Publica gratis y contrata expertos verificados en plomería, electricidad y enfermería. Todo el trato es directo, 100% libre de comisiones de intermediación.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-none text-white transition-all duration-300">
+                        Multiplica tus ingresos{' '}
+                        <span className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
+                          sin pagar comisiones
+                        </span>
+                      </h1>
+                      <p className="text-xs md:text-sm text-zinc-400 leading-relaxed max-w-md transition-all duration-300">
+                        Postúlate a trabajos reales usando créditos económicos desde tu billetera digital prepago. Conserva el 100% de lo que facturas y contacta directamente.
+                      </p>
+                    </>
+                  )}
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex gap-4 pt-4">
+                  <Link
+                    href="/auth/registro"
+                    className={`flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-xs font-bold text-white shadow-lg transition-all active:scale-95 group ${
+                      activeRole === 'cliente' 
+                        ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-600/15 hover:shadow-indigo-600/25' 
+                        : 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/15 hover:shadow-rose-600/25'
+                    }`}
+                  >
+                    {activeRole === 'cliente' ? 'Comenzar Proyecto' : 'Ofrecer Servicios'}
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    href="/auth/login"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm px-6 py-3 text-xs font-bold text-white transition-all active:scale-95"
+                  >
+                    Iniciar Sesión
+                  </Link>
+                </div>
               </div>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
-                <ShieldCheck className="h-3 w-3" />
-                Verificado
-              </span>
-            </div>
-          </div>
-
-          {/* Floating Order Card (Right) */}
-          <div className="absolute right-[-10%] top-[25%] hidden xl:flex flex-col p-4 w-56 rounded-2xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl backdrop-blur-md animate-float-delayed pointer-events-none select-none">
-            <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/30">
-                <Zap className="h-3 w-3" />
-                Solicitud Activa
-              </span>
-              <span className="text-xs font-semibold text-zinc-400">Hace 5m</span>
-            </div>
-            <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-white text-left">Instalación Eléctrica</p>
-            <p className="text-xs font-normal text-zinc-500 dark:text-zinc-400 text-left">Caracas, Chacao</p>
-            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5 text-xs">
-              <span className="font-semibold text-zinc-400">Trato</span>
-              <span className="font-bold text-indigo-600 dark:text-indigo-400">Directo sin Comisión</span>
-            </div>
-          </div>
-
-          <div className="space-y-6 max-w-3xl">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-50/80 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 border border-indigo-100/50 dark:border-indigo-900/30 animate-pulse">
-              <Sparkles className="h-3.5 w-3.5" />
-              El Marketplace de servicios líder de Venezuela
-            </span>
-            
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight sm:leading-none text-zinc-900 dark:text-white">
-              Talento profesional de confianza{' '}
-              <span className="bg-gradient-to-r from-indigo-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
-                sin intermediarios ni comisiones
-              </span>
-            </h1>
-            
-            <p className="text-sm sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              Consigue expertos verificados en plomería, enfermería y electricidad en minutos. Acuerda y paga directamente sin tarifas ocultas.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4.5 justify-center pt-6">
-              <Link
-                href="/auth/registro"
-                className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/15 hover:bg-indigo-500 hover:shadow-indigo-600/25 transition-all active:scale-95 group"
-              >
-                Comenzar Ahora
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/auth/login"
-                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-sm px-7 py-3.5 text-sm font-bold hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all active:scale-95"
-              >
-                Tengo una Cuenta
-              </Link>
             </div>
 
-            {/* Quick Metrics */}
-            <div className="flex flex-wrap items-center justify-center gap-y-3 gap-x-8 pt-12 text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-450">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                +10,000 Trabajos Resueltos
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                Reputación e Historial Transparente
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                Paga Directo al Profesional
-              </span>
+            {/* Cartas HUD Flotantes (Aparecen según el scrollProgress %) */}
+            {/* CARTA 1: 0.15 a 0.35 */}
+            <div 
+              className={`absolute top-[22%] right-6 md:right-12 z-20 w-80 bg-zinc-900/80 border border-indigo-500/20 rounded-xl p-5 backdrop-blur-md transition-all duration-300 pointer-events-none md:pointer-events-auto ${
+                scrollProgress >= 0.12 && scrollProgress <= 0.38 
+                  ? 'translate-y-0 opacity-100 pointer-events-auto shadow-xl shadow-indigo-950/20' 
+                  : 'translate-y-4 opacity-0'
+              }`}
+            >
+              <div className="flex items-center justify-between border-b border-indigo-500/10 pb-2 mb-3">
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-indigo-400">TELEMETRÍA 01 / COMMS</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              </div>
+              <h4 className="text-xs font-bold text-white uppercase tracking-wide">Chat Seguro e Anti-Puenteo</h4>
+              <p className="text-[10px] text-zinc-400 mt-2 leading-relaxed">
+                Nuestra IA escanea y detecta patrones de puenteo de datos de contacto de forma inmediata, garantizando que el acuerdo y la mensajería se mantengan transparentes.
+              </p>
+              <div className="mt-3 flex justify-between items-center text-[8px] font-mono text-zinc-500">
+                <span>FILTER STATUS: ACTIVE</span>
+                <span>PING 14MS</span>
+              </div>
             </div>
+
+            {/* CARTA 2: 0.45 a 0.65 */}
+            <div 
+              className={`absolute top-1/2 -translate-y-1/2 right-6 md:right-12 z-20 w-80 bg-zinc-900/80 border ${
+                activeRole === 'cliente' ? 'border-indigo-500/20' : 'border-rose-500/20'
+              } rounded-xl p-5 backdrop-blur-md transition-all duration-300 pointer-events-none md:pointer-events-auto ${
+                scrollProgress >= 0.42 && scrollProgress <= 0.68 
+                  ? 'translate-y-0 opacity-100 pointer-events-auto shadow-xl' 
+                  : 'translate-y-4 opacity-0'
+              }`}
+            >
+              <div className={`flex items-center justify-between border-b ${activeRole === 'cliente' ? 'border-indigo-500/10' : 'border-rose-500/10'} pb-2 mb-3`}>
+                <span className={`font-mono text-[9px] uppercase tracking-[0.2em] ${activeRole === 'cliente' ? 'text-indigo-400' : 'text-rose-400'}`}>
+                  TELEMETRÍA 02 / WALLET
+                </span>
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              </div>
+              <h4 className="text-xs font-bold text-white uppercase tracking-wide">Wallet Prepago Integrada</h4>
+              <p className="text-[10px] text-zinc-400 mt-2 leading-relaxed">
+                Los profesionales controlan su presupuesto mediante créditos prepagos transparentes. Descuentos progresivos del 10% y 20% y validación manual de comprobantes en tiempo real.
+              </p>
+              <div className="mt-3 flex justify-between items-center text-[8px] font-mono text-zinc-500">
+                <span>TX STATE: STABLE</span>
+                <span>FEE: 0%</span>
+              </div>
+            </div>
+
+            {/* CARTA 3: 0.75 a 0.95 */}
+            <div 
+              className={`absolute bottom-24 right-6 md:bottom-28 md:right-12 z-20 w-80 bg-zinc-900/80 border ${
+                activeRole === 'cliente' ? 'border-indigo-500/20' : 'border-rose-500/20'
+              } rounded-xl p-5 backdrop-blur-md transition-all duration-300 pointer-events-none md:pointer-events-auto ${
+                scrollProgress >= 0.72 && scrollProgress <= 0.98 
+                  ? 'translate-y-0 opacity-100 pointer-events-auto shadow-xl' 
+                  : 'translate-y-4 opacity-0'
+              }`}
+            >
+              <div className={`flex items-center justify-between border-b ${activeRole === 'cliente' ? 'border-indigo-500/10' : 'border-rose-500/10'} pb-2 mb-3`}>
+                <span className={`font-mono text-[9px] uppercase tracking-[0.2em] ${activeRole === 'cliente' ? 'text-indigo-400' : 'text-rose-400'}`}>
+                  TELEMETRÍA 03 / TRUST
+                </span>
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              </div>
+              <h4 className="text-xs font-bold text-white uppercase tracking-wide">Reputación Impecable e Inapelable</h4>
+              <p className="text-[10px] text-zinc-400 mt-2 leading-relaxed">
+                Triggers de base de datos recalculan automáticamente la reputación de cada profesional. Calificaciones cruzadas transparentes garantizan la calidad del ecosistema ConectaPro.
+              </p>
+              <div className="mt-3 flex justify-between items-center text-[8px] font-mono text-zinc-500">
+                <span>REPUTATION SYNCED</span>
+                <span>RATING PRO: ★ 4.9</span>
+              </div>
+            </div>
+
           </div>
         </section>
 
