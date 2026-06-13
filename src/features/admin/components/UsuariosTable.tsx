@@ -236,9 +236,9 @@ export default function UsuariosTable({
 
       {/* 2. Barra de Filtros y Búsqueda */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end w-full">
           {/* Búsqueda */}
-          <div className="md:col-span-2 flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1.5">
             <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
               Buscar Usuario
             </label>
