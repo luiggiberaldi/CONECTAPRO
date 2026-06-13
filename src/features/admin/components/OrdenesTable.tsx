@@ -265,10 +265,10 @@ export default function OrdenesTable({
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[920px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <table className="w-full table-fixed min-w-[850px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-4 py-4 w-[20%]">
+              <th scope="col" className="px-4 py-4 w-[23%]">
                 <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Orden / Categoría</span>
               </th>
               <th scope="col" className="px-4 py-4 w-[18%]">
@@ -277,7 +277,7 @@ export default function OrdenesTable({
               <th scope="col" className="px-4 py-4 w-[18%]">
                 <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesional</span>
               </th>
-              <th scope="col" className="px-2 py-4 w-[13%]">
+              <th scope="col" className="px-2 py-4 w-[14%]">
                 <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
               <th scope="col" className="px-2 py-4 w-[11%]">
@@ -286,7 +286,7 @@ export default function OrdenesTable({
               <th scope="col" className="px-2 py-4 w-[10%]">
                 <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="py-4 w-[10%] text-right" style={{ paddingRight: '32px', paddingLeft: '16px' }}>
+              <th scope="col" className="pr-4 pl-2 py-4 w-[6%] text-right">
               </th>
             </tr>
           </thead>
@@ -404,13 +404,13 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Detalles Acción */}
-                  <td className="py-5 align-middle text-right" style={{ paddingRight: '32px', paddingLeft: '16px' }} onClick={(e) => e.stopPropagation()}>
+                  <td className="pr-4 pl-2 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => setSelectedOrden(orden)}
-                      className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
+                      className="p-1 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
                       title="Ver ficha de orden"
                     >
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-3.5 w-3.5" />
                     </button>
                   </td>
                 </tr>
