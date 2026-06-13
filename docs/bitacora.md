@@ -341,8 +341,18 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Gestión de Usuarios & Órdenes:** Se estandarizaron los focus states y bordes interactivos en los inputs de búsqueda y el CustomSelect. Se agregaron micro-indicadores pulsantes (`animate-ping`) para cuentas de usuarios activas y se escaló el tamaño de la tipografía para todos los badges de estado y categorías para garantizar legibilidad operacional en listas densas.
 * **Validación realizada:** Limpieza de caché, verificación exitosa de tipos con `npx tsc --noEmit` y ESLint sin errores, y compilación final limpia mediante `npm run build`.
 
+## [13 de junio de 2026]
 
-
-
-
-
+### [style] Rediseño del Navbar (Header) siguiendo el modelo de Workana
+* **Decisión:** Rediseñar la barra de navegación para copiar el modelo de Workana, adaptándolo a los roles de ConectaPro con un diseño responsivo y dropdowns de alta calidad visual.
+* **Archivos modificados:**
+  - [Navbar.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/Navbar.tsx)
+* **Detalles:**
+  - **Identidad visual:** Fondo blanco sólido con un borde inferior púrpura de 3px (`border-[#3c2475]`) y soporte para tema oscuro.
+  - **Navegación:** Enlaces reorganizados según el rol del usuario (Búsqueda de profesionales/trabajo, proyectos, wallet/finanzas, reputación).
+  - **Buscador Extensible:** Botón de lupa que despliega un campo de búsqueda animado en un panel flotante.
+  - **Paneles flotantes:** Se agregaron menús desplegables para notificaciones y mensajes con ilustraciones y empty states premium.
+  - **Perfil de Usuario:** Avatar interactivo que despliega una tarjeta de perfil flotante con nombre, correo, rol y botón de logout (Cerrar Sesión).
+  - **Responsividad Móvil:** Menú lateral tipo hamburger que se activa en móviles mostrando todos los links de navegación filtrados por rol.
+  - **Optimización de interacciones:** Detección de clics externos para cerrar automáticamente todos los dropdowns y submenús.
+* **Validación realizada:** Compilación y linting de Next.js exitosos con `npm run build`.
