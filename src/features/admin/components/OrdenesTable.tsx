@@ -266,7 +266,7 @@ export default function OrdenesTable({
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[1150px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <table className="w-full table-fixed min-w-[1000px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
               <th scope="col" className="px-4 py-4 w-[22%]">
@@ -326,8 +326,8 @@ export default function OrdenesTable({
                 >
                   {/* Título & Categoría */}
                   <td className="px-4 py-5 max-w-xs">
-                    <div className="flex flex-col text-left">
-                      <span className="font-black text-zinc-900 dark:text-zinc-150 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" title={orden.titulo}>
+                    <div className="flex flex-col text-left min-w-0">
+                      <span className="block truncate font-black text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" title={orden.titulo}>
                         {orden.titulo}
                       </span>
                       <span className="inline-flex self-start mt-1.5 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-indigo-50/70 border border-indigo-150 text-indigo-650 dark:bg-indigo-950/30 dark:text-indigo-400 dark:border-indigo-900/35">
@@ -338,7 +338,7 @@ export default function OrdenesTable({
 
                   {/* Cliente */}
                   <td className="px-4 py-5">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2.5 min-w-0">
                       {orden.cliente?.avatar_url ? (
                         <img
                           src={orden.cliente.avatar_url}
@@ -351,8 +351,8 @@ export default function OrdenesTable({
                         </div>
                       )}
                       <div className="flex flex-col text-left min-w-0 max-w-[150px]">
-                        <span className="font-bold text-xs truncate text-zinc-800 dark:text-zinc-200">{orden.cliente?.nombre || 'Cliente'}</span>
-                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate leading-normal">{orden.cliente?.email}</span>
+                        <span className="block truncate font-bold text-xs text-zinc-800 dark:text-zinc-200" title={orden.cliente?.nombre}>{orden.cliente?.nombre || 'Cliente'}</span>
+                        <span className="block truncate text-[10px] text-zinc-400 dark:text-zinc-500 leading-normal" title={orden.cliente?.email}>{orden.cliente?.email}</span>
                       </div>
                     </div>
                   </td>
@@ -360,7 +360,7 @@ export default function OrdenesTable({
                   {/* Profesional */}
                   <td className="px-4 py-5">
                     {orden.profesional ? (
-                      <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-2.5 min-w-0">
                         {orden.profesional.avatar_url ? (
                           <img
                             src={orden.profesional.avatar_url}
@@ -373,8 +373,8 @@ export default function OrdenesTable({
                           </div>
                         )}
                         <div className="flex flex-col text-left min-w-0 max-w-[150px]">
-                          <span className="font-bold text-xs truncate text-zinc-800 dark:text-zinc-200">{orden.profesional.nombre}</span>
-                          <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate leading-normal">{orden.profesional.email}</span>
+                          <span className="block truncate font-bold text-xs text-zinc-800 dark:text-zinc-200" title={orden.profesional.nombre}>{orden.profesional.nombre}</span>
+                          <span className="block truncate text-[10px] text-zinc-400 dark:text-zinc-500 leading-normal" title={orden.profesional.email}>{orden.profesional.email}</span>
                         </div>
                       </div>
                     ) : (
@@ -387,9 +387,9 @@ export default function OrdenesTable({
 
                   {/* Ubicación */}
                   <td className="px-4 py-5 font-medium text-zinc-500 dark:text-zinc-400">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 min-w-0">
                       <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
-                      <span className="truncate max-w-[140px] text-xs">
+                      <span className="block truncate max-w-[140px] text-xs" title={`${orden.ciudad}, ${orden.zona}`}>
                         {orden.ciudad}, {orden.zona}
                       </span>
                     </div>

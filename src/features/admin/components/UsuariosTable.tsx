@@ -315,7 +315,7 @@ export default function UsuariosTable({
       {/* 3. Listado Principal (Tabla Rediseñada) */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[1050px] text-left text-xs">
+          <table className="w-full table-fixed min-w-[950px] text-left text-xs">
           <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
               <th scope="col" className="pr-4 py-3.5 w-[28%]" style={{ paddingLeft: '24px' }}>
@@ -410,10 +410,10 @@ export default function UsuariosTable({
                           </div>
                         )}
                         <div className="flex flex-col text-left min-w-0 max-w-[190px] sm:max-w-xs">
-                          <span className="font-bold text-[13px] text-zinc-900 dark:text-zinc-100 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
+                          <span className="block truncate font-bold text-[13px] text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight" title={user.nombre}>
                             {user.nombre}
                           </span>
-                          <span className="text-[11px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5">
+                          <span className="block truncate text-[11px] text-zinc-400 dark:text-zinc-550 mt-0.5" title={user.email}>
                             {user.email}
                           </span>
                         </div>
@@ -427,9 +427,9 @@ export default function UsuariosTable({
 
                     {/* Ciudad */}
                     <td className="px-4 py-3.5 align-middle">
-                      <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                      <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
                         <MapPin className="h-3 w-3 text-zinc-350 dark:text-zinc-550 shrink-0" />
-                        <span className="truncate">
+                        <span className="block truncate" title={user.ciudad || ''}>
                           {user.ciudad || <span className="italic text-zinc-350 dark:text-zinc-600">—</span>}
                         </span>
                       </div>

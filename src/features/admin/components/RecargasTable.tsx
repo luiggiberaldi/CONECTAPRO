@@ -67,7 +67,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
     <div className="space-y-4">
       <div className="bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[1150px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <table className="w-full table-fixed min-w-[1000px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider">
             <tr>
               <th scope="col" className="px-4 py-4 w-[22%]">Profesional</th>
@@ -94,13 +94,13 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
               paginatedRecargas.map((recarga) => (
                 <tr key={recarga.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-950/20 transition-colors">
                   <td className="px-4 py-4 font-medium text-zinc-900 dark:text-zinc-150">
-                    <div className="flex items-center gap-2.5">
-                      <div className="h-7 w-7 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-450 border border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="h-7 w-7 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-450 border border-zinc-200 dark:border-zinc-800 shrink-0">
                         <User className="h-3.5 w-3.5" />
                       </div>
-                      <div className="flex flex-col text-left">
-                        <span className="font-bold text-xs">{recarga.usuarios?.nombre || 'Profesional'}</span>
-                        <span className="text-xs text-zinc-400 dark:text-zinc-500">{recarga.usuarios?.email}</span>
+                      <div className="flex flex-col text-left min-w-0 max-w-[150px]">
+                        <span className="block truncate font-bold text-xs" title={recarga.usuarios?.nombre || 'Profesional'}>{recarga.usuarios?.nombre || 'Profesional'}</span>
+                        <span className="block truncate text-xs text-zinc-400 dark:text-zinc-500" title={recarga.usuarios?.email}>{recarga.usuarios?.email}</span>
                       </div>
                     </div>
                   </td>
@@ -128,7 +128,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                     )}
                   </td>
                   <td className="px-4 py-4 font-mono font-medium text-xs text-zinc-500 dark:text-zinc-400">
-                    {recarga.referencia}
+                    <span className="block truncate" title={recarga.referencia}>{recarga.referencia}</span>
                   </td>
                   <td className="px-4 py-4 text-zinc-400">
                     <span className="inline-flex items-center gap-1 font-semibold">
