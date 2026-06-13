@@ -69,14 +69,18 @@ export default function UsuariosTable({
   const getStatusBadge = (estado: string) => {
     if (estado === 'suspendido') {
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30">
-          <ShieldAlert className="h-3 w-3" />
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30">
+          <ShieldAlert className="h-3.5 w-3.5" />
           Suspendido
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-550"></span>
+        </span>
         Activo
       </span>
     );
@@ -85,11 +89,11 @@ export default function UsuariosTable({
   const getRoleBadge = (rol: string) => {
     switch (rol) {
       case 'admin':
-        return 'bg-rose-100 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-450 dark:border-rose-900/30';
+        return 'bg-rose-50 text-rose-700 border-rose-250 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/35';
       case 'profesional':
-        return 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-450 dark:border-emerald-900/30';
+        return 'bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/35';
       default:
-        return 'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-950/30 dark:text-indigo-450 dark:border-indigo-900/30';
+        return 'bg-indigo-50 text-indigo-700 border-indigo-250 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-900/35';
     }
   };
 
@@ -108,7 +112,7 @@ export default function UsuariosTable({
               setCurrentPage(1);
             }}
             placeholder="Buscar por nombre o correo..."
-            className="w-full pl-9 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 rounded-xl text-xs focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-700/80 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
           />
         </div>
 
@@ -168,7 +172,7 @@ export default function UsuariosTable({
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded text-[8px] font-bold border capitalize ${getRoleBadge(user.rol)}`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-black border capitalize tracking-wider ${getRoleBadge(user.rol)}`}>
                         {user.rol}
                       </span>
                     </td>
@@ -202,7 +206,7 @@ export default function UsuariosTable({
                           <button
                             onClick={() => setConfirmAction({ id: user.id, action: 'suspender', nombre: user.nombre })}
                             disabled={loadingAction === user.id}
-                            className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg border border-rose-200 dark:border-rose-950/30 text-rose-650 hover:bg-rose-50 dark:hover:bg-rose-950/20 font-semibold transition-all active:scale-95"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-rose-200 dark:border-rose-950/30 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 hover:text-rose-700 dark:hover:text-rose-300 font-bold transition-all active:scale-95"
                           >
                             <UserX className="h-3 w-3" />
                             Suspender
@@ -211,7 +215,7 @@ export default function UsuariosTable({
                           <button
                             onClick={() => setConfirmAction({ id: user.id, action: 'activar', nombre: user.nombre })}
                             disabled={loadingAction === user.id}
-                            className="inline-flex items-center gap-1.5 px-2 py-1 rounded-lg border border-emerald-200 dark:border-emerald-950/30 text-emerald-650 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 font-semibold transition-all active:scale-95"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-950/30 text-emerald-600 dark:text-emerald-450 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 hover:text-emerald-700 dark:hover:text-emerald-300 font-bold transition-all active:scale-95"
                           >
                             <UserCheck className="h-3 w-3" />
                             Reactivar

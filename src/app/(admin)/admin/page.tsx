@@ -89,35 +89,35 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Sección Informativa / Guías Rápidas */}
-      <div className="bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-950 dark:from-zinc-900 dark:via-zinc-900/60 dark:to-zinc-950/40 text-white p-6 rounded-2xl border border-zinc-850 shadow-md">
-        <div className="flex items-center gap-2 text-rose-400 mb-3">
-          <Sparkles className="h-5 w-5" />
+      <div className="bg-gradient-to-br from-indigo-950/20 via-zinc-900/90 to-zinc-950 dark:from-indigo-950/10 dark:via-zinc-900/70 dark:to-zinc-950/40 text-white p-6 rounded-2xl border border-zinc-800/40 dark:border-zinc-850/80 shadow-md shadow-indigo-950/5">
+        <div className="flex items-center gap-2 text-indigo-400 mb-3">
+          <Sparkles className="h-4 w-4" />
           <h4 className="text-xs font-black uppercase tracking-wider">Centro de Operaciones</h4>
         </div>
         <h3 className="text-base font-bold text-zinc-100">
           Bienvenido de vuelta al Panel de ConectaPro
         </h3>
-        <p className="text-xs text-zinc-400 mt-2 leading-relaxed max-w-2xl">
+        <p className="text-xs text-zinc-400 mt-2 leading-relaxed max-w-2xl font-medium">
           Como administrador, tienes la responsabilidad de auditar y garantizar la fluidez del marketplace.
           Utiliza la barra lateral para navegar a las herramientas de revisión de comprobantes de pago (recargas),
           moderación y suspensión de usuarios reportados, y auditoría general de órdenes de servicio en curso.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 border-t border-zinc-800 pt-5 text-xs">
-          <div className="space-y-1">
-            <span className="font-bold text-rose-400">1. Validar Capturas</span>
-            <p className="text-[10px] text-zinc-500 leading-relaxed">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 border-t border-zinc-800/50 pt-5 text-xs">
+          <div className="space-y-1 bg-zinc-900/40 dark:bg-zinc-950/30 p-3.5 rounded-xl border border-zinc-800/50">
+            <span className="font-bold text-indigo-400 text-xs">1. Validar Capturas</span>
+            <p className="text-[11px] text-zinc-450 dark:text-zinc-500 leading-relaxed font-semibold">
               Compara el número de referencia e importe en banco antes de aprobar créditos a los profesionales.
             </p>
           </div>
-          <div className="space-y-1">
-            <span className="font-bold text-rose-400">2. Moderación Activa</span>
-            <p className="text-[10px] text-zinc-500 leading-relaxed">
+          <div className="space-y-1 bg-zinc-900/40 dark:bg-zinc-950/30 p-3.5 rounded-xl border border-zinc-800/50">
+            <span className="font-bold text-indigo-400 text-xs">2. Moderación Activa</span>
+            <p className="text-[11px] text-zinc-450 dark:text-zinc-500 leading-relaxed font-semibold">
               Suspende de forma temporal a usuarios con mal comportamiento o sospechas de fraude off-platform.
             </p>
           </div>
-          <div className="space-y-1">
-            <span className="font-bold text-rose-400">3. Transacciones Atómicas</span>
-            <p className="text-[10px] text-zinc-500 leading-relaxed">
+          <div className="space-y-1 bg-zinc-900/40 dark:bg-zinc-950/30 p-3.5 rounded-xl border border-zinc-800/50">
+            <span className="font-bold text-indigo-400 text-xs">3. Transacciones Atómicas</span>
+            <p className="text-[11px] text-zinc-450 dark:text-zinc-500 leading-relaxed font-semibold">
               Las aprobaciones de créditos aplican cambios atómicos directos en la billetera mediante base de datos.
             </p>
           </div>

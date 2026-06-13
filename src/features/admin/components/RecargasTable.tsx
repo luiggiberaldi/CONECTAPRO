@@ -109,14 +109,28 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                   <td className="px-6 py-4 font-medium">
                     ${Number(recarga.montousd).toFixed(2)}
                   </td>
-                  <td className="px-6 py-4 uppercase font-bold text-xs tracking-wide text-zinc-500 dark:text-zinc-450">
-                    {formatMetodo(recarga.metodopago)}
+                  <td className="px-6 py-4">
+                    {recarga.metodopago === 'pagomovil' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+                        Pago Móvil
+                      </span>
+                    )}
+                    {recarga.metodopago === 'usdt' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-amber-50 text-amber-700 border-amber-250 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
+                        USDT (Tether)
+                      </span>
+                    )}
+                    {recarga.metodopago !== 'pagomovil' && recarga.metodopago !== 'usdt' && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-purple-50 text-purple-700 border-purple-250 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-900/30">
+                        {formatMetodo(recarga.metodopago)}
+                      </span>
+                    )}
                   </td>
                   <td className="px-6 py-4 font-mono font-medium text-[11px] text-zinc-500 dark:text-zinc-400">
                     {recarga.referencia}
                   </td>
                   <td className="px-6 py-4 text-zinc-400">
-                    <span className="inline-flex items-center gap-1">
+                    <span className="inline-flex items-center gap-1 font-semibold">
                       <Calendar className="h-3 w-3" />
                       {new Date(recarga.createdat).toLocaleDateString('es-VE')}
                     </span>
@@ -124,7 +138,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                   <td className="px-6 py-4">
                     <button
                       onClick={() => handleOpenViewer(recarga)}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-100 font-semibold transition-all"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-indigo-200/60 dark:border-indigo-900/40 text-indigo-650 dark:text-indigo-400 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-bold transition-all active:scale-95"
                     >
                       <Eye className="h-3 w-3" />
                       Ver Captura
@@ -185,15 +199,15 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
         </div>
       )}
 
-      {/* Modal Visor de Captura */}
+      {/* Modal Visor de Captura (Lightbox Glassmorphic) */}
       {isViewerOpen && selectedRecarga && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/75 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-slide-in flex flex-col max-h-[85vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md animate-fade-in">
+          <div className="bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-850 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl shadow-zinc-950/20 animate-slide-in flex flex-col max-h-[85vh]">
             {/* Header del Modal */}
-            <div className="px-5 py-4 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-5 py-4 border-b border-zinc-200/50 dark:border-zinc-800/50 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
               <div>
                 <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-150">Comprobante de Pago</h3>
-                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
+                <p className="text-xs text-zinc-500 dark:text-zinc-450 mt-0.5 font-medium">
                   Ref: {selectedRecarga.referencia} | Profesional: {selectedRecarga.usuarios?.nombre}
                 </p>
               </div>
@@ -206,21 +220,23 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             </div>
 
             {/* Contenido (Imagen) */}
-            <div className="flex-1 p-4 bg-zinc-950 flex items-center justify-center min-h-[300px] relative w-full aspect-[4/3] max-h-[50vh] overflow-hidden">
-              <Image
-                src={selectedRecarga.captura_url}
-                alt={`Comprobante de referencia ${selectedRecarga.referencia}`}
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 500px"
-              />
+            <div className="flex-1 p-4 bg-zinc-950/90 flex items-center justify-center min-h-[300px] relative w-full aspect-[4/3] max-h-[50vh] overflow-hidden">
+              <div className="relative w-full h-full rounded-lg overflow-hidden border border-zinc-800/80">
+                <Image
+                  src={selectedRecarga.captura_url}
+                  alt={`Comprobante de referencia ${selectedRecarga.referencia}`}
+                  fill
+                  className="object-contain p-2"
+                  sizes="(max-width: 768px) 100vw, 500px"
+                />
+              </div>
             </div>
 
             {/* Footer con Acciones */}
-            <div className="px-5 py-4 border-t border-zinc-100 dark:border-zinc-800/60 flex justify-between items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-5 py-4 border-t border-zinc-200/50 dark:border-zinc-800/50 flex justify-between items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/20">
               <div className="text-left">
-                <span className="text-xs uppercase font-bold text-zinc-450 dark:text-zinc-500">Monto del Paquete</span>
-                <p className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                <span className="text-[10px] uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Monto del Paquete</span>
+                <p className="text-sm font-black text-indigo-600 dark:text-indigo-400">
                   {selectedRecarga.paquete} Créditos (${Number(selectedRecarga.montousd).toFixed(2)} USD)
                 </p>
               </div>
@@ -230,7 +246,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                     setIsViewerOpen(false);
                     setConfirmAction({ id: selectedRecarga.id, type: 'rechazar' });
                   }}
-                  className="px-3 py-2 border border-rose-200 dark:border-rose-950/30 text-rose-650 hover:bg-rose-50 dark:hover:bg-rose-950/25 rounded-xl text-xs font-semibold transition-all active:scale-95"
+                  className="px-3.5 py-2 border border-rose-200 dark:border-rose-900/30 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-xl text-xs font-bold transition-all active:scale-95"
                 >
                   Rechazar
                 </button>
@@ -239,7 +255,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                     setIsViewerOpen(false);
                     setConfirmAction({ id: selectedRecarga.id, type: 'aprobar' });
                   }}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold shadow-sm transition-all active:scale-95"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-500/10 transition-all active:scale-95"
                 >
                   Aprobar Créditos
                 </button>

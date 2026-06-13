@@ -325,6 +325,23 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Ocultar duplicados:** Se ocultaron los botones de navegación inferiores del layout de escritorio en móviles usando la clase `hidden md:flex`.
 * **Validación realizada:** Verificación de tipos y lint de código TypeScript correctos.
 
+### [style] Renovación Estética (UI/UX) y Unificación Cromática del Panel Administrativo
+* **Decisión:** Rediseñar la interfaz y usabilidad de todo el panel administrativo (`/admin`), unificando los acentos cromáticos del tema `rose` original hacia la identidad de marca `indigo` de ConectaPro, elevando las tarjetas de KPIs con acentos e interacciones premium, estilizando la legibilidad de tablas/badges, e implementando un modal visor de comprobantes (Lightbox) glassmorphic premium.
+* **Archivos modificados:**
+  - [layout.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(admin)/admin/layout.tsx)
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(admin)/admin/page.tsx)
+  - [KPICard.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/KPICard.tsx)
+  - [RecargasTable.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/RecargasTable.tsx)
+  - [UsuariosTable.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/UsuariosTable.tsx)
+  - [OrdenesTable.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/OrdenesTable.tsx)
+* **Detalles:**
+  - **Navegación & Layout:** Se reemplazó el tema `rose-500` por el esquema `indigo-600`/`indigo-500` en los iconos, acentos activos y sidebar general. Se mejoró la ergonomía de hover y active state con bordes redondeados tipo píldora (`rounded-xl`), fondo translúcido y bordes izquierdos más limpios.
+  - **KPI Dashboard:** Se agregaron barras de acento superiores en `KPICard.tsx`, sombras premium adaptativas, glows internos en iconos y animación hover (`hover:-translate-y-1 hover:shadow-lg`). Se eliminaron las fuentes minúsculas `<12px` (corrigiendo a un estándar de `11px` y `12px` legibles por WCAG 2.1).
+  - **Revisión de Recargas:** Se añadieron badges de color premium para los métodos de pago (Pago Móvil, USDT, Zelle) y se rediseñó el visor de comprobantes convirtiéndolo en un Lightbox de cristal con desenfoque de fondo (`backdrop-blur-md bg-zinc-950/80`), contenedor flotante curvado y botones de acción de alta calidad.
+  - **Gestión de Usuarios & Órdenes:** Se estandarizaron los focus states y bordes interactivos en los inputs de búsqueda y el CustomSelect. Se agregaron micro-indicadores pulsantes (`animate-ping`) para cuentas de usuarios activas y se escaló el tamaño de la tipografía para todos los badges de estado y categorías para garantizar legibilidad operacional en listas densas.
+* **Validación realizada:** Limpieza de caché, verificación exitosa de tipos con `npx tsc --noEmit` y ESLint sin errores, y compilación final limpia mediante `npm run build`.
+
+
 
 
 

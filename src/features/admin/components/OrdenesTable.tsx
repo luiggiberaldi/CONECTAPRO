@@ -42,13 +42,13 @@ export default function OrdenesTable({
   const getUrgencyBadge = (urgencia: string) => {
     if (urgencia === 'hoy') {
       return (
-        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-450 dark:border-rose-900/30">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30 uppercase tracking-wider">
           Urgente
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border bg-zinc-100 text-zinc-650 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700">
+      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-zinc-50 text-zinc-600 border-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:border-zinc-700 uppercase tracking-wider">
         Esta semana
       </span>
     );
@@ -58,25 +58,25 @@ export default function OrdenesTable({
     switch (estado) {
       case 'pendiente':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900/30">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-blue-50/70 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900/30 uppercase tracking-wider">
             Pendiente
           </span>
         );
       case 'en_proceso':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-amber-50/70 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30 uppercase tracking-wider">
             En Proceso
           </span>
         );
       case 'completada':
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-emerald-50/70 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30 uppercase tracking-wider">
             Completada
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border bg-zinc-100 text-zinc-650 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-550 dark:border-zinc-700">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-zinc-100/70 text-zinc-600 border-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:border-zinc-700 uppercase tracking-wider">
             Cancelada
           </span>
         );
@@ -102,7 +102,7 @@ export default function OrdenesTable({
               setCurrentPage(1); // Resetear a pág 1 al buscar
             }}
             placeholder="Buscar por título..."
-            className="w-full pl-9 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 rounded-xl text-xs focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+            className="w-full pl-9 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-700/80 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
           />
         </div>
 
@@ -154,7 +154,7 @@ export default function OrdenesTable({
                       <span className="font-bold text-xs truncate max-w-[200px]" title={orden.titulo}>
                         {orden.titulo}
                       </span>
-                      <span className="inline-flex self-start mt-1 px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-600 dark:bg-indigo-950/35 dark:text-indigo-400">
+                      <span className="inline-flex self-start mt-1 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-indigo-50/70 border border-indigo-150 text-indigo-650 dark:bg-indigo-950/30 dark:text-indigo-400 dark:border-indigo-900/35">
                         {orden.categoria?.nombre || 'Categoría'}
                       </span>
                     </div>
