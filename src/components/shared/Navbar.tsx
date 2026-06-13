@@ -99,12 +99,11 @@ export default function Navbar() {
                     className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Buscar profesionales
-                  </Link>
-                  <Link
+                  </Link>                  <Link
                     href="/cliente/ordenes"
                     className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
-                    Mis proyectos
+                    Mis solicitudes
                   </Link>
                   <Link
                     href="/cliente/ordenes"
@@ -114,10 +113,10 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/cliente/ordenes/nueva"
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-md font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm active:scale-98"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-md font-bold text-white bg-indigo-650 hover:bg-indigo-500 transition-all shadow-sm active:scale-98"
                   >
                     <PlusCircle className="h-4 w-4" />
-                    Publicar proyecto
+                    Publicar solicitud
                   </Link>
                 </>
               )}
@@ -134,7 +133,7 @@ export default function Navbar() {
                     href="/profesional/ordenes"
                     className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
-                    Mis proyectos
+                    Mis trabajos
                   </Link>
                   <Link
                     href="/profesional/wallet"
@@ -398,7 +397,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
-                Mis proyectos
+                Mis solicitudes
               </Link>
               <Link
                 href="/cliente/ordenes"
@@ -413,7 +412,7 @@ export default function Navbar() {
                 className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-md font-bold text-white bg-indigo-650 hover:bg-indigo-500 transition-all shadow-sm"
               >
                 <PlusCircle className="h-4 w-4" />
-                Publicar proyecto
+                Publicar solicitud
               </Link>
             </>
           )}
@@ -432,7 +431,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
-                Mis proyectos
+                Mis trabajos
               </Link>
               <Link
                 href="/profesional/wallet"

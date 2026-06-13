@@ -27,7 +27,7 @@ export default function ClienteOrdenesPage() {
   // Estadísticas del Cliente
   const [rating, setRating] = useState(0);
   const [totalCalifs, setTotalCalifs] = useState(0);
-  const [proyectosEnCurso, setProyectosEnCurso] = useState(0);
+  const [solicitudesActivas, setSolicitudesActivas] = useState(0);
 
   // Paginación
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,9 +71,9 @@ export default function ClienteOrdenesPage() {
            .eq('clienteid', usuario.id)
            .in('estado', ['pendiente', 'en_proceso']);
 
-         if (!errActive && activeCount !== null) {
-           setProyectosEnCurso(activeCount);
-         }
+          if (!errActive && activeCount !== null) {
+            setSolicitudesActivas(activeCount);
+          }
       } catch (err) {
         console.error('Error al cargar estadísticas del cliente:', err);
       }
@@ -136,11 +136,11 @@ export default function ClienteOrdenesPage() {
               </div>
             </div>
 
-            {/* Proyectos en Curso */}
+            {/* Solicitudes de servicio activas */}
             <div className="flex items-center gap-8">
               <div className="flex flex-col">
                 <span className="text-lg font-black text-zinc-900 dark:text-zinc-55 flex items-center gap-1">
-                  {proyectosEnCurso}
+                  {solicitudesActivas}
                   <span 
                     className="text-indigo-600 bg-indigo-50 dark:bg-indigo-950/30 dark:text-indigo-400 p-0.5 rounded-full inline-flex items-center justify-center cursor-help" 
                     title="Solicitudes de servicio activas o en proceso."
@@ -149,7 +149,7 @@ export default function ClienteOrdenesPage() {
                   </span>
                 </span>
                 <span className="text-xs text-zinc-500 dark:text-zinc-400 font-bold">
-                  Proyectos activos
+                  Solicitudes activas
                 </span>
               </div>
             </div>
@@ -169,7 +169,7 @@ export default function ClienteOrdenesPage() {
                 className="flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-black text-white bg-indigo-650 hover:bg-indigo-500 transition-all shadow-sm active:scale-98"
               >
                 <PlusCircle className="h-4.5 w-4.5" />
-                Publicar proyecto
+                Publicar solicitud
               </Link>
             </div>
           </div>

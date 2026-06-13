@@ -30,7 +30,7 @@ export default function ProfesionalOrdenesPage() {
   const [loadingProf, setLoadingProf] = useState(true);
 
   // Estados de la ficha
-  const [proyectosEnCurso, setProyectosEnCurso] = useState(0);
+  const [trabajosEnCurso, setTrabajosEnCurso] = useState(0);
   const [isWalletDetailsOpen, setIsWalletDetailsOpen] = useState(false);
 
   // Carga de Billetera
@@ -78,9 +78,9 @@ export default function ProfesionalOrdenesPage() {
     loadProfesional();
   }, [usuario]);
 
-  // Cargar contador de proyectos en curso
+  // Cargar contador de trabajos en curso
   useEffect(() => {
-    async function loadProyectosCount() {
+    async function loadTrabajosCount() {
       if (!usuario?.id) return;
       try {
         const { count, error } = await supabaseBrowser
@@ -89,14 +89,14 @@ export default function ProfesionalOrdenesPage() {
           .eq('profesionalid', usuario.id)
           .eq('estado', 'en_proceso');
         if (!error && count !== null) {
-          setProyectosEnCurso(count);
+          setTrabajosEnCurso(count);
         }
       } catch (err) {
-        console.error('Error al cargar proyectos en curso:', err);
+        console.error('Error al cargar trabajos en curso:', err);
       }
     }
     if (!loadingProf) {
-      loadProyectosCount();
+      loadTrabajosCount();
     }
   }, [usuario, loadingProf]);
 
@@ -187,16 +187,16 @@ export default function ProfesionalOrdenesPage() {
 
               <div className="flex flex-col">
                 <span className="text-lg font-black text-zinc-900 dark:text-zinc-55 flex items-center gap-1">
-                  {proyectosEnCurso}
+                  {trabajosEnCurso}
                   <span 
                     className="text-indigo-600 bg-indigo-50 dark:bg-indigo-950/30 dark:text-indigo-400 p-0.5 rounded-full inline-flex items-center justify-center cursor-help" 
-                    title="Proyectos que tienes actualmente asignados y en proceso."
+                    title="Trabajos que tienes actualmente asignados y en proceso."
                   >
                     <Info className="h-3.5 w-3.5" />
                   </span>
                 </span>
                 <span className="text-xs text-zinc-500 dark:text-zinc-400 font-bold">
-                  Proyectos en curso
+                  Trabajos en curso
                 </span>
               </div>
             </div>

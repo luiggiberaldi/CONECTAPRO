@@ -455,7 +455,7 @@ export default function UsuariosTable({
                             <span className="font-semibold text-zinc-600 dark:text-zinc-400">
                               {Number(clienteData.calificacionpromedio).toFixed(1)}
                             </span>
-                            <span className="text-zinc-400 dark:text-zinc-550">· {clienteData.totalproyectos} proy.</span>
+                            <span className="text-zinc-400 dark:text-zinc-550">· {clienteData.totalproyectos} sol.</span>
                           </div>
                         </div>
                       ) : (
