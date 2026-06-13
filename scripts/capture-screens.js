@@ -109,11 +109,11 @@ async function main() {
 
     // Abrir Drawer de Usuario
     console.log('Abriendo Drawer de detalle de usuario...');
-    const eyeButtonSelector = 'table tbody tr:first-child button';
+    const eyeButtonSelector = 'table tbody tr:nth-child(2) button';
     const hasEyeButton = await page.$(eyeButtonSelector) !== null;
     
     if (hasEyeButton) {
-      const buttons = await page.$$('table tbody tr:first-child button');
+      const buttons = await page.$$('table tbody tr:nth-child(2) button');
       let clicked = false;
       for (const btn of buttons) {
         const title = await page.evaluate(el => el.getAttribute('title'), btn);

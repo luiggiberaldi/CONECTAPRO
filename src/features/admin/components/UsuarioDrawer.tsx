@@ -128,21 +128,22 @@ export default function UsuarioDrawer({
               <div className={`absolute top-0 inset-x-0 h-2 bg-gradient-to-r ${bannerGradient}`} />
               
               {/* Avatar Container */}
-              <div className="relative mt-2">
+              <div className="relative mt-2 shrink-0" style={{ width: '80px', height: '80px' }}>
                 {selectedUser.avatar_url ? (
                   <img
                     src={selectedUser.avatar_url}
                     alt={selectedUser.nombre}
-                    className="h-20 w-20 rounded-full object-cover border-2 border-white dark:border-zinc-900 ring-4 ring-indigo-500/10 shadow-md"
+                    className="rounded-full object-cover border-2 border-white dark:border-zinc-900 ring-4 ring-indigo-500/10 shadow-md shrink-0"
+                    style={{ width: '80px', height: '80px' }}
                   />
                 ) : (
-                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-950/40 dark:to-indigo-900/30 border border-indigo-150 dark:border-indigo-900/50 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-black text-2xl shadow-sm">
+                  <div className="rounded-full bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-950/40 dark:to-indigo-900/30 border border-indigo-150 dark:border-indigo-900/50 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-black text-2xl shadow-sm shrink-0" style={{ width: '80px', height: '80px' }}>
                     {selectedUser.nombre.substring(0, 2).toUpperCase()}
                   </div>
                 )}
                 
                 {/* Status Indicator Dot */}
-                <span className="absolute bottom-0 right-0 block h-5 w-5 rounded-full ring-2 ring-white dark:ring-zinc-950 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center">
+                <span className="absolute bottom-0 right-0 block h-5 w-5 rounded-full border-2 border-white dark:border-zinc-950 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center">
                   {selectedUser.estado === 'activo' ? (
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
