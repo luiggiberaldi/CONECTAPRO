@@ -224,3 +224,13 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Tablas Admin**: Escaladas las cabeceras de tabla (`thead`) de `text-[10px]` a `text-xs font-bold`. Subidos correos de clientes y profesionales a `text-xs`.
   - **Formulario de Recarga**: Reemplazadas las notas pequeñas individuales de 9px por un banner interactivo de advertencia unificado con `text-xs` y fondo alert-accent, haciendo dinámicas las instrucciones de Pago Móvil, Zelle y USDT. Escalados los labels a `text-xs`.
 * **Validación realizada:** Limpieza de caché de Next.js (`Remove-Item -Recurse -Force .next`) y compilación limpia exitosa de las 19 rutas del build.
+
+### [arch] Hero Interactivo 3D con Scroll y Morphing en Home
+* **Decisión:** Implementar un Hero interactivo 3D con un lienzo WebGL de alto rendimiento utilizando Three.js procedimental que reacciona dinámicamente al scroll (giro y zoom) y al movimiento del ratón (paralaje).
+* **Detalles:**
+  * Se desarrolló el componente cliente `Home3DCanvas.tsx` con un sistema de 1,200 partículas procedimentales que realizan transiciones fluidas de morphing y color entre dos estados: Modo Cliente (esfera geodésica índigo + wireframe) y Modo Profesional (constelación de anillos rosa + octaedro).
+  * Se refactorizó la página de inicio `src/app/page.tsx` para sincronizar pasivamente el scroll del usuario (`requestAnimationFrame`) con la cámara de Three.js y el desvanecimiento progresivo de 3 tarjetas HUD de telemetría y especificaciones de la plataforma.
+  * Se garantizó el empaquetado del canvas mediante carga dinámica diferida (`next/dynamic` con `ssr: false`) para evitar errores en el renderizado del lado del servidor (SSR) de Next.js.
+  * Se resolvieron errores de compilación de TypeScript y ESLint por variables u objetos no utilizados e imports redundantes.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx), [Home3DCanvas.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/Home3DCanvas.tsx), [package.json](file:///c:/Users/luigg/Desktop/conectapro/package.json), [package-lock.json](file:///c:/Users/luigg/Desktop/conectapro/package-lock.json)
+* **Validación realizada:** Limpieza completa de caché de Next.js y compilación limpia y exitosa a través de `npm run build` sin errores de linter.
