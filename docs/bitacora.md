@@ -266,5 +266,19 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
     - Se quitó la animación letra por letra con blur por una transición fluida de opacidad/desplazamiento de bloque entero para mayor consistencia de renderizado.
 * **Validación realizada:** Se solucionaron errores sintácticos por cabecera `h2` sin cerrar y comillas dobles literales en JSX. El comando `npm run build` ejecutó y finalizó con código 0, generando todas las rutas de producción satisfactoriamente.
 
+### [style] Reestructuración de Onboarding ("Cómo funciona") a Grid Bento Horizontal (4 Columnas)
+* **Decisión:** Reestructurar la sección de onboarding de 2 columnas desiguales a una sola columna vertical con grid de 4 columnas horizontales a pantalla completa (`max-w-7xl`). Esto elimina el mockup de navegador repetitivo del lado derecho y optimiza el uso de espacio y la tipografía.
+* **Archivos modificados:**
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
+  - [next.config.mjs](file:///c:/Users/luigg/Desktop/conectapro/next.config.mjs)
+* **Detalles:**
+  - **Eliminación del Mockup**: Se removió el cuadro de navegador de la derecha que mostraba simulaciones redundantes.
+  - **Cabecera Centrada**: Se alinearon al centro el título, subtítulo, descripción y el selector deslizante de roles.
+  - **Bento Steps Grid**: Se creó un grid horizontal de 4 columnas. Cada paso es una tarjeta premium independiente que incluye un número de paso gigante de fondo (`01` al `04`), caja de icono con hover reactivo y textos de alta legibilidad.
+  - **Iconografía**: Se importaron y asignaron iconos semánticos específicos (`ClipboardList`, `UserCheck`, `Search`, `Coins`).
+  - **Optimización de Compilación**: Se deshabilitó el Webpack build worker experimental (`webpackBuildWorker: false` en `next.config.mjs`) para evitar desbordamientos de memoria RAM (out of memory error) durante el build en el sandbox.
+* **Validación realizada:** El comando `$env:NODE_TLS_REJECT_UNAUTHORIZED="0"; $env:NODE_OPTIONS="--max-old-space-size=4096"; npm run build` compiló sin errores, confirmando la validez tipográfica y sintáctica del JSX.
+
+
 
 
