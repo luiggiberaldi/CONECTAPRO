@@ -66,17 +66,17 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
   return (
     <div className="space-y-4">
       <div className="overflow-x-auto bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm">
-        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+        <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider">
             <tr>
-              <th scope="col" className="px-6 py-4">Profesional</th>
-              <th scope="col" className="px-6 py-4">Paquete</th>
-              <th scope="col" className="px-6 py-4">Monto (USD)</th>
-              <th scope="col" className="px-6 py-4">Método</th>
-              <th scope="col" className="px-6 py-4">Referencia</th>
-              <th scope="col" className="px-6 py-4">Fecha</th>
-              <th scope="col" className="px-6 py-4">Soporte</th>
-              <th scope="col" className="px-6 py-4 text-right">Acciones</th>
+              <th scope="col" className="px-6 py-4 w-[22%]">Profesional</th>
+              <th scope="col" className="px-6 py-4 w-[11%]">Paquete</th>
+              <th scope="col" className="px-6 py-4 w-[12%]">Monto (USD)</th>
+              <th scope="col" className="px-6 py-4 w-[13%]">Método</th>
+              <th scope="col" className="px-6 py-4 w-[12%]">Referencia</th>
+              <th scope="col" className="px-6 py-4 w-[11%]">Fecha</th>
+              <th scope="col" className="px-6 py-4 w-[11%]">Soporte</th>
+              <th scope="col" className="px-6 py-4 w-[8%] text-right">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-150 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">

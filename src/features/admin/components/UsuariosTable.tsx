@@ -318,26 +318,26 @@ export default function UsuariosTable({
 
       {/* 3. Listado Principal (Tabla Rediseñada) */}
       <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
-        <table className="min-w-full text-left text-xs">
-          <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
+        <table className="w-full table-fixed min-w-[900px] text-left text-xs">
+          <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="pl-5 pr-4 py-3.5 w-[30%]">
-                <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Usuario</span>
+              <th scope="col" className="pl-5 pr-4 py-3.5 w-[28%]">
+                <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Usuario</span>
               </th>
               <th scope="col" className="px-4 py-3.5 w-[14%]">
-                <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Rol</span>
+                <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Rol</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[13%]">
-                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Ubicación</span>
+              <th scope="col" className="px-4 py-3.5 w-[14%]">
+                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
               <th scope="col" className="px-4 py-3.5 w-[20%]">
-                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Profesión / Reputación</span>
+                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesión / Reputación</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[11%]">
-                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Estado</span>
+              <th scope="col" className="px-4 py-3.5 w-[12%]">
+                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
               <th scope="col" className="px-4 py-3.5 w-[12%] text-right">
-                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Acciones</span>
+                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Acciones</span>
               </th>
             </tr>
           </thead>

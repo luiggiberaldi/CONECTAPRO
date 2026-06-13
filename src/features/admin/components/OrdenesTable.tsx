@@ -264,31 +264,30 @@ export default function OrdenesTable({
         )}
       </div>
 
-      {/* 3. Listado de Órdenes (Tabla Rediseñada) */}
       <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
-        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
+        <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-6 py-4">
-                <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Orden / Categoría</span>
+              <th scope="col" className="px-6 py-4 w-[22%]">
+                <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Orden / Categoría</span>
               </th>
-              <th scope="col" className="px-6 py-4">
-                <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Cliente</span>
+              <th scope="col" className="px-6 py-4 w-[18%]">
+                <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Cliente</span>
               </th>
-              <th scope="col" className="px-6 py-4">
-                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Profesional</span>
+              <th scope="col" className="px-6 py-4 w-[18%]">
+                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesional</span>
               </th>
-              <th scope="col" className="px-6 py-4">
-                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Ubicación</span>
+              <th scope="col" className="px-6 py-4 w-[14%]">
+                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-6 py-4">
-                <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Urgencia</span>
+              <th scope="col" className="px-6 py-4 w-[11%]">
+                <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Urgencia</span>
               </th>
-              <th scope="col" className="px-6 py-4">
-                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Estado</span>
+              <th scope="col" className="px-6 py-4 w-[11%]">
+                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="px-6 py-4 text-right">
-                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Detalle</span>
+              <th scope="col" className="px-6 py-4 w-[6%] text-right">
+                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Detalle</span>
               </th>
             </tr>
           </thead>
