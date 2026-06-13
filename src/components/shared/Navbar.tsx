@@ -57,15 +57,15 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/cliente/ordenes"
-                    className="px-3 py-2 rounded-xl text-xs font-semibold text-zinc-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-150 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-sm font-semibold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                   >
                     Mis Órdenes
                   </Link>
                   <Link
                     href="/cliente/ordenes/nueva"
-                    className="flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm hover:shadow active:scale-98"
                   >
-                    <PlusCircle className="h-3.5 w-3.5" />
+                    <PlusCircle className="h-4 w-4" />
                     Nueva Solicitud
                   </Link>
                 </>
@@ -75,21 +75,21 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/profesional/ordenes"
-                    className="px-3 py-2 rounded-xl text-xs font-semibold text-zinc-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-150 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-sm font-semibold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                   >
                     Trabajos Disponibles
                   </Link>
                   <Link
                     href="/profesional/reputacion"
-                    className="px-3 py-2 rounded-xl text-xs font-semibold text-zinc-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-150 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-sm font-semibold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                   >
                     Mi Reputación
                   </Link>
                   <Link
                     href="/profesional/wallet"
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-zinc-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-150 transition-colors"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                   >
-                    <Wallet className="h-3.5 w-3.5 text-zinc-400" />
+                    <Wallet className="h-4 w-4 text-zinc-400 dark:text-zinc-500" />
                     Mi Billetera
                   </Link>
                 </>
@@ -99,9 +99,9 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/admin"
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-zinc-650 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-150 transition-colors"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                   >
-                    <LayoutDashboard className="h-3.5 w-3.5" />
+                    <LayoutDashboard className="h-4 w-4" />
                     Dashboard
                   </Link>
                 </>
@@ -111,14 +111,14 @@ export default function Navbar() {
 
           {/* User profile dropdown & logout */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {/* Avatar placeholder */}
-              <div className="h-8 w-8 rounded-full bg-zinc-100 dark:bg-zinc-850 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
-                <User className="h-4 w-4" />
+              <div className="h-9 w-9 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500 dark:text-zinc-400 shadow-sm">
+                <User className="h-4.5 w-4.5" />
               </div>
               <div className="hidden md:flex flex-col text-left">
-                <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200">{usuario.nombre}</span>
-                <span className={`inline-flex items-center self-start px-1.5 py-0.5 rounded text-[8px] font-bold border capitalize mt-0.5 ${getRoleBadgeColor()}`}>
+                <span className="text-sm font-bold text-zinc-800 dark:text-zinc-200 leading-tight">{usuario.nombre}</span>
+                <span className={`inline-flex items-center self-start px-2 py-0.5 rounded-md text-[10px] font-bold border capitalize mt-1 tracking-wider ${getRoleBadgeColor()}`}>
                   {rol}
                 </span>
               </div>
@@ -127,10 +127,10 @@ export default function Navbar() {
             {/* Logout button */}
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center p-2 rounded-xl text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-850 border border-zinc-200/50 dark:border-zinc-800/60 transition-colors"
+              className="flex items-center justify-center p-2 rounded-xl text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200/50 dark:border-zinc-700 transition-colors"
               title="Cerrar sesión"
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-4.5 w-4.5" />
             </button>
           </div>
         </div>

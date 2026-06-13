@@ -111,22 +111,22 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                   </td>
                   <td className="px-6 py-4">
                     {recarga.metodopago === 'pagomovil' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black border bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
                         Pago Móvil
                       </span>
                     )}
                     {recarga.metodopago === 'usdt' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-amber-50 text-amber-700 border-amber-250 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black border bg-amber-50 text-amber-700 border-amber-250 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
                         USDT (Tether)
                       </span>
                     )}
                     {recarga.metodopago !== 'pagomovil' && recarga.metodopago !== 'usdt' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-purple-50 text-purple-700 border-purple-250 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-900/30">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black border bg-purple-50 text-purple-700 border-purple-250 dark:bg-purple-950/20 dark:text-purple-400 dark:border-purple-900/30">
                         {formatMetodo(recarga.metodopago)}
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 font-mono font-medium text-[11px] text-zinc-500 dark:text-zinc-400">
+                  <td className="px-6 py-4 font-mono font-medium text-xs text-zinc-500 dark:text-zinc-400">
                     {recarga.referencia}
                   </td>
                   <td className="px-6 py-4 text-zinc-400">
@@ -235,7 +235,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             {/* Footer con Acciones */}
             <div className="px-5 py-4 border-t border-zinc-200/50 dark:border-zinc-800/50 flex justify-between items-center gap-2 bg-zinc-50/50 dark:bg-zinc-950/20">
               <div className="text-left">
-                <span className="text-[10px] uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Monto del Paquete</span>
+                <span className="text-xs uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Monto del Paquete</span>
                 <p className="text-sm font-black text-indigo-600 dark:text-indigo-400">
                   {selectedRecarga.paquete} Créditos (${Number(selectedRecarga.montousd).toFixed(2)} USD)
                 </p>

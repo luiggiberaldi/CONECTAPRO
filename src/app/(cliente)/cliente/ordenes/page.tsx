@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { OrdenCard } from '@/features/ordenes';
-import { Plus, Inbox, RefreshCw } from 'lucide-react';
+import { Plus, Inbox, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
 import Loader from '@/components/shared/Loader';
 import Link from 'next/link';
 
@@ -14,10 +14,15 @@ export default function ClienteOrdenesPage() {
   const { usuario } = useAuth();
   const { ordenes, loading, cargarOrdenesCliente } = useOrdenes();
   const [activeTab, setActiveTab] = useState<TabType>('activas');
+  
+  // Paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
 
   const fetchOrders = useCallback(() => {
     if (usuario?.id) {
       cargarOrdenesCliente(usuario.id);
+      setCurrentPage(1);
     }
   }, [usuario, cargarOrdenesCliente]);
 
@@ -35,6 +40,11 @@ export default function ClienteOrdenesPage() {
     }
     return o.estado === 'cancelada';
   });
+
+  // Derivados
+  const totalPages = Math.max(1, Math.ceil(ordenesFiltradas.length / pageSize));
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedOrdenes = ordenesFiltradas.slice(startIndex, startIndex + pageSize);
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -70,7 +80,10 @@ export default function ClienteOrdenesPage() {
           {(['activas', 'completadas', 'canceladas'] as TabType[]).map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => {
+                setActiveTab(tab);
+                setCurrentPage(1);
+              }}
               className={`px-4 py-2.5 text-xs font-bold capitalize border-b-2 -mb-[2px] transition-all ${
                 activeTab === tab
                   ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400 font-extrabold'
@@ -105,14 +118,44 @@ export default function ClienteOrdenesPage() {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
-            {ordenesFiltradas.map((orden) => (
-              <OrdenCard
-                key={orden.id}
-                orden={orden}
-                href={`/cliente/ordenes/${orden.id}`}
-              />
-            ))}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4">
+              {paginatedOrdenes.map((orden) => (
+                <OrdenCard
+                  key={orden.id}
+                  orden={orden}
+                  href={`/cliente/ordenes/${orden.id}`}
+                />
+              ))}
+            </div>
+
+            {/* Controles de Paginación */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between px-2 text-xs pt-4 border-t border-zinc-200 dark:border-zinc-800/60 mt-4">
+                <span className="text-zinc-500 font-medium">
+                  Mostrando {startIndex + 1}-{Math.min(startIndex + pageSize, ordenesFiltradas.length)} de {ordenesFiltradas.length} solicitudes
+                </span>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <span className="px-2 font-bold">
+                    Página {currentPage} de {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
     </main>

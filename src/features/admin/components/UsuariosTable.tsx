@@ -69,14 +69,14 @@ export default function UsuariosTable({
   const getStatusBadge = (estado: string) => {
     if (estado === 'suspendido') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30">
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30">
           <ShieldAlert className="h-3.5 w-3.5" />
           Suspendido
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-black border bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
         <span className="relative flex h-1.5 w-1.5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-550"></span>
@@ -135,7 +135,7 @@ export default function UsuariosTable({
       {/* Tabla */}
       <div className="overflow-x-auto bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm">
         <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
+          <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             <tr>
               <th scope="col" className="px-6 py-4">Usuario</th>
               <th scope="col" className="px-6 py-4">Rol</th>
@@ -168,15 +168,15 @@ export default function UsuariosTable({
                     <td className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-150">
                       <div className="flex flex-col text-left">
                         <span className="font-bold text-xs">{user.nombre}</span>
-                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{user.email}</span>
+                        <span className="text-xs text-zinc-500 dark:text-zinc-400">{user.email}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-black border capitalize tracking-wider ${getRoleBadge(user.rol)}`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded text-xs font-black border capitalize tracking-wider ${getRoleBadge(user.rol)}`}>
                         {user.rol}
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-medium text-zinc-500 dark:text-zinc-405">
+                    <td className="px-6 py-4 font-medium text-zinc-500 dark:text-zinc-400">
                       {user.ciudad || <span className="italic text-zinc-400">No especificada</span>}
                     </td>
                     <td className="px-6 py-4">

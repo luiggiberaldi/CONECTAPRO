@@ -5,7 +5,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { OrdenCard } from '@/features/ordenes';
 import { supabaseBrowser } from '@/lib/supabase';
-import { RefreshCw, Inbox, Award } from 'lucide-react';
+import { RefreshCw, Inbox, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 import Loader from '@/components/shared/Loader';
 import { Profesional } from '@/types';
 
@@ -18,6 +18,9 @@ export default function ProfesionalOrdenesPage() {
   const [profesional, setProfesional] = useState<(Profesional & { categoriaid?: string }) | null>(null);
   const [loadingProf, setLoadingProf] = useState(true);
 
+  // Paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
 
   // Cargar datos de profesional vinculados
   useEffect(() => {
@@ -59,6 +62,7 @@ export default function ProfesionalOrdenesPage() {
 
   const cargarDatos = useCallback(() => {
     if (!usuario?.id) return;
+    setCurrentPage(1);
     
     if (activeTab === 'disponibles') {
       if (profesional?.categoriaid) {
@@ -67,7 +71,6 @@ export default function ProfesionalOrdenesPage() {
         cargarOrdenesDisponibles(profesional.especialidad);
       }
     } else {
-
       cargarOrdenesAsignadas(usuario.id);
     }
   }, [usuario, activeTab, profesional, cargarOrdenesDisponibles, cargarOrdenesAsignadas]);
@@ -77,6 +80,11 @@ export default function ProfesionalOrdenesPage() {
       cargarDatos();
     }
   }, [activeTab, loadingProf, profesional, cargarDatos]);
+
+  // Derivados de Paginación
+  const totalPages = Math.max(1, Math.ceil(ordenes.length / pageSize));
+  const startIndex = (currentPage - 1) * pageSize;
+  const paginatedOrdenes = ordenes.slice(startIndex, startIndex + pageSize);
 
   if (loadingProf) {
     return (
@@ -117,7 +125,10 @@ export default function ProfesionalOrdenesPage() {
         {/* TABS SELECTOR */}
         <div className="flex border-b border-zinc-200 dark:border-zinc-800 mb-6 gap-2">
           <button
-            onClick={() => setActiveTab('disponibles')}
+            onClick={() => {
+              setActiveTab('disponibles');
+              setCurrentPage(1);
+            }}
             className={`px-4 py-2.5 text-xs font-bold border-b-2 -mb-[2px] transition-all ${
               activeTab === 'disponibles'
                 ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400 font-extrabold'
@@ -127,7 +138,10 @@ export default function ProfesionalOrdenesPage() {
             Trabajos Disponibles ({profesional?.especialidad})
           </button>
           <button
-            onClick={() => setActiveTab('asignados')}
+            onClick={() => {
+              setActiveTab('asignados');
+              setCurrentPage(1);
+            }}
             className={`px-4 py-2.5 text-xs font-bold border-b-2 -mb-[2px] transition-all ${
               activeTab === 'asignados'
                 ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400 font-extrabold'
@@ -157,14 +171,44 @@ export default function ProfesionalOrdenesPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
-            {ordenes.map((orden) => (
-              <OrdenCard
-                key={orden.id}
-                orden={orden}
-                href={`/profesional/ordenes/${orden.id}`}
-              />
-            ))}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4">
+              {paginatedOrdenes.map((orden) => (
+                <OrdenCard
+                  key={orden.id}
+                  orden={orden}
+                  href={`/profesional/ordenes/${orden.id}`}
+                />
+              ))}
+            </div>
+
+            {/* Controles de Paginación */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between px-2 text-xs pt-4 border-t border-zinc-200 dark:border-zinc-800/60 mt-4">
+                <span className="text-zinc-500 font-medium">
+                  Mostrando {startIndex + 1}-{Math.min(startIndex + pageSize, ordenes.length)} de {ordenes.length} órdenes
+                </span>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <span className="px-2 font-bold">
+                    Página {currentPage} de {totalPages}
+                  </span>
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                    className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
     </main>

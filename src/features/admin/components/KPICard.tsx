@@ -63,20 +63,20 @@ export default function KPICard({
       <div className={`absolute top-0 left-0 right-0 h-1 ${styles.accentBg}`} />
       
       <div className="space-y-2.5">
-        <span className="text-[11px] font-extrabold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">
+        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">
           {title}
         </span>
         <div className="flex items-baseline gap-2">
-          <h3 className="text-2xl font-black text-zinc-900 dark:text-zinc-150 tracking-tight">
+          <h3 className="text-2xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
             {value}
           </h3>
           {trend && (
-            <span className="text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/30 px-1.5 py-0.5 rounded-md">
+            <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 bg-emerald-50/80 dark:bg-emerald-950/30 px-1.5 py-0.5 rounded-md">
               {trend}
             </span>
           )}
         </div>
-        <p className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 leading-normal">
+        <p className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 leading-normal">
           {description}
         </p>
       </div>
