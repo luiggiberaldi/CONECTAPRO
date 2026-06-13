@@ -218,7 +218,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[92vh] animate-slide-in">
             {/* Header del Modal */}
-            <div className="px-6 pt-7 pb-4 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-8 pt-7 pb-5 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50/50 dark:bg-zinc-950/20">
               <div className="flex items-center gap-2.5">
                 <div className="h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse" />
                 <div className="text-left">
@@ -235,10 +235,10 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             </div>
 
             {/* Contenido del Modal (Scrollable) */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-5">
+            <div className="flex-1 overflow-y-auto p-8 space-y-6">
               
               {/* Contenedor del Comprobante (Imagen o Fallback Digital) */}
-              <div className="relative w-full h-[260px] bg-zinc-950/5 dark:bg-zinc-950/40 border border-zinc-200/60 dark:border-zinc-800/80 rounded-2xl overflow-hidden flex items-center justify-center group shadow-inner">
+              <div className="relative w-full h-[300px] bg-zinc-950/5 dark:bg-zinc-950/40 border border-zinc-200/60 dark:border-zinc-800/80 rounded-2xl overflow-hidden flex items-center justify-center group shadow-inner">
                 {!imageError ? (
                   <>
                     <Image
@@ -263,7 +263,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                   </>
                 ) : (
                   /* Fallback de Boleto/Ticket Digital */
-                  <div className="w-full h-full p-6 flex flex-col justify-between bg-gradient-to-br from-zinc-50 to-zinc-100/50 dark:from-zinc-900/60 dark:to-zinc-950/40 relative overflow-hidden text-left">
+                  <div className="w-full h-full p-7 flex flex-col justify-between bg-gradient-to-br from-zinc-50 to-zinc-100/50 dark:from-zinc-900/60 dark:to-zinc-950/40 relative overflow-hidden text-left">
                     {/* Marca de agua decorativa */}
                     <FileText className="absolute -right-8 -bottom-8 h-36 w-36 text-zinc-200/30 dark:text-zinc-800/10 pointer-events-none" />
                     
@@ -277,16 +277,16 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       </div>
                     </div>
 
-                    <div className="my-auto py-4 border-y border-dashed border-zinc-200/80 dark:border-zinc-800/80">
+                    <div className="my-auto py-5 border-y border-dashed border-zinc-200/80 dark:border-zinc-800/80">
                       <span className="text-[10px] uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Verificación de Transacción</span>
-                      <div className="mt-2.5 space-y-1.5 text-xs font-medium text-zinc-650 dark:text-zinc-400">
+                      <div className="mt-3.5 space-y-2 text-xs font-medium text-zinc-650 dark:text-zinc-400">
                         <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Referencia de Pago:</span><span className="font-mono text-zinc-850 dark:text-zinc-150 font-bold">{selectedRecarga.referencia}</span></div>
                         <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Monto Reportado:</span><span className="text-zinc-850 dark:text-zinc-150 font-bold">${Number(selectedRecarga.montousd).toFixed(2)} USD</span></div>
                         <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Paquete Adquirido:</span><span className="text-indigo-600 dark:text-indigo-400 font-black">{selectedRecarga.paquete} Créditos</span></div>
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center text-[10px] text-zinc-400 dark:text-zinc-500">
+                    <div className="flex justify-between items-center text-[10px] text-zinc-400 dark:text-zinc-550 pt-2">
                       <span>ConectaPro Digital Voucher</span>
                       <span className="font-mono">{new Date(selectedRecarga.createdat).toLocaleString('es-VE')}</span>
                     </div>
@@ -295,10 +295,10 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
               </div>
 
               {/* Grid de Detalles Administrativos */}
-              <div className="bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-150 dark:border-zinc-850 rounded-2xl p-5 text-left space-y-4">
-                <h4 className="text-xs uppercase font-bold text-zinc-400 dark:text-zinc-500 tracking-wider">Detalles de la Transacción</h4>
+              <div className="bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-150 dark:border-zinc-850 rounded-2xl p-6 text-left space-y-5">
+                <h4 className="text-xs uppercase font-bold text-zinc-400 dark:text-zinc-550 tracking-wider">Detalles de la Transacción</h4>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-6">
                   {/* Profesional */}
                   <div className="flex gap-2.5 min-w-0">
                     <div className="h-8 w-8 rounded-xl bg-zinc-100 dark:bg-zinc-850 border border-zinc-250/60 dark:border-zinc-800 flex items-center justify-center text-zinc-500 shrink-0">
@@ -309,7 +309,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       <span className="text-xs font-black text-zinc-800 dark:text-zinc-200 truncate" title={selectedRecarga.usuarios?.nombre}>
                         {selectedRecarga.usuarios?.nombre}
                       </span>
-                      <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate" title={selectedRecarga.usuarios?.email}>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-550 truncate" title={selectedRecarga.usuarios?.email}>
                         {selectedRecarga.usuarios?.email}
                       </span>
                     </div>
@@ -329,7 +329,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                           </span>
                         )}
                         {selectedRecarga.metodopago === 'usdt' && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900/30">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/20 dark:text-amber-400 dark:border-emerald-900/30">
                             USDT (Tether)
                           </span>
                         )}
@@ -379,9 +379,9 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             </div>
 
             {/* Footer con Acciones */}
-            <div className="px-6 pt-4 pb-7 border-t border-zinc-150 dark:border-zinc-800/60 flex justify-between items-center gap-3 bg-zinc-50/50 dark:bg-zinc-950/20">
+            <div className="px-8 pt-5 pb-7 border-t border-zinc-150 dark:border-zinc-800/60 flex justify-between items-center gap-4 bg-zinc-50/50 dark:bg-zinc-950/20">
               <div className="text-left">
-                <span className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-550 tracking-wider">Acreditar Paquete</span>
+                <span className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-555 tracking-wider">Acreditar Paquete</span>
                 <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 mt-0.5">
                   +{selectedRecarga.paquete} Créditos
                   <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500 ml-1.5">
