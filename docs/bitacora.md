@@ -368,3 +368,14 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Ficha de Cliente:** Muestra foto de avatar, reputación promedio calculada dinámicamente en base a las calificaciones recibidas de profesionales, total de proyectos activos publicados, y un botón de acción rápida para publicar un nuevo proyecto.
   - **Estética premium:** Uso de fondos cálidos off-white/beige (`#fdfcf9`) con bordes atenuados, diseño totalmente responsivo y micro-interacciones pulidas.
 * **Validación realizada:** Verificación de tipos de TypeScript y compilación de producción exitosa con `npm run build` sin errores.
+
+### [style] Simplificación del Panel de Administración y Eliminación del Sidebar Redundante
+* **Decisión:** Remover la barra lateral de navegación (sidebar) de la interfaz de administración para optimizar el espacio horizontal y eliminar enlaces redundantes, dado que la barra de navegación superior (Navbar) ya provee acceso directo a todas las secciones.
+* **Archivos modificados:**
+  - [layout.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(admin)/admin/layout.tsx)
+  - [Navbar.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/Navbar.tsx)
+* **Detalles:**
+  - **Eliminación del aside:** Se removió por completo la barra lateral que mostraba "Panel de Control" y las opciones "KPIs & Estadísticas", "Revisión de Recargas", "Monitoreo de Órdenes" y "Gestión de Usuarios".
+  - **Optimización de Espacio:** El contenedor principal ahora utiliza el ancho completo (`w-full`) para renderizar las tablas y listados administrativos, lo que facilita considerablemente la lectura en pantallas compactas y de escritorio.
+  - **Actualización del Dropdown (Navbar):** Se actualizó el texto del enlace en el menú del avatar. Ahora muestra "Panel de Administración" únicamente para usuarios administradores, y "Mi Ficha de Usuario" para clientes y profesionales.
+* **Validación realizada:** Limpieza de código sin imports obsoletos (`usePathname`, `Shield`, `Users`, etc.) y compilación exitosa en Next.js.

@@ -330,7 +330,7 @@ export default function Navbar() {
                       className="flex items-center gap-2.5 px-4 py-2 text-md font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors"
                     >
                       <LayoutDashboard className="h-4 w-4 text-zinc-400" />
-                      Panel de Control
+                      {rol === 'admin' ? 'Panel de Administración' : 'Mi Ficha de Usuario'}
                     </Link>
 
                     {rol === 'profesional' && (
