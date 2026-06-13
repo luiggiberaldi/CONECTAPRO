@@ -65,8 +65,9 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
 
   return (
     <div className="space-y-4">
-      <div className="overflow-x-auto bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm">
-        <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+      <div className="bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider">
             <tr>
               <th scope="col" className="px-6 py-4 w-[22%]">Profesional</th>
@@ -169,6 +170,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             )}
           </tbody>
         </table>
+      </div>
       </div>
 
       {/* Controles de Paginación */}

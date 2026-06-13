@@ -313,8 +313,9 @@ export default function UsuariosTable({
       </div>
 
       {/* 3. Listado Principal (Tabla Rediseñada) */}
-      <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
-        <table className="w-full table-fixed min-w-[900px] text-left text-xs">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full table-fixed min-w-[900px] text-left text-xs">
           <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
               <th scope="col" className="pr-4 py-3.5 w-[28%]" style={{ paddingLeft: '24px' }}>
@@ -518,6 +519,7 @@ export default function UsuariosTable({
             )}
           </tbody>
         </table>
+      </div>
       </div>
 
       {/* 4. Controles Paginación */}

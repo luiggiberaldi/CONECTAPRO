@@ -264,8 +264,9 @@ export default function OrdenesTable({
         )}
       </div>
 
-      <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
-        <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
               <th scope="col" className="px-6 py-4 w-[22%]">
@@ -419,6 +420,7 @@ export default function OrdenesTable({
             )}
           </tbody>
         </table>
+      </div>
       </div>
 
       {/* 4. Controles Paginación */}
