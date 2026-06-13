@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { Loader2, User, Mail, Lock, Sparkles, Briefcase, MapPin, Award, UserPlus, ArrowLeft } from 'lucide-react';
+import { User, Mail, Lock, Sparkles, Briefcase, MapPin, Award, UserPlus, ArrowLeft } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 import Link from 'next/link';
 import Image from 'next/image';
 import CustomSelect, { SelectOption } from '@/components/ui/CustomSelect';
@@ -310,7 +311,7 @@ export default function RegistroPage() {
                 className="flex w-full justify-center items-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
               >
                 {loading ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <Loader size="sm" />
                 ) : (
                   <>
                     <UserPlus className="h-4 w-4" />

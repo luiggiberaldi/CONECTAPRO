@@ -4,6 +4,7 @@ export interface AdminKPIs {
   totalOrdenesHoy: number;
   profesionalesActivos: number;
   creditosVendidos: number;
+  dolaresRecaudados: number;
 }
 
 export interface AdminRecarga extends Omit<Recarga, 'usuario'> {

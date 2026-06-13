@@ -5,7 +5,8 @@ import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { OrdenCard } from '@/features/ordenes';
 import { supabaseBrowser } from '@/lib/supabase';
-import { Loader2, RefreshCw, Inbox, Award } from 'lucide-react';
+import { RefreshCw, Inbox, Award } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 import { Profesional } from '@/types';
 
 type TabType = 'disponibles' | 'asignados';
@@ -80,8 +81,8 @@ export default function ProfesionalOrdenesPage() {
   if (loadingProf) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
-        <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando perfil profesional...</p>
+        <Loader size="lg" />
+        <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Cargando perfil profesional...</p>
       </div>
     );
   }
@@ -140,8 +141,8 @@ export default function ProfesionalOrdenesPage() {
         {/* LISTADO */}
         {loading && ordenes.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">Buscando órdenes...</p>
+            <Loader size="lg" />
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Buscando órdenes...</p>
           </div>
         ) : ordenes.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 px-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50/30 text-center animate-fade-in">

@@ -3,8 +3,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabaseBrowser } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
-import { Loader2, ShieldCheck } from 'lucide-react';
-import ConfirmModal from '@/components/shared/ConfirmModal';
+import { ShieldCheck } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
+import dynamic from 'next/dynamic';
+const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
 
 interface AceptarOrdenButtonProps {
   ordenid: string;
@@ -75,10 +77,10 @@ export default function AceptarOrdenButton({
     return (
       <button
         disabled
-        className="flex items-center justify-center gap-2 w-full rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-400 py-3 text-sm font-semibold cursor-not-allowed"
+        className="flex items-center justify-center gap-2 w-full rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 py-3 px-4 text-xs sm:text-sm font-semibold cursor-not-allowed whitespace-nowrap"
       >
-        <Loader2 className="h-4 w-4 animate-spin" />
-        Consultando créditos disponibles...
+        <Loader size="sm" />
+        Verificando saldo...
       </button>
     );
   }
@@ -89,14 +91,14 @@ export default function AceptarOrdenButton({
         type="button"
         disabled={actionLoading}
         onClick={handleButtonClick}
-        className="flex items-center justify-center gap-2 w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm py-3 text-sm font-semibold transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+        className="flex items-center justify-center gap-2 w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/10 py-3 px-4 text-xs sm:text-sm font-bold tracking-wide transition-all active:scale-98 disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap"
       >
         {actionLoading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
+          <Loader size="sm" />
         ) : (
           <>
-            <ShieldCheck className="h-4 w-4" />
-            Aceptar esta Orden (Costo: 1 crédito)
+            <ShieldCheck className="h-4 w-4 text-indigo-200" />
+            Aceptar Orden (1 crédito)
           </>
         )}
       </button>

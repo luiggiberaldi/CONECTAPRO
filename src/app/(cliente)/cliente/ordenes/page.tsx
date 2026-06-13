@@ -4,7 +4,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { OrdenCard } from '@/features/ordenes';
-import { Loader2, Plus, Inbox, RefreshCw } from 'lucide-react';
+import { Plus, Inbox, RefreshCw } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 import Link from 'next/link';
 
 type TabType = 'activas' | 'completadas' | 'canceladas';
@@ -84,8 +85,8 @@ export default function ClienteOrdenesPage() {
         {/* LISTADO */}
         {loading && ordenes.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando tus solicitudes...</p>
+            <Loader size="lg" />
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Cargando tus solicitudes...</p>
           </div>
         ) : ordenesFiltradas.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 px-4 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl bg-zinc-50/30 text-center animate-fade-in">

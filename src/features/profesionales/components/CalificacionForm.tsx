@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, Loader2, Send } from 'lucide-react';
+import { Star, Send } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 import { calificarServicio } from '../api';
 import { toast } from '@/hooks/use-toast';
 
@@ -115,7 +116,7 @@ export default function CalificacionForm({
           className="flex items-center justify-center gap-1.5 w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm py-2.5 text-xs font-semibold transition-all active:scale-95 disabled:opacity-50"
         >
           {loading ? (
-            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            <Loader size="sm" />
           ) : (
             <Send className="h-3.5 w-3.5" />
           )}

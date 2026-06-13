@@ -6,7 +6,8 @@ import { crearOrden } from '../api';
 import { UrgenciaOrden, Categoria } from '@/types';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { Loader2, Briefcase, FileText, MapPin, AlertCircle, Sparkles } from 'lucide-react';
+import { Briefcase, FileText, MapPin, AlertCircle, Sparkles } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 import CustomSelect, { SelectOption } from '@/components/ui/CustomSelect';
 
 
@@ -88,7 +89,7 @@ export default function CrearOrdenForm() {
   if (loadingCats) {
     return (
       <div className="flex items-center justify-center p-8">
-        <Loader2 className="h-6 w-6 text-indigo-600 animate-spin" />
+        <Loader size="md" />
         <span className="text-sm text-zinc-500 dark:text-zinc-400 ml-2">Cargando categorías disponibles...</span>
       </div>
     );
@@ -245,7 +246,7 @@ export default function CrearOrdenForm() {
           className="flex w-full justify-center items-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
         >
           {submitting ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader size="sm" />
           ) : (
             'Publicar Orden de Servicio'
           )}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Recarga } from '@/types';
 import { CreditCard, Calendar, Eye, ArrowLeft, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 interface HistorialRecargasProps {
   recargas: Recarga[] | null;
@@ -150,12 +151,15 @@ export default function HistorialRecargas({ recargas }: HistorialRecargasProps) 
             className="relative bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden max-w-lg w-full max-h-[85vh] p-3 shadow-2xl border border-zinc-200 dark:border-zinc-800 flex flex-col items-center justify-center animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={verCapturaUrl}
-              alt="Comprobante de pago"
-              className="max-w-full max-h-[75vh] object-contain rounded-xl"
-            />
+            <div className="relative w-full aspect-[4/3] max-h-[70vh] rounded-xl overflow-hidden min-h-[250px] min-w-[280px] md:min-w-[400px]">
+              <Image
+                src={verCapturaUrl}
+                alt="Comprobante de pago"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 500px"
+              />
+            </div>
             <button
               type="button"
               onClick={() => setVerCapturaUrl(null)}

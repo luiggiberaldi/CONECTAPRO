@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { AuthRole } from '@/features/auth/types';
-import { Loader2, ShieldAlert, LogOut } from 'lucide-react';
+import { ShieldAlert, LogOut } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -25,8 +26,8 @@ export default function RouteGuard({ children, allowedRoles }: RouteGuardProps) 
   if (!initialized || (loading && !usuario)) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
-        <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">Verificando accesos...</p>
+        <Loader size="lg" />
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-4">Verificando accesos...</p>
       </div>
     );
   }

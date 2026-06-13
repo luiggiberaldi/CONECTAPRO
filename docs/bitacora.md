@@ -111,4 +111,100 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
 * **Revision cruzada:** No hay archivos en `src/` con mas de 600 lineas; no hay usos de `window.alert`, `window.confirm`, `window.prompt`, `alert`, `confirm` o `prompt`; los imports de Supabase se mantienen centralizados a traves de `src/lib/supabase.ts`.
 * **Toasts de exito:** Se verificaron las acciones con persistencia y se reforzo `crearOrden()` para lanzar error si la insercion no retorna un `id` real antes de mostrar `toast.success`.
 * **Archivos modificados:** `src/features/ordenes/api.ts`, `docs/bitacora.md`.
-* **Validacion realizada:** `npm run lint` paso con una advertencia existente de `@next/next/no-img-element` en `src/features/profesionales/components/ResenasList.tsx`; `npm run build` compilo correctamente. La validacion visual en navegador integrado quedo limitada porque el entorno no permitio mantener vivo el servidor local de desarrollo en un puerto disponible.
+* **Validacion realizada:** `npm run lint` paso con una advertencia existente de `@next/next/no-img-element` en `src/features/profesionales/components/ResenasList.tsx`; `npm run build` compilo correctamente. La validacion visual en navegador integrado quedo limitada porque el entorno no permitio mantener vivo el servidor local de desarrollo.
+
+### [arch] Rediseño de cargadores de la aplicación a Torre 3D
+* **Decisión de arquitectura:** Se creó un componente reutilizable `Loader` en `src/components/shared/Loader.tsx` que implementa la estructura de torre 3D propuesta, y se agregaron sus estilos correspondientes y configuraciones de tamaño en `src/app/globals.css`.
+* **Archivos modificados:** `src/app/globals.css`, `src/components/shared/Loader.tsx` y 12 archivos adicionales de páginas y componentes donde se reemplazó `Loader2` por el nuevo componente `Loader`.
+* **Validación realizada:** El compilador de TypeScript (`npx tsc --noEmit`) finalizó sin errores.
+
+### [arch] Rediseño Premium de la Página de Inicio (Home)
+* **Decisión:** Rediseñar por completo la página de inicio ([page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)) para ofrecer una experiencia visual premium y ultra profesional que destaque ante clientes y profesionales.
+* **Detalles:**
+  * Se diseñó un Hero animado con gradientes dinámicos interactivos, efectos de brillo y micro-animaciones.
+  * Se implementó una cuadrícula tipo Bento Grid para presentar las características de la plataforma de forma moderna.
+  * Se creó un selector y timeline interactivo para explicar el funcionamiento adaptado a clientes ("Cómo funciona") y a profesionales.
+  * Se diseñó una sección de Preguntas Frecuentes (FAQ) interactiva con acordeones fluidos y transiciones visuales agradables.
+  * Se añadió un banner de llamado a la acción (CTA) premium con un fondo degradado y botones dinámicos.
+  * Se removieron las dependencias/importaciones sin uso (como `Clock`) para garantizar la compilación limpia.
+  * Se excluyó la carpeta independiente `iron-man` de `tsconfig.json` para evitar que Next.js intente verificar sus tipos dentro del build de ConectaPro.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx), [tsconfig.json](file:///c:/Users/luigg/Desktop/conectapro/tsconfig.json)
+* **Validación realizada:** Verificación del flujo de compilación mediante `npm run build` sin errores ni advertencias críticas.
+
+### [fix] BUG-7 — Badge borroso/ilegible en la cabecera del Home
+* **Causa raíz:** La clase CSS `.animate-pulse-glow` aplicaba `filter: blur(...)` al elemento contenedor en lugar de ser un efecto de resplandor externo/sombra, lo que emborronaba por completo la tarjeta y el texto en el Home.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
+* **Validación realizada:** Se reemplazó por la clase nativa `animate-pulse` de Tailwind que realiza una transición de opacidad sin distorsionar el texto. La compilación mediante `npm run build` finalizó correctamente.
+
+### [arch] Mejora de Layout Lateral en el Hero del Home
+* **Decisión de arquitectura:** Para balancear el espacio vacío lateral detectado en pantallas grandes (desktops), se implementó una rejilla de fondo radial y dos tarjetas glassmorphic flotantes interactivas en los costados del Hero.
+* **Detalles:**
+  - Se crearon animaciones CSS personalizadas `@keyframes float` y `@keyframes floatDelayed` en [globals.css](file:///c:/Users/luigg/Desktop/conectapro/src/app/globals.css) para simular una levitación natural desfasada con ligeras rotaciones.
+  - Se integró un fondo con patrón de puntos radiales tecnológicos atenuados mediante máscaras CSS en el Hero de [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx).
+  - Se añadieron dos tarjetas flotantes con estilo glassmorphism (perfil de profesional certificado a la izquierda y una orden de trabajo activa a la derecha) con visibilidad restringida a pantallas grandes (`xl:flex`) para no saturar móviles y tablets.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx), [globals.css](file:///c:/Users/luigg/Desktop/conectapro/src/app/globals.css)
+* **Validación realizada:** La compilación (`npm run build`) terminó de manera exitosa.
+
+### [arch] Script de Semillero (Seed) y Limpieza Automática de Datos de Prueba (Demo)
+* **Decisión:** Desarrollar un script centralizado de gestión de datos de prueba (`src/scripts/manage-demo.js`) para poblar y limpiar la base de datos de manera atómica, rápida y segura para demostraciones de la plataforma.
+* **Detalles:**
+  - **Estructura de Datos Demo**: Genera 3 clientes y 5 profesionales (con especialidades repartidas y descripciones realistas). Simula balances de wallet (desde 5 a 19 créditos), recargas aprobadas en el historial de pagos y 6 órdenes de trabajo (en estados `pendiente`, `en_proceso` y `completada`).
+  - **Reputación y Feedbacks**: Crea calificaciones y reseñas cruzadas (cliente <=> profesional) con marcas de tiempo históricas de hasta 15 días de antigüedad. El trigger de base de datos recalcula de manera automática las estrellas promedio y cantidad de cada perfil profesional.
+  - **Facilidad de Limpieza**: Los correos de todos los usuarios demo terminan en `@conectapro-demo.com`. El comando `clean` busca estos usuarios en Auth, los elimina a través de la API Admin de Supabase y, por relaciones de clave externa con eliminación en cascada (`ON DELETE CASCADE`), limpia todas las dependencias asociadas de forma instantánea.
+  - Se añadieron accesos rápidos en `package.json` (`npm run demo:seed` y `npm run demo:clean`).
+* **Archivos modificados:** [package.json](file:///c:/Users/luigg/Desktop/conectapro/package.json), [manage-demo.js](file:///c:/Users/luigg/Desktop/conectapro/scripts/manage-demo.js)
+* **Validación realizada:** Ejecuciones exitosas locales de carga de datos y posterior eliminación atómica de los mismos; verificación de integridad en la consola de Supabase.
+
+### [fix] BUG-8 — Superposición de badge "Recomendado" y visual confuso en el selector de créditos
+* **Causa raíz:**
+  - El badge `RECOMENDADO` del paquete de 20 créditos en [PaquetesGrid.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/PaquetesGrid.tsx) estaba posicionado de forma absoluta en el extremo superior derecho (`right-4`), lo que provocaba que se superpusiera con el círculo de selección/radio button de la tarjeta, tapándolo casi por completo.
+  - Cualquier posicionamiento absoluto del badge (`-top-2.5`, `top-[-10px]`) sobre el contorno superior de la tarjeta colisionaba visualmente con el texto del título *"20 Créditos"* en pantallas compactas y dispositivos de escritorio debido a la cercanía con el padding de la tarjeta y la tipografía aplicada.
+  - El icono `Coins` de Lucide contiene internamente caracteres que lucen como el número `1` superpuesto en algunas tipografías, lo que confundía a los usuarios haciéndoles creer que se trataba de un paso numérico duplicado o roto.
+* **Archivos modificados:** [PaquetesGrid.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/PaquetesGrid.tsx)
+* **Validación realizada:** 
+  - Se eliminó por completo el posicionamiento absoluto del badge `RECOMENDADO`.
+  - Se agrupó el badge y el título *"20 Créditos"* dentro de un contenedor vertical (`flex flex-col gap-1.5`) de flujo de documento natural. Si el paquete es popular, el badge se renderiza justo arriba del título, empujando este último hacia abajo de forma orgánica y garantizando **cero solapamiento** en cualquier resolución.
+  - Se reestructuró el botón de selección (radio button) alineándolo al extremo derecho con flexbox independiente.
+  - Se restituyó el padding uniforme `p-5` y la altura mínima consistente `min-h-[160px]` en toda la cuadrícula para un look simétrico y balanceado.
+  - Se sustituyó el icono `Coins` por `CircleDollarSign` (con el símbolo `$` claramente legible), eliminando cualquier similitud con indicadores numéricos de paso.
+  - Se eliminó el uso de clases inexistentes de Tailwind (`h-4.5` y `w-4.5`) por la clase estándar `h-5` y `w-5`.
+  - La compilación mediante `npm run build` finalizó correctamente.
+
+### [arch] Descuentos progresivos en paquetes de créditos
+* **Decisión:** Incentivar la compra de paquetes mayores aplicando descuentos del 10% (para 20 créditos) y del 20% (para 50 créditos) de forma unificada.
+* **Detalles:**
+  * Se definieron funciones de precios y descuentos unificadas (`getPrecioPaquete`, `getPrecioOriginalPaquete`, `getDescuentoPaquete`) en [constants.ts](file:///c:/Users/luigg/Desktop/conectapro/src/lib/constants.ts).
+  * Se rediseñó [PaquetesGrid.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/PaquetesGrid.tsx) para mostrar badges llamativos con el porcentaje de ahorro (ej. `Ahorra 10%`) y renderizar el precio anterior tachado.
+  * Se sincronizó [RecargaForm.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/RecargaForm.tsx) y el servicio de registro de recargas en [api.ts](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/api.ts) para almacenar y facturar con el precio de descuento correcto.
+  * Se adaptaron los KPIs de administración en [types.ts](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/types.ts) y [api.ts](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/api.ts) para sumarizar los montos en USD reales (`montousd`) en lugar de estimaciones lineales.
+  * Se actualizó el panel administrativo en [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(admin)/admin/page.tsx) para reflejar los ingresos reales.
+* **Validación realizada:** `npm run build` compiló sin advertencias ni errores relacionados.
+
+### [arch] Rediseño premium del componente Loader
+* **Decisión:** Sustituir la antigua animación 3D de torre de cubos por un cargador concéntrico animado con SVG de alta calidad visual, gradiente de color (Indigo a Rose) y giro inverso sincronizado, mejorando el escalado en botones y bloques.
+* **Detalles:**
+  * Se removieron todos los estilos CSS del loader 3D en [globals.css](file:///c:/Users/luigg/Desktop/conectapro/src/app/globals.css) y se añadieron las animaciones concéntricas de giro inverso (`animate-spin-slow` y `animate-spin-reverse`).
+  * Se reestructuró [Loader.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/Loader.tsx) usando SVG, círculos de gradiente con `strokeDasharray`, efectos de halo (glow) dinámicos para tamaño grande y un mini spinner de alto contraste para tamaño pequeño (`size="sm"`).
+* **Validación realizada:** `npm run build` finalizó correctamente de manera limpia.
+
+### [arch] Optimización global de rendimiento
+* **Decisión:** Mejorar los tiempos de carga iniciales y optimizar el rendimiento del servidor de base de datos para cargas altas sin perder calidad visual.
+* **Detalles:**
+  * **Base de Datos**: Creado el archivo [00013_performance_indexes.sql](file:///c:/Users/luigg/Desktop/conectapro/supabase/migrations/00013_performance_indexes.sql) que define índices B-Tree estratégicos en las claves foráneas de `ordenes`, `recargas`, `mensajes`, `calificaciones` y `profesionales` para evitar escaneos secuenciales y garantizar consultas rápidas de microsegundos.
+  * **Optimización de Imágenes**: Reemplazadas las etiquetas heredadas `<img>` por el componente optimizado `<Image />` de Next.js en [ResenasList.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/profesionales/components/ResenasList.tsx), [RecargasTable.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/admin/components/RecargasTable.tsx), [HistorialRecargas.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/HistorialRecargas.tsx) y [RecargaForm.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/wallet/components/RecargaForm.tsx) (con propiedad `unoptimized` para Object URLs locales).
+  * **Configuración del Servidor de Imágenes**: Agregada la URL del storage de Supabase en `images.remotePatterns` dentro de [next.config.mjs](file:///c:/Users/luigg/Desktop/conectapro/next.config.mjs) para habilitar la compresión en servidor de Next.js.
+  * **Carga Dinámica (Code-Splitting)**: Configurada la carga dinámica mediante `next/dynamic` de `ConfirmModal` en todas las tablas y páginas de detalles, reduciendo los Kilobytes de JS iniciales requeridos.
+  * **Optimización de Reactividad**: Implementada la función `useShallow` de Zustand en el hook `useAuth` de [useAuth.ts](file:///c:/Users/luigg/Desktop/conectapro/src/features/auth/hooks/useAuth.ts) para evitar re-renderizaciones redundantes de los componentes suscritos.
+* **Validación realizada:** La compilación mediante `npm run build` finalizó correctamente de forma limpia y exitosa.
+
+## [13 de junio de 2026]
+
+### [fix] BUG-9 — Desalineación del icono y envoltura de texto en AceptarOrdenButton
+* **Causa raíz:** El texto del botón original *"Aceptar esta Orden (Costo: 1 crédito)"* (37 caracteres) se partía en dos líneas en pantallas de menor resolución o paneles laterales. Esto expandía la caja flex al 100% y desplazaba de forma asimétrica el icono `ShieldCheck` hacia el extremo izquierdo del botón.
+* **Archivos modificados:** [AceptarOrdenButton.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/features/ordenes/components/AceptarOrdenButton.tsx)
+* **Detalles:**
+  - Se simplificó el texto del botón principal a *"Aceptar Orden (1 crédito)"* (25 caracteres).
+  - Se simplificó el texto de carga de saldo a *"Verificando saldo..."* para consistencia.
+  - Se añadieron las clases responsivas `text-xs sm:text-sm` y la propiedad `whitespace-nowrap` a ambos botones para evitar que el texto o el icono se envuelvan y permanezcan siempre alineados en una sola línea.
+  - Se estandarizó el uso de sombras premium (`shadow-md shadow-indigo-600/10`) y clases nativas de Tailwind CSS.
+* **Validación realizada:** Limpieza de caché de Next.js (`.next`) y ejecución exitosa de `npm run build` sin errores.

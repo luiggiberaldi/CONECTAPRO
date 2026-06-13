@@ -4,7 +4,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { getTodasOrdenes } from '@/features/admin/api';
 import { AdminOrden, OrdenFilterEstado } from '@/features/admin/types';
 import OrdenesTable from '@/features/admin/components/OrdenesTable';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 export default function AdminOrdenesPage() {
   const [ordenes, setOrdenes] = useState<AdminOrden[]>([]);
@@ -60,8 +61,8 @@ export default function AdminOrdenesPage() {
       {/* Tabla de órdenes */}
       {loading && ordenes.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[40vh] p-4 text-center">
-          <Loader2 className="h-8 w-8 text-rose-500 animate-spin mb-2" />
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Consultando órdenes...</p>
+          <Loader size="lg" />
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Consultando órdenes...</p>
         </div>
       ) : (
         <OrdenesTable

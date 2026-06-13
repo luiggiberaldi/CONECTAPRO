@@ -1,6 +1,7 @@
 import { supabaseBrowser } from '@/lib/supabase';
 import { toast } from '@/hooks/use-toast';
 import { Wallet, Recarga } from '@/types';
+import { getPrecioPaquete } from '@/lib/constants';
 
 /**
  * Obtiene el wallet de un profesional.
@@ -85,8 +86,8 @@ export async function solicitarRecarga(
       throw new Error('No se pudo generar la URL pública de la captura de pago.');
     }
 
-    // 3. Calcular el monto en USD (1 crédito = $1.20 USD)
-    const montousd = paquete * 1.20;
+    // 3. Calcular el monto en USD con descuento progresivo
+    const montousd = getPrecioPaquete(paquete);
 
     // 4. Registrar la recarga en la base de datos
     const { data, error } = await supabaseBrowser

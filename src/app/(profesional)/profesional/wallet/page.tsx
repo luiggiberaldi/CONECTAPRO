@@ -9,7 +9,7 @@ import {
   RecargaForm,
   HistorialRecargas
 } from '@/features/wallet';
-import { Loader2 } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 export default function ProfesionalWalletPage() {
   const { usuario } = useAuth();
@@ -66,8 +66,8 @@ export default function ProfesionalWalletPage() {
 
         {loading ? (
           <div className="flex flex-col items-center justify-center min-h-[45vh] p-4 text-center">
-            <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando detalles de tu billetera...</p>
+            <Loader size="lg" />
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Cargando detalles de tu billetera...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">

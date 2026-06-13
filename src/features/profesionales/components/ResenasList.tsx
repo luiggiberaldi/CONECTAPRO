@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Resena } from '../types';
 import { Star, User, Calendar, MessageSquare, ChevronLeft, ChevronRight, Inbox } from 'lucide-react';
+import Image from 'next/image';
 
 interface ResenasListProps {
   resenas: Resena[];
@@ -57,13 +58,14 @@ export default function ResenasList({ resenas }: ResenasListProps) {
               {/* Header de Reseña */}
               <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-7 w-7 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 border border-zinc-200 dark:border-zinc-800">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <div className="h-7 w-7 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
                     {resena.calificador?.avatar_url ? (
-                      <img
+                      <Image
                         src={resena.calificador.avatar_url}
                         alt={`Avatar de ${resena.calificador.nombre}`}
-                        className="h-full w-full object-cover rounded-full"
+                        width={28}
+                        height={28}
+                        className="h-full w-full object-cover"
                       />
                     ) : (
                       <User className="h-3.5 w-3.5 text-zinc-400" />

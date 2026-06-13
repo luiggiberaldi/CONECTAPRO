@@ -53,20 +53,22 @@ export async function getKPIs(): Promise<AdminKPIs | null> {
 
     if (errProfesionales) throw errProfesionales;
 
-    // 3. Suma total de créditos vendidos (por recargas con estado = 'aprobada')
+    // 3. Suma total de créditos vendidos y dólares recaudados (por recargas con estado = 'aprobada')
     const { data: recargas, error: errRecargas } = await supabaseBrowser
       .from('recargas')
-      .select('paquete')
+      .select('paquete, montousd')
       .eq('estado', 'aprobada');
 
     if (errRecargas) throw errRecargas;
 
     const creditosVendidos = (recargas || []).reduce((acc, current) => acc + (current.paquete || 0), 0);
+    const dolaresRecaudados = (recargas || []).reduce((acc, current) => acc + (Number(current.montousd) || 0), 0);
 
     return {
       totalOrdenesHoy: totalOrdenesHoy || 0,
       profesionalesActivos: profesionalesActivos || 0,
       creditosVendidos,
+      dolaresRecaudados,
     };
   } catch (error) {
     console.error('[getKPIs]', error);

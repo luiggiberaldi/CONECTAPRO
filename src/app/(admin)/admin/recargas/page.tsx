@@ -4,7 +4,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { getRecargasPendientes, aprobarRecarga, rechazarRecarga } from '@/features/admin/api';
 import { AdminRecarga } from '@/features/admin/types';
 import RecargasTable from '@/features/admin/components/RecargasTable';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 export default function AdminRecargasPage() {
   const [recargas, setRecargas] = useState<AdminRecarga[]>([]);
@@ -73,8 +74,8 @@ export default function AdminRecargasPage() {
       {/* Tabla de recargas */}
       {loading && recargas.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[40vh] p-4 text-center">
-          <Loader2 className="h-8 w-8 text-rose-500 animate-spin mb-2" />
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Buscando solicitudes pendientes...</p>
+          <Loader size="lg" />
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Buscando solicitudes pendientes...</p>
         </div>
       ) : (
         <RecargasTable

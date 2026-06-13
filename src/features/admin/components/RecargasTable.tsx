@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { AdminRecarga } from '../types';
 import { Eye, Check, X, AlertCircle, Calendar, User, ChevronLeft, ChevronRight } from 'lucide-react';
-import ConfirmModal from '@/components/shared/ConfirmModal';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
 
 interface RecargasTableProps {
   recargas: AdminRecarga[];
@@ -204,12 +206,13 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             </div>
 
             {/* Contenido (Imagen) */}
-            <div className="flex-1 overflow-auto p-4 bg-zinc-950 flex items-center justify-center min-h-[300px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="flex-1 p-4 bg-zinc-950 flex items-center justify-center min-h-[300px] relative w-full aspect-[4/3] max-h-[50vh] overflow-hidden">
+              <Image
                 src={selectedRecarga.captura_url}
                 alt={`Comprobante de referencia ${selectedRecarga.referencia}`}
-                className="max-w-full max-h-[50vh] object-contain rounded"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 500px"
               />
             </div>
 

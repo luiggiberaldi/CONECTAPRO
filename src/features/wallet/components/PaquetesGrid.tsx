@@ -1,9 +1,11 @@
 import React from 'react';
-import { Coins, Check, Zap } from 'lucide-react';
+import { CircleDollarSign, Check, Zap } from 'lucide-react';
 
 interface Paquete {
   creditos: number;
   precio: number;
+  precioOriginal?: number;
+  descuento: number;
   popular?: boolean;
   descripcion: string;
 }
@@ -17,17 +19,22 @@ const PAQUETES: Paquete[] = [
   {
     creditos: 10,
     precio: 12.00,
+    descuento: 0,
     descripcion: 'Ideal para probar la plataforma y realizar tus primeros contactos.',
   },
   {
     creditos: 20,
-    precio: 24.00,
+    precio: 21.60,
+    precioOriginal: 24.00,
+    descuento: 10,
     popular: true,
     descripcion: 'El más elegido. Proporciona estabilidad y flujo constante de clientes.',
   },
   {
     creditos: 50,
-    precio: 60.00,
+    precio: 48.00,
+    precioOriginal: 60.00,
+    descuento: 20,
     descripcion: 'Ahorra tiempo. Para profesionales con alta demanda de servicios.',
   },
 ];
@@ -37,11 +44,11 @@ export default function PaquetesGrid({ paqueteSeleccionado, onSelect }: Paquetes
     <div className="space-y-4">
       <div>
         <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
-          <Coins className="h-4.5 w-4.5 text-indigo-500" />
+          <CircleDollarSign className="h-5 w-5 text-indigo-500" />
           Selecciona un Paquete de Créditos
         </h3>
         <p className="text-[10px] text-zinc-450 dark:text-zinc-500 mt-0.5">
-          Cada orden de servicio aceptada consume exactamente 1 crédito ($1.20 USD).
+          Cada orden de servicio aceptada consume exactamente 1 crédito ($1.20 USD). ¡Obtén descuentos comprando paquetes mayores!
         </p>
       </div>
 
@@ -52,27 +59,34 @@ export default function PaquetesGrid({ paqueteSeleccionado, onSelect }: Paquetes
             <div
               key={pkg.creditos}
               onClick={() => onSelect(pkg.creditos)}
-              className={`relative cursor-pointer flex flex-col justify-between rounded-2xl p-5 border transition-all ${
+              className={`relative cursor-pointer flex flex-col justify-between rounded-2xl p-5 border transition-all min-h-[170px] ${
                 esSeleccionado
                   ? 'border-indigo-650 bg-indigo-50/20 dark:bg-indigo-950/10 ring-1 ring-indigo-650'
-                  : pkg.popular
-                  ? 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-700'
                   : 'border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
             >
-              {pkg.popular && (
-                <span className="absolute -top-2.5 right-4 inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[8px] font-black uppercase bg-indigo-600 text-white shadow-sm">
-                  <Zap className="h-2.5 w-2.5 fill-white" />
-                  Recomendado
-                </span>
-              )}
-
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-lg font-black text-zinc-900 dark:text-zinc-100">
-                    {pkg.creditos} Créditos
-                  </span>
-                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center transition-colors ${
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex flex-col gap-1.5 text-left">
+                    <div className="flex flex-wrap gap-1">
+                      {pkg.popular && (
+                        <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[8px] font-black uppercase bg-indigo-600 text-white shadow-sm self-start">
+                          <Zap className="h-2.5 w-2.5 fill-white" />
+                          Recomendado
+                        </span>
+                      )}
+                      {pkg.descuento > 0 && (
+                        <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[8px] font-black uppercase bg-emerald-600 text-white shadow-sm self-start">
+                          Ahorra {pkg.descuento}%
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-lg font-black text-zinc-900 dark:text-zinc-100">
+                      {pkg.creditos} Créditos
+                    </span>
+                  </div>
+
+                  <div className={`h-5 w-5 rounded-full border flex items-center justify-center transition-colors mt-0.5 flex-shrink-0 ${
                     esSeleccionado
                       ? 'border-indigo-600 bg-indigo-600 text-white'
                       : 'border-zinc-300 dark:border-zinc-700'
@@ -81,16 +95,23 @@ export default function PaquetesGrid({ paqueteSeleccionado, onSelect }: Paquetes
                   </div>
                 </div>
 
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-500 leading-relaxed mb-4">
+                <p className="text-[10px] text-zinc-450 dark:text-zinc-500 leading-relaxed mb-4 text-left">
                   {pkg.descripcion}
                 </p>
               </div>
 
-              <div className="border-t border-zinc-100 dark:border-zinc-800/80 pt-3 mt-2 flex items-baseline justify-between">
+              <div className="border-t border-zinc-100 dark:border-zinc-800/80 pt-3 mt-2 flex items-center justify-between">
                 <span className="text-[10px] text-zinc-400 dark:text-zinc-550">Precio</span>
-                <span className="text-base font-black text-zinc-900 dark:text-zinc-100">
-                  ${pkg.precio.toFixed(2)} <span className="text-[10px] font-normal text-zinc-450">USD</span>
-                </span>
+                <div className="text-right">
+                  {pkg.precioOriginal && (
+                    <span className="text-[10px] line-through text-zinc-400 dark:text-zinc-500 block">
+                      ${pkg.precioOriginal.toFixed(2)} <span className="text-[8px] font-normal">USD</span>
+                    </span>
+                  )}
+                  <span className="text-base font-black text-zinc-900 dark:text-zinc-100 block">
+                    ${pkg.precio.toFixed(2)} <span className="text-[10px] font-normal text-zinc-450">USD</span>
+                  </span>
+                </div>
               </div>
             </div>
           );

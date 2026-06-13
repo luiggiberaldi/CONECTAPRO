@@ -6,7 +6,8 @@ import { getReputacionProfesional } from '@/features/profesionales/api';
 import { ReputacionProfesional } from '@/features/profesionales/types';
 import ReputacionCard from '@/features/profesionales/components/ReputacionCard';
 import ResenasList from '@/features/profesionales/components/ResenasList';
-import { Loader2, RefreshCw, ArrowLeft, Award } from 'lucide-react';
+import { RefreshCw, ArrowLeft, Award } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 import Link from 'next/link';
 
 export default function ProfesionalReputacionPage() {
@@ -63,8 +64,8 @@ export default function ProfesionalReputacionPage() {
         {/* Contenido principal */}
         {loading && !reputacion ? (
           <div className="flex flex-col items-center justify-center min-h-[40vh] p-4 text-center">
-            <Loader2 className="h-8 w-8 text-indigo-650 animate-spin mb-2" />
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando reputación e historial...</p>
+            <Loader size="lg" />
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Cargando reputación e historial...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6">

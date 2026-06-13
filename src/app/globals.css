@@ -237,5 +237,49 @@ body {
   .animate-pulse-glow {
     animation: pulseGlow 2.5s infinite ease-in-out;
   }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(-4deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(-3deg);
+    }
+  }
+
+  @keyframes floatDelayed {
+    0%, 100% {
+      transform: translateY(0) rotate(4deg);
+    }
+    50% {
+      transform: translateY(-12px) rotate(5deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: floatDelayed 7s ease-in-out infinite;
+  }
+
+  /* Premium Concentric Loader Styles */
+  .animate-spin-slow {
+    animation: spin 2s linear infinite;
+  }
+
+  .animate-spin-reverse {
+    animation: spin-reverse 1.2s linear infinite;
+  }
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
 }
 

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { CreditCard, Upload, AlertCircle, Loader2, ArrowRight } from 'lucide-react';
+import { CreditCard, Upload, AlertCircle, ArrowRight } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
+import { getPrecioPaquete } from '@/lib/constants';
+import Image from 'next/image';
 
 interface RecargaFormProps {
   paquete: number | null;
@@ -81,7 +84,7 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
     );
   }
 
-  const montousd = paquete * 1.20;
+  const montousd = getPrecioPaquete(paquete);
 
   return (
     <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800/80 rounded-2xl p-6 shadow-sm">
@@ -209,11 +212,12 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
             {/* Vista previa de imagen cargada */}
             {previewUrl && (
               <div className="relative h-24 w-24 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex-shrink-0 bg-zinc-50">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={previewUrl}
                   alt="Vista previa de la captura"
-                  className="h-full w-full object-cover"
+                  fill
+                  unoptimized
+                  className="object-cover"
                 />
               </div>
             )}
@@ -228,7 +232,7 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
         >
           {loading ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader size="sm" />
               Procesando solicitud...
             </>
           ) : (

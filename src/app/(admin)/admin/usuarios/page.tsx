@@ -4,7 +4,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { getTodosUsuarios, suspenderUsuario, activarUsuario } from '@/features/admin/api';
 import { AdminUsuario } from '@/features/admin/types';
 import UsuariosTable from '@/features/admin/components/UsuariosTable';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 export default function AdminUsuariosPage() {
   const [usuarios, setUsuarios] = useState<AdminUsuario[]>([]);
@@ -73,8 +74,8 @@ export default function AdminUsuariosPage() {
       {/* Tabla de usuarios */}
       {loading && usuarios.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[40vh] p-4 text-center">
-          <Loader2 className="h-8 w-8 text-rose-500 animate-spin mb-2" />
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Consultando base de usuarios...</p>
+          <Loader size="lg" />
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Consultando base de usuarios...</p>
         </div>
       ) : (
         <UsuariosTable

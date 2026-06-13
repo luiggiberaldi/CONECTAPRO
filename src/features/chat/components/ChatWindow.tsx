@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useChat } from '../hooks/useChat';
 import { detectarTelefono } from '../utils/antipuenteo';
-import { Send, AlertTriangle, Loader2, MessageSquare, Clock, User, Info } from 'lucide-react';
+import { Send, AlertTriangle, MessageSquare, Clock, User, Info } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 interface ChatWindowProps {
   ordenId: string;
@@ -132,8 +133,8 @@ export default function ChatWindow({
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-zinc-50/30 dark:bg-zinc-950/10">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-full text-zinc-400">
-            <Loader2 className="h-6 w-6 animate-spin text-indigo-600 mb-1.5" />
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-400">Cargando conversación...</p>
+            <Loader size="md" />
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-2">Cargando conversación...</p>
           </div>
         ) : mensajes.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center p-6">
@@ -226,7 +227,7 @@ export default function ChatWindow({
           className="h-[38px] w-[38px] rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm transition-all active:scale-95 disabled:bg-zinc-200 dark:disabled:bg-zinc-800 disabled:text-zinc-450"
         >
           {enviando ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader size="sm" />
           ) : (
             <Send className="h-4 w-4" />
           )}

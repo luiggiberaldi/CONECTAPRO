@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { getKPIs } from '@/features/admin/api';
 import { AdminKPIs } from '@/features/admin/types';
 import KPICard from '@/features/admin/components/KPICard';
-import { ClipboardList, Users, DollarSign, Loader2, Sparkles, RefreshCw } from 'lucide-react';
+import { ClipboardList, Users, DollarSign, Sparkles, RefreshCw } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
 
 export default function AdminDashboardPage() {
   const [kpis, setKpis] = useState<AdminKPIs | null>(null);
@@ -34,8 +35,8 @@ export default function AdminDashboardPage() {
   if (loading && !kpis) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[40vh] p-4 text-center">
-        <Loader2 className="h-8 w-8 text-rose-500 animate-spin mb-2" />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando métricas del sistema...</p>
+        <Loader size="lg" />
+        <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Cargando métricas del sistema...</p>
       </div>
     );
   }
@@ -81,7 +82,7 @@ export default function AdminDashboardPage() {
         <KPICard
           title="Créditos Vendidos"
           value={`${kpis?.creditosVendidos ?? 0} CR`}
-          description={`Equivale a $${((kpis?.creditosVendidos ?? 0) * 1.20).toFixed(2)} USD cobrados`}
+          description={`Equivale a $${(kpis?.dolaresRecaudados ?? 0).toFixed(2)} USD cobrados`}
           icon={DollarSign}
           color="amber"
         />

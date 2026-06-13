@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { AdminUsuario } from '../types';
 import { Search, UserCheck, UserX, AlertCircle, ShieldAlert, Award, ChevronLeft, ChevronRight } from 'lucide-react';
-import ConfirmModal from '@/components/shared/ConfirmModal';
 import CustomSelect, { SelectOption } from '@/components/ui/CustomSelect';
+import dynamic from 'next/dynamic';
+const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
 
 
 interface UsuariosTableProps {

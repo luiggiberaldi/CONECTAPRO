@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
 import { Usuario } from '@/types';
 import { loginConEmail, registrarUsuario, cerrarSesion, obtenerUsuarioPerfil } from '../api';
 import { RegistroPayload } from '../types';
@@ -24,7 +25,16 @@ export const useAuthStore = create<AuthState>((set) => ({
 }));
 
 export function useAuth() {
-  const { usuario, rol, loading, initialized, setSession, setLoading } = useAuthStore();
+  const { usuario, rol, loading, initialized, setSession, setLoading } = useAuthStore(
+    useShallow((state) => ({
+      usuario: state.usuario,
+      rol: state.rol,
+      loading: state.loading,
+      initialized: state.initialized,
+      setSession: state.setSession,
+      setLoading: state.setLoading,
+    }))
+  );
 
   const login = async (email: string, pass: string) => {
     setLoading(true);

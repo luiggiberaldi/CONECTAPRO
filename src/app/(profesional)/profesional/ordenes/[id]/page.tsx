@@ -5,9 +5,11 @@ import { useParams } from 'next/navigation';
 import { useOrdenDetalle } from '@/features/ordenes/hooks/useOrdenDetalle';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { AceptarOrdenButton } from '@/features/ordenes';
-import ConfirmModal from '@/components/shared/ConfirmModal';
 import { supabaseBrowser } from '@/lib/supabase';
-import { Loader2, ArrowLeft, Calendar, MapPin, AlertCircle, User, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, AlertCircle, User, CheckCircle } from 'lucide-react';
+import Loader from '@/components/shared/Loader';
+import dynamic from 'next/dynamic';
+const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
 import Link from 'next/link';
 import { Profesional } from '@/types';
 import { ChatWindow } from '@/features/chat';
@@ -89,8 +91,8 @@ export default function ProfesionalOrdenDetallePage() {
   if (loading || loadingProf) {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
-          <Loader2 className="h-8 w-8 text-indigo-600 animate-spin mb-2" />
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Cargando detalles de la orden...</p>
+          <Loader size="lg" />
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">Cargando detalles de la orden...</p>
         </div>
     );
   }
@@ -275,7 +277,7 @@ export default function ProfesionalOrdenDetallePage() {
               <div className="space-y-4">
                 {checkingCalificacion ? (
                   <div className="flex items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
-                    <Loader2 className="h-5 w-5 text-indigo-600 animate-spin" />
+                    <Loader size="sm" />
                   </div>
                 ) : yaCalifico ? (
                   <div className="bg-emerald-50/35 dark:bg-emerald-950/15 border border-emerald-500/15 rounded-2xl p-5 shadow-sm text-center">
