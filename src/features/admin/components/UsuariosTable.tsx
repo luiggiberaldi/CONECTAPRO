@@ -319,24 +319,24 @@ export default function UsuariosTable({
       {/* 3. Listado Principal (Tabla Rediseñada) */}
       <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
         <table className="min-w-full text-left text-xs">
-          <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest border-b border-zinc-200 dark:border-zinc-800">
+          <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="pl-3 pr-4 py-3.5">
+              <th scope="col" className="pl-5 pr-4 py-3.5 w-[30%]">
                 <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Usuario</span>
               </th>
-              <th scope="col" className="px-4 py-3.5">
+              <th scope="col" className="px-4 py-3.5 w-[14%]">
                 <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Rol</span>
               </th>
-              <th scope="col" className="px-4 py-3.5">
+              <th scope="col" className="px-4 py-3.5 w-[13%]">
                 <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-4 py-3.5">
+              <th scope="col" className="px-4 py-3.5 w-[20%]">
                 <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Profesión / Reputación</span>
               </th>
-              <th scope="col" className="px-4 py-3.5">
+              <th scope="col" className="px-4 py-3.5 w-[11%]">
                 <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Estado</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 text-right">
+              <th scope="col" className="px-4 py-3.5 w-[12%] text-right">
                 <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Acciones</span>
               </th>
             </tr>
@@ -385,11 +385,8 @@ export default function UsuariosTable({
                     className="relative hover:bg-indigo-50/20 dark:hover:bg-indigo-950/10 transition-all duration-150 group cursor-pointer border-b border-zinc-100 dark:border-zinc-800/60 last:border-0"
                     onClick={() => setSelectedUser(user)}
                   >
-                    {/* Left accent bar - absolute dentro del tr[relative] */}
-                    <div className={`absolute left-0 inset-y-0 w-[3px] rounded-r-full ${accentColor} opacity-60 group-hover:opacity-100 transition-opacity duration-150`} />
-
-                    {/* Perfil & Avatar */}
-                    <td className="pl-4 pr-4 py-3.5">
+                    {/* Perfil & Avatar — border-left como accent bar */}
+                    <td className={`pl-5 pr-4 py-3.5 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}>
                       <div className="flex items-center gap-3">
                         {user.avatar_url ? (
                           <img
@@ -461,7 +458,7 @@ export default function UsuariosTable({
                           </div>
                         </div>
                       ) : (
-                        <span className="text-zinc-300 dark:text-zinc-700 text-xs">—</span>
+                        <span className="text-zinc-350 dark:text-zinc-600 text-[11px] italic">N/A</span>
                       )}
                     </td>
 
@@ -472,7 +469,7 @@ export default function UsuariosTable({
 
                     {/* Acciones - visible solo en hover */}
                     <td className="px-4 py-3.5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center justify-end gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity duration-150">
+                      <div className="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity duration-150">
                         {/* Botón Ver Ficha */}
                         <button
                           onClick={() => setSelectedUser(user)}
@@ -512,9 +509,7 @@ export default function UsuariosTable({
                             </button>
                           )
                         ) : (
-                          <div className="invisible p-1.5 rounded-lg border border-transparent shrink-0">
-                            <UserX className="h-3.5 w-3.5" />
-                          </div>
+                          <span className="inline-block w-[30px]" />
                         )}
                       </div>
                     </td>
