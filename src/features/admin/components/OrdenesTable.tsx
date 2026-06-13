@@ -268,7 +268,7 @@ export default function OrdenesTable({
           <table className="w-full table-fixed min-w-[920px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-4 py-4 w-[22%]">
+              <th scope="col" className="px-4 py-4 w-[20%]">
                 <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Orden / Categoría</span>
               </th>
               <th scope="col" className="px-4 py-4 w-[18%]">
@@ -283,10 +283,10 @@ export default function OrdenesTable({
               <th scope="col" className="px-2 py-4 w-[11%]">
                 <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Urgencia</span>
               </th>
-              <th scope="col" className="px-2 py-4 w-[11%]">
+              <th scope="col" className="px-2 py-4 w-[10%]">
                 <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="pr-6 pl-2 py-4 w-[7%] text-right">
+              <th scope="col" className="py-4 w-[10%] text-right" style={{ paddingRight: '32px', paddingLeft: '16px' }}>
               </th>
             </tr>
           </thead>
@@ -404,7 +404,7 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Detalles Acción */}
-                  <td className="pr-6 pl-2 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                  <td className="py-5 align-middle text-right" style={{ paddingRight: '32px', paddingLeft: '16px' }} onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => setSelectedOrden(orden)}
                       className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
