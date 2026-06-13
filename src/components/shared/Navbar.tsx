@@ -96,25 +96,25 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/cliente/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Buscar profesionales
                   </Link>
                   <Link
                     href="/cliente/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Mis proyectos
                   </Link>
                   <Link
                     href="/cliente/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Planes
                   </Link>
                   <Link
                     href="/cliente/ordenes/nueva"
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm active:scale-98"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-md font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm active:scale-98"
                   >
                     <PlusCircle className="h-4 w-4" />
                     Publicar proyecto
@@ -126,25 +126,25 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/profesional/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Busca trabajo
                   </Link>
                   <Link
                     href="/profesional/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Mis proyectos
                   </Link>
                   <Link
                     href="/profesional/wallet"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Mis finanzas
                   </Link>
                   <Link
                     href="/profesional/reputacion"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Mi reputación
                   </Link>
@@ -155,25 +155,25 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/admin"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Dashboard
                   </Link>
                   <Link
                     href="/admin/usuarios"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Usuarios
                   </Link>
                   <Link
                     href="/admin/recargas"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Recargas
                   </Link>
                   <Link
                     href="/admin/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-xs font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
                     Órdenes
                   </Link>
@@ -207,7 +207,7 @@ export default function Navbar() {
                   <input
                     type="text"
                     placeholder="Buscar en ConectaPro..."
-                    className="w-full px-3 py-1.5 text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-550 dark:text-zinc-200"
+                    className="w-full px-3 py-1.5 text-md bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-550 dark:text-zinc-200"
                     autoFocus
                   />
                 </div>
@@ -237,13 +237,13 @@ export default function Navbar() {
               {isNotificationsOpen && (
                 <div className="absolute right-0 top-12 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl py-3.5 px-4 animate-in fade-in slide-in-from-top-2 duration-150">
                   <div className="flex justify-between items-center pb-2 border-b border-zinc-100 dark:border-zinc-800 mb-3">
-                    <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Notificaciones</h3>
-                    <span className="text-[10px] bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 px-2 py-0.5 rounded-full font-bold">1 nueva</span>
+                    <h3 className="text-md font-bold text-zinc-900 dark:text-zinc-100">Notificaciones</h3>
+                    <span className="text-[15px] bg-zinc-100 text-zinc-660 dark:bg-zinc-800 dark:text-zinc-300 px-2 py-0.5 rounded-full font-bold">1 nueva</span>
                   </div>
                   <div className="flex flex-col items-center justify-center py-5 text-center">
                     <Bell className="h-8 w-8 text-indigo-400 dark:text-indigo-500/80 mb-2 animate-bounce" />
-                    <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">¡Bienvenido a ConectaPro!</p>
-                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1.5 max-w-[220px]">
+                    <p className="text-md font-bold text-zinc-800 dark:text-zinc-200">¡Bienvenido a ConectaPro!</p>
+                    <p className="text-[15px] text-zinc-500 dark:text-zinc-400 mt-1.5 max-w-[220px]">
                       Explora la plataforma y descubre todas las herramientas de soporte técnico y profesional.
                     </p>
                   </div>
@@ -272,13 +272,13 @@ export default function Navbar() {
               {isMessagesOpen && (
                 <div className="absolute right-0 top-12 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl py-3.5 px-4 animate-in fade-in slide-in-from-top-2 duration-150">
                   <div className="flex justify-between items-center pb-2 border-b border-zinc-100 dark:border-zinc-800 mb-3">
-                    <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-100">Mensajes</h3>
-                    <span className="text-[10px] bg-zinc-100 text-zinc-650 dark:bg-zinc-800 dark:text-zinc-300 px-2 py-0.5 rounded-full font-bold">0 nuevos</span>
+                    <h3 className="text-md font-bold text-zinc-900 dark:text-zinc-100">Mensajes</h3>
+                    <span className="text-[15px] bg-zinc-100 text-zinc-650 dark:bg-zinc-800 dark:text-zinc-300 px-2 py-0.5 rounded-full font-bold">0 nuevos</span>
                   </div>
                   <div className="flex flex-col items-center justify-center py-5 text-center">
                     <MessageSquare className="h-8 w-8 text-zinc-300 dark:text-zinc-700 mb-2" />
-                    <p className="text-xs font-bold text-zinc-800 dark:text-zinc-200">Sin chats nuevos</p>
-                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1 max-w-[200px]">
+                    <p className="text-md font-bold text-zinc-800 dark:text-zinc-200">Sin chats nuevos</p>
+                    <p className="text-[15px] text-zinc-500 dark:text-zinc-400 mt-1 max-w-[200px]">
                       Conversa con otros usuarios directamente desde el detalle de tus solicitudes asignadas.
                     </p>
                   </div>
@@ -304,7 +304,7 @@ export default function Navbar() {
                     className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-800 shadow-sm"
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/60 flex items-center justify-center text-indigo-700 dark:text-indigo-400 font-black text-xs shadow-sm">
+                  <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/60 flex items-center justify-center text-indigo-700 dark:text-indigo-400 font-black text-md shadow-sm">
                     {usuario.nombre.substring(0, 2).toUpperCase()}
                   </div>
                 )}
@@ -315,9 +315,9 @@ export default function Navbar() {
                 <div className="absolute right-0 top-12 z-50 w-60 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl py-2.5 animate-in fade-in slide-in-from-top-2 duration-150">
                   {/* Info de Usuario */}
                   <div className="px-4 py-3 border-b border-zinc-100 dark:border-zinc-800 flex flex-col gap-1">
-                    <span className="text-xs font-black text-zinc-900 dark:text-zinc-100 leading-tight">{usuario.nombre}</span>
-                    <span className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate max-w-full">{usuario.email}</span>
-                    <span className={`inline-flex items-center self-start px-2 py-0.5 rounded-md text-[9px] font-bold border capitalize mt-1.5 tracking-wider ${getRoleBadgeColor()}`}>
+                    <span className="text-md font-black text-zinc-900 dark:text-zinc-100 leading-tight">{usuario.nombre}</span>
+                    <span className="text-[15px] text-zinc-500 dark:text-zinc-400 truncate max-w-full">{usuario.email}</span>
+                    <span className={`inline-flex items-center self-start px-2 py-0.5 rounded-md text-base font-bold border capitalize mt-1.5 tracking-wider ${getRoleBadgeColor()}`}>
                       {rol}
                     </span>
                   </div>
@@ -327,7 +327,7 @@ export default function Navbar() {
                     <Link
                       href={rol === 'cliente' ? '/cliente/ordenes' : rol === 'profesional' ? '/profesional/ordenes' : '/admin'}
                       onClick={() => setIsProfileOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors"
+                      className="flex items-center gap-2.5 px-4 py-2 text-md font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors"
                     >
                       <LayoutDashboard className="h-4 w-4 text-zinc-400" />
                       Panel de Control
@@ -337,7 +337,7 @@ export default function Navbar() {
                       <Link
                         href="/profesional/wallet"
                         onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors"
+                        className="flex items-center gap-2.5 px-4 py-2 text-md font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors"
                       >
                         <Wallet className="h-4 w-4 text-zinc-400" />
                         Mi Billetera
@@ -353,7 +353,7 @@ export default function Navbar() {
                       setIsProfileOpen(false);
                       handleLogout();
                     }}
-                    className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-black text-rose-600 dark:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-colors text-left"
+                    className="w-full flex items-center gap-2.5 px-4 py-2 text-md font-black text-rose-600 dark:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-colors text-left"
                   >
                     <LogOut className="h-4 w-4" />
                     Cerrar sesión
@@ -372,7 +372,7 @@ export default function Navbar() {
                   setIsSearchExpanded(false);
                   setIsProfileOpen(false);
                 }}
-                className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-850 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900 transition-colors"
+                className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-855 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900 transition-colors"
               >
                 {isMobileMenuOpen ? <X className="h-5.5 w-5.5" /> : <Menu className="h-5.5 w-5.5" />}
               </button>
@@ -389,28 +389,28 @@ export default function Navbar() {
               <Link
                 href="/cliente/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Buscar profesionales
               </Link>
               <Link
                 href="/cliente/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Mis proyectos
               </Link>
               <Link
                 href="/cliente/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Planes
               </Link>
               <Link
                 href="/cliente/ordenes/nueva"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-650 hover:bg-indigo-500 transition-all shadow-sm"
+                className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-md font-bold text-white bg-indigo-650 hover:bg-indigo-500 transition-all shadow-sm"
               >
                 <PlusCircle className="h-4 w-4" />
                 Publicar proyecto
@@ -423,28 +423,28 @@ export default function Navbar() {
               <Link
                 href="/profesional/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Busca trabajo
               </Link>
               <Link
                 href="/profesional/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Mis proyectos
               </Link>
               <Link
                 href="/profesional/wallet"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Mis finanzas
               </Link>
               <Link
                 href="/profesional/reputacion"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Mi reputación
               </Link>
@@ -456,28 +456,28 @@ export default function Navbar() {
               <Link
                 href="/admin"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Dashboard
               </Link>
               <Link
                 href="/admin/usuarios"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Usuarios
               </Link>
               <Link
                 href="/admin/recargas"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Recargas
               </Link>
               <Link
                 href="/admin/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 Órdenes
               </Link>
