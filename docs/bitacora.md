@@ -315,6 +315,17 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Estructura:** Implementado estilo glassmorphic de cristal en ambas tarjetas de rol (`bg-white/[0.03] backdrop-blur-xl border-white/10 hover:border-indigo-500/30 shadow-2xl`), iconos Lucide de gran formato en burbujas degradadas (`Users` y `Briefcase`), y listas con checks para resumir los beneficios clave en lugar de texto corrido.
 * **Validación realizada:** Compilación y visualización limpia comprobando la correcta renderización sintáctica de las etiquetas JSX de Next.js y Tailwind CSS.
 
+### [ux] Usabilidad y Gestos Táctiles en el Carrusel de Especialidades (Móviles)
+* **Decisión:** Habilitar navegación por gestos de arrastre horizontal (swipe) en dispositivos móviles, incorporar controles de flecha flotantes glassmorphic sobre la imagen, añadir un indicador de puntos (dots) activo, y ocultar los botones de navegación de escritorio duplicados en pantallas de teléfonos.
+* **Archivos modificados:** [animated-testimonials.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/ui/animated-testimonials.tsx)
+* **Detalles:**
+  - **Gestos de Arrastre (Swipe):** Configurada la propiedad `drag="x"` de Framer Motion en la tarjeta activa de especialidades con límites de retorno `dragConstraints={{ left: 0, right: 0 }}` y `dragElastic={0.2}`. El callback `onDragEnd` detecta deslizamientos superiores a 50px de distancia para cambiar de ficha. Se agregó `touch-pan-y` para posibilitar el scroll vertical del navegador sin bloquearse al tocar el carrusel.
+  - **Overlays de Flecha:** Se renderizan dos botones de navegación flotantes sobre la imagen (`ArrowLeft` y `ArrowRight`) con fondo oscuro translúcido y desenfoque (`bg-black/40 backdrop-blur-md border border-white/10`) posicionados en absoluto en los laterales, visibles solo en dispositivos móviles (`md:hidden`).
+  - **Dots de Estado:** Se agregó una barra de indicadores activos (dots) tipo píldora debajo del contenedor de la imagen (`md:hidden`) que reacciona reactivamente mostrando cuál ficha está cargada y permite saltar directamente a ella.
+  - **Ocultar duplicados:** Se ocultaron los botones de navegación inferiores del layout de escritorio en móviles usando la clase `hidden md:flex`.
+* **Validación realizada:** Verificación de tipos y lint de código TypeScript correctos.
+
+
 
 
 

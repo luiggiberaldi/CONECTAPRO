@@ -63,12 +63,23 @@ export const AnimatedTestimonials = ({
   return (
     <div className="max-w-sm md:max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto antialiased font-sans px-4 md:px-8 lg:px-12 py-10">
       <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 lg:gap-24">
-        <div>
+        <div className="relative">
           <div className="relative h-72 sm:h-[400px] md:h-[480px] lg:h-[520px] xl:h-[560px] w-full">
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={testimonial.src}
+                  drag={isActive(index) ? "x" : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(e, info) => {
+                    const threshold = 50; // px
+                    if (info.offset.x < -threshold) {
+                      handleNext();
+                    } else if (info.offset.x > threshold) {
+                      handlePrev();
+                    }
+                  }}
                   initial={{
                     opacity: 0,
                     scale: 0.9,
@@ -95,7 +106,7 @@ export const AnimatedTestimonials = ({
                     duration: 0.4,
                     ease: "easeInOut",
                   }}
-                  className="absolute inset-0 origin-bottom"
+                  className="absolute inset-0 origin-bottom cursor-grab active:cursor-grabbing touch-pan-y"
                 >
                   <Image
                     src={testimonial.src}
@@ -104,11 +115,41 @@ export const AnimatedTestimonials = ({
                     height={600}
                     draggable={false}
                     priority={index === 0}
-                    className="h-full w-full rounded-3xl object-cover object-center shadow-xl"
+                    className="h-full w-full rounded-3xl object-cover object-center shadow-xl select-none"
                   />
                 </motion.div>
               ))}
             </AnimatePresence>
+          </div>
+
+          {/* Floating overlays for mobile navigation */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-black/40 text-white backdrop-blur-md flex items-center justify-center border border-white/10 active:scale-90 transition-all md:hidden shadow-lg focus:outline-none"
+            aria-label="Anterior"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-black/40 text-white backdrop-blur-md flex items-center justify-center border border-white/10 active:scale-90 transition-all md:hidden shadow-lg focus:outline-none"
+            aria-label="Siguiente"
+          >
+            <ArrowRight className="h-5 w-5" />
+          </button>
+
+          {/* Dots Indicator for mobile */}
+          <div className="flex justify-center gap-1.5 mt-4 md:hidden">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActive(index)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  isActive(index) ? 'w-6 bg-indigo-650' : 'w-1.5 bg-zinc-300 dark:bg-zinc-800'
+                }`}
+                aria-label={`Ir a especialidad ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
         <div className="flex justify-between flex-col py-2 lg:py-4 md:max-lg:py-1">
@@ -221,7 +262,7 @@ export const AnimatedTestimonials = ({
             )}
           </motion.div>
 
-          <div className="flex gap-4 pt-8 lg:pt-6 md:max-lg:pt-4">
+          <div className="hidden md:flex gap-4 pt-8 lg:pt-6 md:max-lg:pt-4">
             <button
               onClick={handlePrev}
               className="h-11 w-11 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 flex items-center justify-center group/button transition-colors border border-zinc-200/45 dark:border-zinc-700/40 shadow-sm"
