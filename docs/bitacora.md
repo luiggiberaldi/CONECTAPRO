@@ -299,4 +299,13 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Visibilidad:** Integrado botón absoluto con iconos `Eye` y `EyeOff` en ambos campos de contraseña para alternar dinámicamente el atributo `type` entre `"password"` y `"text"`. Se ajustó el padding derecho a `pr-10` en los inputs para evitar solapamiento de texto con el botón.
 * **Validación realizada:** Compilación limpia y exitosa de Next.js (`Compiled successfully`) con `npm run build`.
 
+### [feature] Ciudad / Dirección obligatoria para todos los roles (Clientes y Profesionales)
+* **Decisión:** Mover el campo Ciudad al bloque común de registro de cuenta (`/auth/registro`) renombrado como "Ciudad / Dirección" para capturar la localización de todos los usuarios (incluidos clientes) de forma obligatoria.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/auth/registro/page.tsx)
+* **Detalles:**
+  - **Ubicación:** Trasladado el campo del grid profesional a los inputs comunes (Nombre, Correo, Ciudad/Dirección, Contraseñas) y validado en `handleSubmit` para ambas cuentas.
+  - **Sincronización:** Se envía la ciudad en el payload de registro. El trigger de base de datos `handle_new_user()` guarda este dato en la columna `ciudad` de la tabla `public.usuarios` para clientes y profesionales, manteniendo compatibilidad de esquema.
+* **Validación realizada:** Verificación estática con `npx tsc --noEmit` y `npx eslint src/app/auth/registro/page.tsx` con 0 errores y advertencias.
+
+
 

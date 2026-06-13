@@ -43,7 +43,7 @@ export default function RegistroPage() {
     setFormError(null);
 
     // Validar comunes
-    if (!email || !password || !confirmPassword || !nombre) {
+    if (!email || !password || !confirmPassword || !nombre || !ciudad) {
       setFormError('Por favor completa todos los campos comunes.');
       return;
     }
@@ -55,7 +55,7 @@ export default function RegistroPage() {
 
     // Validar profesional
     if (rol === 'profesional') {
-      if (!especialidad || !ciudad || !descripcion || !anyosexperiencia) {
+      if (!especialidad || !descripcion || !anyosexperiencia) {
         setFormError('Por favor completa toda la información profesional requerida.');
         return;
       }
@@ -73,7 +73,7 @@ export default function RegistroPage() {
       especialidad: rol === 'profesional' ? especialidad : undefined,
       descripcion: rol === 'profesional' ? descripcion : undefined,
       anyosexperiencia: rol === 'profesional' ? Number(anyosexperiencia) : undefined,
-      ciudad: rol === 'profesional' ? ciudad : undefined,
+      ciudad: ciudad || undefined,
     });
 
     if (res?.user?.id) {
@@ -198,6 +198,27 @@ export default function RegistroPage() {
                 </div>
               </div>
 
+              {/* Ciudad / Dirección */}
+              <div>
+                <label htmlFor="ciudad" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                  Ciudad / Dirección
+                </label>
+                <div className="relative mt-1">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
+                    <MapPin className="h-4 w-4" />
+                  </div>
+                  <input
+                    id="ciudad"
+                    type="text"
+                    required
+                    value={ciudad}
+                    onChange={(e) => setCiudad(e.target.value)}
+                    className="block w-full rounded-xl border-zinc-200 dark:border-zinc-800 pl-10 pr-4 py-2.5 bg-white/50 dark:bg-zinc-950/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all border outline-none focus:ring-1"
+                    placeholder="Ej. Caracas, Chacao"
+                  />
+                </div>
+              </div>
+
               {/* Contraseña */}
               <div>
                 <label htmlFor="pass" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-350">
@@ -265,44 +286,20 @@ export default function RegistroPage() {
                   Información de Proveedor de Servicios
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Especialidad */}
-                  <div>
-                    <label htmlFor="especialidad" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                      Especialidad / Oficio
-                    </label>
-                    <div className="mt-1">
-                      <CustomSelect
-                        id="especialidad"
-                        options={especialidadesOptions}
-                        value={especialidad}
-                        onChange={setEspecialidad}
-                        placeholder="Selecciona..."
-                        leftIcon={<Briefcase className="h-4 w-4" />}
-                      />
-                    </div>
-                  </div>
-
-
-                  {/* Ciudad */}
-                  <div>
-                    <label htmlFor="ciudad" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                      Ciudad
-                    </label>
-                    <div className="relative mt-1">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
-                        <MapPin className="h-4 w-4" />
-                      </div>
-                      <input
-                        id="ciudad"
-                        type="text"
-                        required
-                        value={ciudad}
-                        onChange={(e) => setCiudad(e.target.value)}
-                        className="block w-full rounded-xl border-zinc-200 dark:border-zinc-800 pl-10 pr-4 py-2.5 bg-white/50 dark:bg-zinc-950/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 text-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all border outline-none focus:ring-1"
-                        placeholder="Caracas"
-                      />
-                    </div>
+                {/* Especialidad */}
+                <div>
+                  <label htmlFor="especialidad" className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    Especialidad / Oficio
+                  </label>
+                  <div className="mt-1">
+                    <CustomSelect
+                      id="especialidad"
+                      options={especialidadesOptions}
+                      value={especialidad}
+                      onChange={setEspecialidad}
+                      placeholder="Selecciona..."
+                      leftIcon={<Briefcase className="h-4 w-4" />}
+                    />
                   </div>
                 </div>
 
