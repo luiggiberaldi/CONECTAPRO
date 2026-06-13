@@ -277,8 +277,17 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Bento Steps Grid**: Se creó un grid horizontal de 4 columnas. Cada paso es una tarjeta premium independiente que incluye un número de paso gigante de fondo (`01` al `04`), caja de icono con hover reactivo y textos de alta legibilidad.
   - **Iconografía**: Se importaron y asignaron iconos semánticos específicos (`ClipboardList`, `UserCheck`, `Search`, `Coins`).
   - **Optimización de Compilación**: Se deshabilitó el Webpack build worker experimental (`webpackBuildWorker: false` en `next.config.mjs`) para evitar desbordamientos de memoria RAM (out of memory error) durante el build en el sandbox.
-* **Validación realizada:** El comando `$env:NODE_TLS_REJECT_UNAUTHORIZED="0"; $env:NODE_OPTIONS="--max-old-space-size=4096"; npm run build` compiló sin errores, confirmando la validez tipográfica y sintáctica del JSX.
+* **Validación realizada:** El comando `$env:NODE_TLS_REJECT_UNAUTHORIZED="0"; $env:NODE_OPTIONS="--max-old-space-size=4096"; npm run build` compiló sin errores, confirmando la validez tipográfica y sintáctica del JSX.## [13 de junio de 2026] (Continuación)
 
-
-
+### [style] Optimización de Responsividad de toda la Home Page
+* **Decisión:** Realizar mejoras profundas de adaptabilidad y maquetación fluida en toda la página de inicio (Header, Hero, Bento Grid, Carrusel de Especialidades y Muro de Solicitudes) para asegurar una experiencia premium en todas las pantallas (320px móvil a 1080p escritorio).
+* **Archivos modificados:**
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
+  - [animated-testimonials.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/ui/animated-testimonials.tsx)
+* **Detalles:**
+  - **Header & Hero**: Se redujo proporcionalmente la altura del logo en móviles a `h-6` (escalando a `h-8` en sm) y se achicaron los botones de login/registro (`text-xs` y padding dinámico) para evitar colisión horizontal. Se redujo el título del Hero a `text-3xl` en móvil (escalando a `text-5xl` y `text-6xl` en sm/lg).
+  - **Bento Grid Core**: Se modificó la cuadrícula para pasar a 2 columnas en tablets (`sm:grid-cols-2 lg:grid-cols-3 gap-6`), dándoles un ancho holgado a las tarjetas de 1 columna ("Perfiles" y "Chat") de ~360px para que respiren y no colisionen sus footers. Las tarjetas horizontales se asignaron a `sm:col-span-2` y `sm:col-span-1` correspondientemente.
+  - **Especialidades**: Se configuró la altura de imagen auto-escalable de `h-72` a `h-[560px]`. Se redujeron márgenes y rellenos internos (`mt-3.5 pt-3.5`, `gap-2.5`, etc.) en la columna de texto lateral en tablets (`md:max-lg:`) para evitar que la caja exceda la altura de la imagen física.
+  - **Muro de Solicitudes**: Se cambió el grid a `sm:grid-cols-2 lg:grid-cols-3` y se configuró para que la tercera tarjeta (loading shimmer, feed y fallbacks) ocupe `sm:col-span-2 lg:col-span-1` en tablets para balancear el layout y evitar espacios vacíos asimétricos.
+* **Validación realizada:** Compilación de producción exitosa con `npm run build` sin advertencias de linter ni errores de TypeScript.
 

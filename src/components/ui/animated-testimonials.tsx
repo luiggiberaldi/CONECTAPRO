@@ -64,7 +64,7 @@ export const AnimatedTestimonials = ({
     <div className="max-w-sm md:max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto antialiased font-sans px-4 md:px-8 lg:px-12 py-10">
       <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 lg:gap-24">
         <div>
-          <div className="relative h-80 md:h-[480px] lg:h-[520px] xl:h-[560px] w-full">
+          <div className="relative h-72 sm:h-[400px] md:h-[480px] lg:h-[520px] xl:h-[560px] w-full">
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
@@ -111,7 +111,7 @@ export const AnimatedTestimonials = ({
             </AnimatePresence>
           </div>
         </div>
-        <div className="flex justify-between flex-col py-2 lg:py-4">
+        <div className="flex justify-between flex-col py-2 lg:py-4 md:max-lg:py-1">
           <motion.div
             key={active}
             initial={{
@@ -153,15 +153,15 @@ export const AnimatedTestimonials = ({
               </div>
             )}
 
-            <p className="text-sm lg:text-base text-zinc-650 dark:text-zinc-350 leading-relaxed mt-4">
+            <p className="text-sm lg:text-base text-zinc-650 dark:text-zinc-350 leading-relaxed mt-4 md:max-lg:mt-3">
               {testimonials[active].quote}
             </p>
 
             {/* Panel de estadísticas */}
             {testimonials[active].stats && (
-              <div className="mt-5 pt-5 border-t border-zinc-200/50 dark:border-zinc-800/60 grid grid-cols-2 gap-3.5">
+              <div className="mt-5 pt-5 md:max-lg:mt-3.5 md:max-lg:pt-3.5 border-t border-zinc-200/50 dark:border-zinc-800/60 grid grid-cols-2 gap-3.5 md:max-lg:gap-2.5">
                 {testimonials[active].stats.map((stat, i) => (
-                  <div key={i} className="bg-zinc-50/60 dark:bg-zinc-950/20 border border-zinc-200/50 dark:border-zinc-850/40 p-3.5 rounded-2xl">
+                  <div key={i} className="bg-zinc-50/60 dark:bg-zinc-950/20 border border-zinc-200/50 dark:border-zinc-850/40 p-3.5 md:max-lg:p-2.5 rounded-2xl">
                     <span className="block text-xl lg:text-2xl font-black text-indigo-650 dark:text-indigo-400">
                       {stat.value}
                     </span>
@@ -175,7 +175,7 @@ export const AnimatedTestimonials = ({
 
             {/* Testimonio Real Destacado (Social Proof) */}
             {testimonials[active].review && (
-              <div className="mt-5 p-4 rounded-2xl bg-zinc-50 border border-zinc-200/50 dark:bg-zinc-950/20 dark:border-zinc-850/40 relative overflow-hidden">
+              <div className="mt-5 md:max-lg:mt-3.5 p-4 md:max-lg:p-3 rounded-2xl bg-zinc-50 border border-zinc-200/50 dark:bg-zinc-950/20 dark:border-zinc-850/40 relative overflow-hidden">
                 <div className="flex items-center gap-1 text-amber-500 mb-1.5">
                   {[...Array(testimonials[active].review.stars)].map((_, idx) => (
                     <svg
@@ -191,7 +191,7 @@ export const AnimatedTestimonials = ({
                 <p className="text-xs lg:text-sm text-zinc-655 dark:text-zinc-300 italic leading-relaxed">
                   &ldquo;{testimonials[active].review.text}&rdquo;
                 </p>
-                <div className="flex items-center gap-2 mt-2.5 pt-2.5 border-t border-zinc-200/50 dark:border-zinc-800/40">
+                <div className="flex items-center gap-2 mt-2.5 pt-2.5 md:max-lg:mt-2 md:max-lg:pt-2 border-t border-zinc-200/50 dark:border-zinc-800/40">
                   <div className="h-6 w-6 rounded-full bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-[10px] font-bold text-indigo-700 dark:text-indigo-300">
                     {testimonials[active].review.author.split(' ').map(n => n[0]).join('')}
                   </div>
@@ -209,7 +209,7 @@ export const AnimatedTestimonials = ({
 
             {/* Botón de Acción Directa (CTA) */}
             {testimonials[active].ctaText && (
-              <div className="mt-5">
+              <div className="mt-5 md:max-lg:mt-3.5">
                 <a
                   href={testimonials[active].ctaLink}
                   className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-650 hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-650/10 hover:shadow-indigo-650/20 active:scale-98 transform duration-150 gap-2"
@@ -221,7 +221,7 @@ export const AnimatedTestimonials = ({
             )}
           </motion.div>
 
-          <div className="flex gap-4 pt-8 lg:pt-6">
+          <div className="flex gap-4 pt-8 lg:pt-6 md:max-lg:pt-4">
             <button
               onClick={handlePrev}
               className="h-11 w-11 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 flex items-center justify-center group/button transition-colors border border-zinc-200/45 dark:border-zinc-700/40 shadow-sm"

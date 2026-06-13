@@ -197,19 +197,19 @@ export default function Home() {
               width={192}
               height={32}
               priority
-              className="h-8 w-auto object-contain dark:brightness-110"
+              className="h-6 sm:h-8 w-auto object-contain dark:brightness-110"
             />
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/auth/login"
-              className="px-4 py-2 text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100 transition-colors"
+              className="px-2.5 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-100 transition-colors"
             >
               Iniciar Sesión
             </Link>
             <Link
               href="/auth/registro"
-              className="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md hover:shadow-indigo-500/20 transition-all active:scale-95"
+              className="px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md hover:shadow-indigo-500/20 transition-all active:scale-95"
             >
               Registrarse
             </Link>
@@ -270,7 +270,7 @@ export default function Home() {
               El Marketplace de servicios líder de Venezuela
             </span>
             
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight sm:leading-none text-zinc-900 dark:text-white">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-none text-zinc-900 dark:text-white">
               Talento profesional de confianza{' '}
               <span className="bg-gradient-to-r from-indigo-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
                 sin intermediarios ni comisiones
@@ -327,9 +327,9 @@ export default function Home() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Card 1: Col-span-2 */}
-              <div className="md:col-span-2 bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+              <div className="sm:col-span-2 lg:col-span-2 bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
                 <div>
                   <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
@@ -353,7 +353,7 @@ export default function Home() {
               </div>
 
               {/* Card 2: Col-span-1 */}
-              <div className="bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group flex flex-col justify-between h-full">
+              <div className="sm:col-span-1 lg:col-span-1 bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group flex flex-col justify-between h-full">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
                 <div>
                   <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
@@ -386,7 +386,7 @@ export default function Home() {
               </div>
 
               {/* Card 3: Col-span-1 */}
-              <div className="bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group flex flex-col justify-between h-full">
+              <div className="sm:col-span-1 lg:col-span-1 bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group flex flex-col justify-between h-full">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
                 <div>
                   <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
@@ -409,7 +409,7 @@ export default function Home() {
               </div>
 
               {/* Card 4: Col-span-2 */}
-              <div className="md:col-span-2 bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+              <div className="sm:col-span-2 lg:col-span-2 bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
                 <div>
                   <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
@@ -553,9 +553,9 @@ export default function Home() {
 
             {loadingRecientes ? (
               /* Shimmer loading state */
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map((n) => (
-                  <div key={n} className="bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-200/40 dark:border-zinc-850/40 p-6 rounded-2xl space-y-4 animate-pulse">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((n, index) => (
+                  <div key={n} className={`bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-200/40 dark:border-zinc-850/40 p-6 rounded-2xl space-y-4 animate-pulse ${index === 2 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
                     <div className="flex justify-between items-start">
                       <div className="h-4 bg-zinc-200 dark:bg-zinc-850 rounded w-20" />
                       <div className="h-3 bg-zinc-200 dark:bg-zinc-850 rounded w-10" />
@@ -573,9 +573,9 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recientes && recientes.length > 0 ? (
-                  recientes.map((orden) => {
+                  recientes.map((orden, index) => {
                     const date = new Date(orden.createdat);
                     const formattedDate = isNaN(date.getTime()) 
                       ? 'Reciente' 
@@ -600,7 +600,7 @@ export default function Home() {
                     }
 
                     return (
-                      <div key={orden.id} className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group">
+                      <div key={orden.id} className={`bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group ${index === 2 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
                         <div className="space-y-4">
                           <div className="flex justify-between items-start gap-4">
                             <span className={`text-xs font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider select-none ${
@@ -725,7 +725,7 @@ export default function Home() {
                     </div>
 
                     {/* Fallback 3: Enfermería */}
-                    <div className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group">
+                    <div className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group sm:col-span-2 lg:col-span-1">
                       <div className="space-y-4">
                         <div className="flex justify-between items-start gap-4">
                           <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-zinc-50 dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 border border-zinc-200/50 dark:border-zinc-800/50 uppercase tracking-wider select-none">
