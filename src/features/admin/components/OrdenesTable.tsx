@@ -20,7 +20,6 @@ import {
   Copy,
   Check,
   FilterX,
-  Sliders,
   Briefcase,
   Activity
 } from 'lucide-react';
