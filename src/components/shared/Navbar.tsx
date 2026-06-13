@@ -68,7 +68,7 @@ export default function Navbar() {
   return (
     <nav 
       ref={navRef}
-      className="sticky top-0 z-40 w-full bg-white dark:bg-zinc-950 border-b-[3px] border-[#3c2475] shadow-sm transition-colors duration-200"
+      className="sticky top-0 z-40 w-full bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 shadow-sm transition-colors duration-200"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
