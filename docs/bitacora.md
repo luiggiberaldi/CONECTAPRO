@@ -225,12 +225,46 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Formulario de Recarga**: Reemplazadas las notas pequeñas individuales de 9px por un banner interactivo de advertencia unificado con `text-xs` y fondo alert-accent, haciendo dinámicas las instrucciones de Pago Móvil, Zelle y USDT. Escalados los labels a `text-xs`.
 * **Validación realizada:** Limpieza de caché de Next.js (`Remove-Item -Recurse -Force .next`) y compilación limpia exitosa de las 19 rutas del build.
 
-### [arch] Hero Interactivo 3D con Scroll y Morphing en Home
-* **Decisión:** Implementar un Hero interactivo 3D con un lienzo WebGL de alto rendimiento utilizando Three.js procedimental que reacciona dinámicamente al scroll (giro y zoom) y al movimiento del ratón (paralaje).
+### [feature] Rediseño "Cómo funciona" (Estilo Workana) y "Muro de Solicitudes Recientes" (Live Feed)
+* **Decisión:** Rediseñar la sección informativa del Home para incorporar un estilo interactivo asimétrico y un feed en vivo que muestre las últimas solicitudes registradas de forma directa desde Supabase, mejorando la conversión de clientes y profesionales.
+* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
 * **Detalles:**
-  * Se desarrolló el componente cliente `Home3DCanvas.tsx` con un sistema de 1,200 partículas procedimentales que realizan transiciones fluidas de morphing y color entre dos estados: Modo Cliente (esfera geodésica índigo + wireframe) y Modo Profesional (constelación de anillos rosa + octaedro).
-  * Se refactorizó la página de inicio `src/app/page.tsx` para sincronizar pasivamente el scroll del usuario (`requestAnimationFrame`) con la cámara de Three.js y el desvanecimiento progresivo de 3 tarjetas HUD de telemetría y especificaciones de la plataforma.
-  * Se garantizó el empaquetado del canvas mediante carga dinámica diferida (`next/dynamic` con `ssr: false`) para evitar errores en el renderizado del lado del servidor (SSR) de Next.js.
-  * Se resolvieron errores de compilación de TypeScript y ESLint por variables u objetos no utilizados e imports redundantes.
-* **Archivos modificados:** [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx), [Home3DCanvas.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/Home3DCanvas.tsx), [package.json](file:///c:/Users/luigg/Desktop/conectapro/package.json), [package-lock.json](file:///c:/Users/luigg/Desktop/conectapro/package-lock.json)
-* **Validación realizada:** Limpieza completa de caché de Next.js y compilación limpia y exitosa a través de `npm run build` sin errores de linter.
+  - **Sección interactiva "Cómo funciona"**: Añadido selector de rol animado con indicador deslizante en CSS y timeline vertical a la izquierda con conector de línea. En el lado derecho se implementó un mockup de navegador web que despliega dinámicamente perfiles profesionales y solicitudes de trabajo según el rol seleccionado.
+  - **Muro de Solicitudes Recientes**: Conectado a la base de datos Supabase para cargar las últimas 3 órdenes pendientes en tiempo real. Implementado esqueleto de carga shimmer skeleton y un fallback estático responsivo de alta calidad con casos de uso realistas de Venezuela para mantener la estética si la base de datos está vacía.
+* **Validación realizada:** Limpieza de caché de Next.js (`.next`) y compilación exitosa con `npm run build`.
+
+### [style] Optimización tipográfica y ocupación de espacio en ProfesionesSection (1080p Desktop)
+* **Decisión:** Incrementar las escalas tipográficas (eliminando fuentes <12px) y expandir el layout del slider de especialidades en pantallas anchas para corregir el exceso de espacio en blanco lateral e incorporar métricas clave.
+* **Archivos modificados:**
+  - [ProfesionesSection.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/ProfesionesSection.tsx)
+  - [animated-testimonials.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/ui/animated-testimonials.tsx)
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
+* **Detalles:**
+  - **Soporte de estadísticas**: Agregada una propiedad `stats` a cada especialidad. Se renderiza dinámicamente un panel de 2 columnas de estadísticas en el lado derecho con bordes redondeados y fondos tenues que se actualizan con la animación del testimonio.
+  - **Ampliación del contenedor**: El ancho máximo del slider se incrementó en escritorio de `max-w-4xl` (896px) a `max-w-7xl` (1280px) con una brecha horizontal de `lg:gap-28` para balancear las columnas. La altura de la imagen en escritorio subió de `h-80` a `h-[460px]`.
+  - **Escala de fuentes**: Se eliminaron los textos pequeños de `text-[10px]` en las fichas del Home, las tarjetas simuladas y el timeline del "Cómo funciona". Se subieron a un estándar de `text-xs` y `text-sm`, y los títulos de las especialidades a `text-3xl lg:text-4xl font-extrabold`.
+* **Validación realizada:** Compilación limpia y exitosa de Next.js con `npm run build`.
+
+### [style] Optimización de Bento Grid y Especialidades (Propuesta 1 - Fichas Enriquecidas)
+* **Decisión:** Reducir drásticamente el espacio en blanco lateral y vertical en la página de inicio (Bento Grid y ProfesionesSection) enriqueciendo la densidad de información con testimonios reales, tags de especialidad y alineación de cuadrícula, además de desactivar el modo oscuro del sistema.
+* **Archivos modificados:**
+  - [tailwind.config.ts](file:///c:/Users/luigg/Desktop/conectapro/tailwind.config.ts)
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/page.tsx)
+  - [animated-testimonials.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/ui/animated-testimonials.tsx)
+  - [ProfesionesSection.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/components/shared/ProfesionesSection.tsx)
+* **Detalles:**
+  - **Desactivación del Modo Oscuro**: Se configuró `darkMode: "class"` en Tailwind. Dado que la etiqueta `html` en el layout no tiene la clase `dark`, el sitio se congela en modo claro, ignorando el esquema del sistema operativo.
+  - **Bento Grid Core**: Se modificaron las tarjetas verticales de 1 columna ("Perfiles Verificados" y "Chat Seguro") para usar `flex flex-col justify-between h-full` y un divisor sutil en el pie, igualando en altura a las tarjetas horizontales. Se añadieron pies de página (footers) ilustrativos:
+    - *Perfiles Verificados*: burbujas de avatars superpuestos con check e indicador "100% Seguro".
+    - *Chat Seguro*: punto verde pulsante e icono de candado con letrero "Protegido".
+    - Se mejoró la legibilidad de textos descriptivos pasando de `text-zinc-500` a `text-zinc-655` (contraste óptimo).
+  - **Especialidades (Fichas Enriquecidas)**:
+    - Se incrementó el tamaño vertical y horizontal del carrusel en escritorio a `h-80 md:h-[480px] lg:h-[520px] xl:h-[560px]`.
+    - Se añadieron etiquetas (tags) con sub-especialidades de cada servicio (ej. *"Filtraciones"*, *"Adulto mayor"*, *"Iluminación LED"*).
+    - Se incorporó un bloque con 5 estrellas doradas de **opinión destacada de un cliente real**, avatar con iniciales y rol.
+    - Se integró un botón de acción principal (CTA) como *"Buscar Plomeros Disponibles"* para dirigir al flujo correspondiente.
+    - Se quitó la animación letra por letra con blur por una transición fluida de opacidad/desplazamiento de bloque entero para mayor consistencia de renderizado.
+* **Validación realizada:** Se solucionaron errores sintácticos por cabecera `h2` sin cerrar y comillas dobles literales en JSX. El comando `npm run build` ejecutó y finalizó con código 0, generando todas las rutas de producción satisfactoriamente.
+
+
+

@@ -1,27 +1,42 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import {
   ShieldCheck,
   MessageSquare,
   Award,
   ArrowRight,
+  Sparkles,
+  CheckCircle2,
   ChevronDown,
   HelpCircle,
   Zap,
   Users,
-  Briefcase
+  Briefcase,
+  Clock,
+  MapPin,
+  Lock
 } from 'lucide-react';
+import { supabaseBrowser } from '@/lib/supabase';
 import ProfesionesSection from '@/components/shared/ProfesionesSection';
 
-const Home3DCanvas = dynamic(() => import('@/components/shared/Home3DCanvas'), {
-  ssr: false,
-});
+interface Categoria {
+  nombre: string;
+}
+
+interface OrdenReciente {
+  id: string;
+  titulo: string;
+  ciudad: string;
+  zona: string | null;
+  urgencia: string;
+  createdat: string;
+  categorias: Categoria | Categoria[] | null;
+}
 
 export default function Home() {
   const { usuario, rol, initialized } = useAuth();
@@ -43,36 +58,43 @@ export default function Home() {
   // Estados interactivos para "Cómo funciona" y "FAQs"
   const [activeRole, setActiveRole] = useState<'cliente' | 'profesional'>('cliente');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [recientes, setRecientes] = useState<OrdenReciente[]>([]);
+  const [loadingRecientes, setLoadingRecientes] = useState(true);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const heroSectionRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    const handleScroll = () => {
-      const heroSection = heroSectionRef.current;
-      if (!heroSection) return;
+    async function cargarRecientes() {
+      try {
+        const { data, error } = await supabaseBrowser
+          .from('ordenes')
+          .select(`
+            id,
+            titulo,
+            ciudad,
+            zona,
+            urgencia,
+            createdat,
+            categorias (nombre)
+          `)
+          .eq('estado', 'pendiente')
+          .order('createdat', { ascending: false })
+          .limit(3);
+        
+        if (error) throw error;
+        if (data) {
+          setRecientes(data);
+        }
+      } catch (err) {
+        console.error('Error al cargar órdenes recientes en el Home:', err);
+      } finally {
+        setLoadingRecientes(false);
+      }
+    }
 
-      const rect = heroSection.getBoundingClientRect();
-      const totalHeight = heroSection.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      // El scrollable es la altura total de la sección menos el alto de la pantalla visible
-      const scrollable = totalHeight - windowHeight;
-      const progress = scrollable <= 0
-        ? 0
-        : Math.min(1, Math.max(0, -rect.top / scrollable));
-
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    cargarRecientes();
   }, []);
 
   // Si ya se está verificando la sesión y hay usuario, se redirige.
@@ -136,207 +158,101 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section con 3D Scrollytelling */}
+      {/* Hero Section */}
       <main className="flex-1">
-        <section ref={heroSectionRef} className="relative w-full h-[280vh] bg-zinc-950 text-white overflow-hidden">
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-            {/* Lienzo WebGL 3D (Ocupa todo el fondo/lado derecho) */}
-            <div className="absolute inset-0 z-0 opacity-60 dark:opacity-85 md:w-3/5 md:left-2/5 h-full">
-              <Home3DCanvas progress={scrollProgress} mode={activeRole} />
+        <section className="max-w-5xl mx-auto px-4 pt-20 pb-16 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
+          {/* Dot Grid Background */}
+          <div className="absolute inset-0 pointer-events-none -z-10 bg-[radial-gradient(#e4e4e7_1.5px,transparent_1.5px)] dark:bg-[radial-gradient(#27272a_1.5px,transparent_1.5px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_at_center,white,transparent_80%)] opacity-70" />
+
+          {/* Floating Professional Card (Left) */}
+          <div className="absolute left-[-10%] top-[15%] hidden xl:flex flex-col p-4 w-56 rounded-2xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl backdrop-blur-md animate-float pointer-events-none select-none">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-indigo-500 to-rose-500 flex items-center justify-center text-white text-sm font-black shadow-inner">
+                CM
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-sm font-bold text-zinc-900 dark:text-white truncate">Carlos Medina</p>
+                <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Plomería General</p>
+              </div>
             </div>
-
-            {/* Degradados de ambiente */}
-            <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/75 to-transparent z-5 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(99,102,241,0.06)_0%,transparent_50%)] pointer-events-none" />
-
-            {/* HUD Indicators (Elementos Estilo Stark/Iron-Man) */}
-            <div className="absolute top-24 left-6 md:left-10 z-10 flex items-center gap-2 pointer-events-none">
-              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-ping" />
-              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-400">
-                TELEMETRY LINK // LIVE // MODE: {activeRole.toUpperCase()}
+            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5">
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-amber-500 text-xs">★</span>
+                ))}
+              </div>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
+                <ShieldCheck className="h-3 w-3" />
+                Verificado
               </span>
             </div>
+          </div>
 
-            <div className="absolute top-24 right-6 md:right-10 z-10 flex items-center gap-2 pointer-events-none text-right">
-              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400">
-                SCROLL PROGRESS:
+          {/* Floating Order Card (Right) */}
+          <div className="absolute right-[-10%] top-[25%] hidden xl:flex flex-col p-4 w-56 rounded-2xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl backdrop-blur-md animate-float-delayed pointer-events-none select-none">
+            <div className="flex items-center justify-between">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/30">
+                <Zap className="h-3 w-3" />
+                Solicitud Activa
               </span>
-              <span className="font-mono text-[9px] text-indigo-400 font-bold">
-                {Math.round(scrollProgress * 100)}%
+              <span className="text-xs font-semibold text-zinc-400">Hace 5m</span>
+            </div>
+            <p className="mt-2 text-sm font-bold text-zinc-900 dark:text-white text-left">Instalación Eléctrica</p>
+            <p className="text-xs font-normal text-zinc-500 dark:text-zinc-400 text-left">Caracas, Chacao</p>
+            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/60 pt-2.5 text-xs">
+              <span className="font-semibold text-zinc-400">Trato</span>
+              <span className="font-bold text-indigo-600 dark:text-indigo-400">Directo sin Comisión</span>
+            </div>
+          </div>
+
+          <div className="space-y-6 max-w-3xl">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-50/80 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 border border-indigo-100/50 dark:border-indigo-900/30 animate-pulse">
+              <Sparkles className="h-3.5 w-3.5" />
+              El Marketplace de servicios líder de Venezuela
+            </span>
+            
+            <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight sm:leading-none text-zinc-900 dark:text-white">
+              Talento profesional de confianza{' '}
+              <span className="bg-gradient-to-r from-indigo-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
+                sin intermediarios ni comisiones
+              </span>
+            </h1>
+            
+            <p className="text-sm sm:text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+              Consigue expertos verificados en plomería, enfermería y electricidad en minutos. Acuerda y paga directamente sin tarifas ocultas.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4.5 justify-center pt-6">
+              <Link
+                href="/auth/registro"
+                className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-600/15 hover:bg-indigo-500 hover:shadow-indigo-600/25 transition-all active:scale-95 group"
+              >
+                Comenzar Ahora
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/auth/login"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-sm px-7 py-3.5 text-sm font-bold hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all active:scale-95"
+              >
+                Tengo una Cuenta
+              </Link>
+            </div>
+
+            {/* Quick Metrics */}
+            <div className="flex flex-wrap items-center justify-center gap-y-3 gap-x-8 pt-12 text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-450">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                +10,000 Trabajos Resueltos
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                Reputación e Historial Transparente
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                Paga Directo al Profesional
               </span>
             </div>
-
-            {/* Barra de progreso inferior del Hero */}
-            <div className="absolute bottom-16 inset-x-6 md:inset-x-10 z-10">
-              <div className="h-[2px] w-full bg-white/10 relative">
-                <div 
-                  className="h-full bg-indigo-500 transition-all duration-75 origin-left"
-                  style={{ transform: `scaleX(${scrollProgress})` }}
-                />
-              </div>
-              <div className="flex justify-between items-center mt-2 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.25em] text-zinc-500 pointer-events-none">
-                <span>CONECTAPRO V1.0</span>
-                <span>SYSTEM STATUS: OPERATIONAL</span>
-                <span>SCROLL &darr; DISCOVER</span>
-              </div>
-            </div>
-
-            {/* Contenido Izquierdo (Sticky e Interactivo) */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full h-full flex flex-col justify-center text-left">
-              <div className="max-w-xl space-y-6">
-                {/* Selector de Rol Dinámico */}
-                <div className="inline-flex rounded-xl bg-white/5 border border-white/10 p-1 backdrop-blur-md">
-                  <button
-                    type="button"
-                    onClick={() => setActiveRole('cliente')}
-                    className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
-                      activeRole === 'cliente' 
-                        ? 'bg-indigo-650 text-white shadow-md' 
-                        : 'text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    Contratar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveRole('profesional')}
-                    className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${
-                      activeRole === 'profesional' 
-                        ? 'bg-rose-650 text-white shadow-md' 
-                        : 'text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    Ser Contratado
-                  </button>
-                </div>
-
-                {/* Copys e Interacciones Dinámicas */}
-                <div className="space-y-4">
-                  {activeRole === 'cliente' ? (
-                    <>
-                      <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-none text-white transition-all duration-300">
-                        Consigue talento de confianza{' '}
-                        <span className="bg-gradient-to-r from-indigo-500 to-cyan-400 bg-clip-text text-transparent">
-                          al instante
-                        </span>
-                      </h1>
-                      <p className="text-xs md:text-sm text-zinc-400 leading-relaxed max-w-md transition-all duration-300">
-                        Publica gratis y contrata expertos verificados en plomería, electricidad y enfermería. Todo el trato es directo, 100% libre de comisiones de intermediación.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-none text-white transition-all duration-300">
-                        Multiplica tus ingresos{' '}
-                        <span className="bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
-                          sin pagar comisiones
-                        </span>
-                      </h1>
-                      <p className="text-xs md:text-sm text-zinc-400 leading-relaxed max-w-md transition-all duration-300">
-                        Postúlate a trabajos reales usando créditos económicos desde tu billetera digital prepago. Conserva el 100% de lo que facturas y contacta directamente.
-                      </p>
-                    </>
-                  )}
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex gap-4 pt-4">
-                  <Link
-                    href="/auth/registro"
-                    className={`flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-xs font-bold text-white shadow-lg transition-all active:scale-95 group ${
-                      activeRole === 'cliente' 
-                        ? 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-600/15 hover:shadow-indigo-600/25' 
-                        : 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/15 hover:shadow-rose-600/25'
-                    }`}
-                  >
-                    {activeRole === 'cliente' ? 'Comenzar Proyecto' : 'Ofrecer Servicios'}
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/auth/login"
-                    className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 backdrop-blur-sm px-6 py-3 text-xs font-bold text-white transition-all active:scale-95"
-                  >
-                    Iniciar Sesión
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Cartas HUD Flotantes (Aparecen según el scrollProgress %) */}
-            {/* CARTA 1: 0.15 a 0.35 */}
-            <div 
-              className={`absolute top-[22%] right-6 md:right-12 z-20 w-80 bg-zinc-900/80 border border-indigo-500/20 rounded-xl p-5 backdrop-blur-md transition-all duration-300 pointer-events-none md:pointer-events-auto ${
-                scrollProgress >= 0.12 && scrollProgress <= 0.38 
-                  ? 'translate-y-0 opacity-100 pointer-events-auto shadow-xl shadow-indigo-950/20' 
-                  : 'translate-y-4 opacity-0'
-              }`}
-            >
-              <div className="flex items-center justify-between border-b border-indigo-500/10 pb-2 mb-3">
-                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-indigo-400">TELEMETRÍA 01 / COMMS</span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              </div>
-              <h4 className="text-xs font-bold text-white uppercase tracking-wide">Chat Seguro e Anti-Puenteo</h4>
-              <p className="text-[10px] text-zinc-400 mt-2 leading-relaxed">
-                Nuestra IA escanea y detecta patrones de puenteo de datos de contacto de forma inmediata, garantizando que el acuerdo y la mensajería se mantengan transparentes.
-              </p>
-              <div className="mt-3 flex justify-between items-center text-[8px] font-mono text-zinc-500">
-                <span>FILTER STATUS: ACTIVE</span>
-                <span>PING 14MS</span>
-              </div>
-            </div>
-
-            {/* CARTA 2: 0.45 a 0.65 */}
-            <div 
-              className={`absolute top-1/2 -translate-y-1/2 right-6 md:right-12 z-20 w-80 bg-zinc-900/80 border ${
-                activeRole === 'cliente' ? 'border-indigo-500/20' : 'border-rose-500/20'
-              } rounded-xl p-5 backdrop-blur-md transition-all duration-300 pointer-events-none md:pointer-events-auto ${
-                scrollProgress >= 0.42 && scrollProgress <= 0.68 
-                  ? 'translate-y-0 opacity-100 pointer-events-auto shadow-xl' 
-                  : 'translate-y-4 opacity-0'
-              }`}
-            >
-              <div className={`flex items-center justify-between border-b ${activeRole === 'cliente' ? 'border-indigo-500/10' : 'border-rose-500/10'} pb-2 mb-3`}>
-                <span className={`font-mono text-[9px] uppercase tracking-[0.2em] ${activeRole === 'cliente' ? 'text-indigo-400' : 'text-rose-400'}`}>
-                  TELEMETRÍA 02 / WALLET
-                </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              </div>
-              <h4 className="text-xs font-bold text-white uppercase tracking-wide">Wallet Prepago Integrada</h4>
-              <p className="text-[10px] text-zinc-400 mt-2 leading-relaxed">
-                Los profesionales controlan su presupuesto mediante créditos prepagos transparentes. Descuentos progresivos del 10% y 20% y validación manual de comprobantes en tiempo real.
-              </p>
-              <div className="mt-3 flex justify-between items-center text-[8px] font-mono text-zinc-500">
-                <span>TX STATE: STABLE</span>
-                <span>FEE: 0%</span>
-              </div>
-            </div>
-
-            {/* CARTA 3: 0.75 a 0.95 */}
-            <div 
-              className={`absolute bottom-24 right-6 md:bottom-28 md:right-12 z-20 w-80 bg-zinc-900/80 border ${
-                activeRole === 'cliente' ? 'border-indigo-500/20' : 'border-rose-500/20'
-              } rounded-xl p-5 backdrop-blur-md transition-all duration-300 pointer-events-none md:pointer-events-auto ${
-                scrollProgress >= 0.72 && scrollProgress <= 0.98 
-                  ? 'translate-y-0 opacity-100 pointer-events-auto shadow-xl' 
-                  : 'translate-y-4 opacity-0'
-              }`}
-            >
-              <div className={`flex items-center justify-between border-b ${activeRole === 'cliente' ? 'border-indigo-500/10' : 'border-rose-500/10'} pb-2 mb-3`}>
-                <span className={`font-mono text-[9px] uppercase tracking-[0.2em] ${activeRole === 'cliente' ? 'text-indigo-400' : 'text-rose-400'}`}>
-                  TELEMETRÍA 03 / TRUST
-                </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-              </div>
-              <h4 className="text-xs font-bold text-white uppercase tracking-wide">Reputación Impecable e Inapelable</h4>
-              <p className="text-[10px] text-zinc-400 mt-2 leading-relaxed">
-                Triggers de base de datos recalculan automáticamente la reputación de cada profesional. Calificaciones cruzadas transparentes garantizan la calidad del ecosistema ConectaPro.
-              </p>
-              <div className="mt-3 flex justify-between items-center text-[8px] font-mono text-zinc-500">
-                <span>REPUTATION SYNCED</span>
-                <span>RATING PRO: ★ 4.9</span>
-              </div>
-            </div>
-
           </div>
         </section>
 
@@ -361,44 +277,76 @@ export default function Home() {
                     <Zap className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Plataforma 100% Libre de Comisiones</h3>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 max-w-lg leading-relaxed">
+                  <p className="text-sm text-zinc-655 dark:text-zinc-400 mt-2 max-w-lg leading-relaxed">
                     A diferencia de otros servicios, no cobramos un porcentaje del trabajo final. Los clientes contratan gratis y los profesionales conservan el 100% de lo que facturan. Todo el acuerdo monetario es directo.
                   </p>
                 </div>
-                <div className="mt-8 flex gap-6 text-xs font-bold text-zinc-500">
+                <div className="mt-8 pt-5 border-t border-zinc-100 dark:border-zinc-800/50 flex gap-6 text-xs font-bold text-zinc-500">
                   <div>
-                    <span className="block text-2xl font-black text-indigo-600 dark:text-indigo-400">0%</span>
+                    <span className="block text-2xl font-black text-indigo-650 dark:text-indigo-400">0%</span>
                     Comisión por servicio
                   </div>
-                  <div className="border-l border-zinc-200 dark:border-zinc-800 pl-6">
-                    <span className="block text-2xl font-black text-indigo-600 dark:text-indigo-400">Directo</span>
+                  <div className="border-l border-zinc-200 dark:border-zinc-850 pl-6">
+                    <span className="block text-2xl font-black text-indigo-655 dark:text-indigo-400 font-extrabold">Directo</span>
                     Pago móvil, efectivo, Zelle
                   </div>
                 </div>
               </div>
 
               {/* Card 2: Col-span-1 */}
-              <div className="bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+              <div className="bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group flex flex-col justify-between h-full">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
-                <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
-                  <ShieldCheck className="h-6 w-6" />
+                <div>
+                  <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
+                    <ShieldCheck className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Perfiles Verificados</h3>
+                  <p className="text-sm text-zinc-655 dark:text-zinc-400 mt-2 leading-relaxed">
+                    Revisamos exhaustivamente las especialidades, calificaciones y reseñas reales para asegurar tranquilidad en tu hogar.
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Perfiles Verificados</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Revisamos exhaustivamente las especialidades, calificaciones y reseñas reales para asegurar tranquilidad en tu hogar.
-                </p>
+                
+                {/* Footer unificado */}
+                <div className="mt-8 pt-5 border-t border-zinc-100 dark:border-zinc-800/50 flex items-center gap-3 text-[11px] font-bold text-zinc-500">
+                  <div className="flex -space-x-1.5">
+                    <div className="h-6 w-6 rounded-full bg-indigo-50 border-2 border-white dark:border-zinc-900 flex items-center justify-center text-[9px] font-extrabold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-400">
+                      AM
+                    </div>
+                    <div className="h-6 w-6 rounded-full bg-zinc-100 border-2 border-white dark:border-zinc-900 flex items-center justify-center text-[9px] font-extrabold text-zinc-700 dark:bg-zinc-800 dark:text-zinc-350">
+                      JS
+                    </div>
+                    <div className="h-6 w-6 rounded-full bg-indigo-650 border-2 border-white dark:border-zinc-900 flex items-center justify-center text-[10px] text-white font-black">
+                      ✓
+                    </div>
+                  </div>
+                  <div>
+                    <span className="block text-indigo-655 dark:text-indigo-400 text-xs font-black uppercase tracking-wider">100% Seguro</span>
+                    Antecedentes validados
+                  </div>
+                </div>
               </div>
 
               {/* Card 3: Col-span-1 */}
-              <div className="bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+              <div className="bg-white dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-800/80 rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group flex flex-col justify-between h-full">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
-                <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
-                  <MessageSquare className="h-6 w-6" />
+                <div>
+                  <div className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl w-fit mb-6">
+                    <MessageSquare className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Chat Seguro Integrado</h3>
+                  <p className="text-sm text-zinc-655 dark:text-zinc-400 mt-2 leading-relaxed">
+                    Comunícate y acuerda los detalles de tus servicios mediante nuestro sistema de chat seguro y directo en la app.
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Chat Seguro Integrado</h3>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                  Comunícate y acuerda los detalles de tus servicios mediante nuestro sistema de chat seguro y directo en la app.
-                </p>
+
+                {/* Footer unificado */}
+                <div className="mt-8 pt-5 border-t border-zinc-100 dark:border-zinc-800/50 flex items-center gap-2 text-[11px] font-bold text-zinc-500">
+                  <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-emerald-600 dark:text-emerald-400 font-black uppercase text-[10px] tracking-wider flex items-center gap-1">
+                    <Lock className="h-3.5 w-3.5" /> Protegido
+                  </span>
+                  <span>• Encriptación activa</span>
+                </div>
               </div>
 
               {/* Card 4: Col-span-2 */}
@@ -409,17 +357,17 @@ export default function Home() {
                     <Award className="h-6 w-6" />
                   </div>
                   <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Reputación Impecable</h3>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 max-w-lg leading-relaxed">
+                  <p className="text-sm text-zinc-655 dark:text-zinc-400 mt-2 max-w-lg leading-relaxed">
                     Visualiza valoraciones con estrellas, testimonios detallados de clientes previos y la cantidad de trabajos resueltos con éxito por cada profesional antes de adjudicar.
                   </p>
                 </div>
-                <div className="mt-8 flex gap-6 text-xs font-bold text-zinc-500">
+                <div className="mt-8 pt-5 border-t border-zinc-100 dark:border-zinc-800/50 flex gap-6 text-xs font-bold text-zinc-500">
                   <div>
-                    <span className="block text-2xl font-black text-indigo-600 dark:text-indigo-400">★ 4.9</span>
+                    <span className="block text-2xl font-black text-indigo-650 dark:text-indigo-400">★ 4.9</span>
                     Calificación promedio
                   </div>
-                  <div className="border-l border-zinc-200 dark:border-zinc-800 pl-6">
-                    <span className="block text-2xl font-black text-indigo-600 dark:text-indigo-400">Transparente</span>
+                  <div className="border-l border-zinc-200 dark:border-zinc-850 pl-6">
+                    <span className="block text-2xl font-black text-indigo-655 dark:text-indigo-400">Transparente</span>
                     Opiniones 100% verificadas
                   </div>
                 </div>
@@ -431,138 +379,586 @@ export default function Home() {
         {/* Especialidades animadas */}
         <ProfesionesSection />
 
-        {/* Sección interactiva: Cómo funciona */}
-        <section className="py-20 bg-zinc-50 dark:bg-zinc-950">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="text-xs font-bold tracking-widest text-indigo-650 dark:text-indigo-400 uppercase">
-                Proceso Simple
-              </span>
-              <h2 className="text-3xl font-extrabold tracking-tight mt-2 text-zinc-900 dark:text-zinc-100">
-                ¿Cómo funciona ConectaPro?
+        {/* Sección interactiva: Cómo funciona (Estilo Workana) */}
+        <section className="py-20 bg-zinc-50 dark:bg-zinc-950/40 border-y border-zinc-200/30 dark:border-zinc-800/20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+              {/* Columna Izquierda: Pasos y selector */}
+              <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
+                <div className="space-y-6">
+                  <div>
+                    <span className="text-xs font-black tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
+                      Proceso Simple
+                    </span>
+                    <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 dark:text-white mt-1">
+                      ¿Cómo funciona ConectaPro?
+                    </h2>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-3 leading-relaxed">
+                      ConectaPro conecta de manera directa a clientes y técnicos en Venezuela sin cobrar comisiones ni intermediar los pagos.
+                    </p>
+                  </div>
+
+                  {/* Selector de Rol Deslizante */}
+                  <div className="relative bg-zinc-150/80 dark:bg-zinc-900/60 p-1 rounded-2xl flex border border-zinc-250/30 dark:border-zinc-800/40 max-w-sm">
+                    {/* Indicador deslizante */}
+                    <div
+                      className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-white dark:bg-zinc-800 rounded-xl shadow-sm transition-all duration-300 ease-out border border-zinc-200/10 dark:border-zinc-750/30 ${
+                        activeRole === 'profesional' ? 'translate-x-full' : 'translate-x-0'
+                      }`}
+                    />
+                    <button
+                      onClick={() => setActiveRole('cliente')}
+                      className={`relative z-10 w-1/2 py-2.5 text-xs font-black text-center transition-all flex items-center justify-center gap-1.5 rounded-xl ${
+                        activeRole === 'cliente'
+                          ? 'text-indigo-600 dark:text-indigo-455'
+                          : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'
+                      }`}
+                    >
+                      <Users className="h-3.5 w-3.5" />
+                      Soy Cliente
+                    </button>
+                    <button
+                      onClick={() => setActiveRole('profesional')}
+                      className={`relative z-10 w-1/2 py-2.5 text-xs font-black text-center transition-all flex items-center justify-center gap-1.5 rounded-xl ${
+                        activeRole === 'profesional'
+                          ? 'text-indigo-600 dark:text-indigo-455'
+                          : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'
+                      }`}
+                    >
+                      <Briefcase className="h-3.5 w-3.5" />
+                      Soy Profesional
+                    </button>
+                  </div>
+
+                  {/* Timeline Pasos */}
+                  <div className="relative pl-7 border-l border-zinc-200 dark:border-zinc-800 space-y-6 py-1">
+                    {activeRole === 'cliente' ? (
+                      <>
+                        {/* Cliente Paso 1 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            1
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Publica tu solicitud gratis
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Describe tu requerimiento (ej. plomería en Baruta, enfermería en Chacao o electricidad en El Hatillo) sin costo alguno.
+                          </p>
+                        </div>
+                        {/* Cliente Paso 2 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            2
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Recibe ofertas de expertos
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Profesionales calificados y evaluados de tu zona revisarán tu orden de trabajo y se postularán para ayudarte.
+                          </p>
+                        </div>
+                        {/* Cliente Paso 3 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            3
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Chatea y coordina directamente
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Usa nuestro chat seguro integrado para resolver dudas, acordar el costo del servicio y pautar el día de la visita.
+                          </p>
+                        </div>
+                        {/* Cliente Paso 4 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            4
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Paga directo y califica
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Una vez finalizado el trabajo, paga directamente por el canal de tu preferencia (Pago Móvil, Zelle o efectivo) y califica.
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* Profesional Paso 1 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            1
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Carga créditos de contacto
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Adquiere paquetes accesibles reportando tu pago directamente vía Pago Móvil, Zelle o USDT en la plataforma.
+                          </p>
+                        </div>
+                        {/* Profesional Paso 2 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            2
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Postúlate a trabajos activos
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Examina las solicitudes de servicio en tu ciudad y usa 1 crédito de contacto para iniciar la postulación y abrir el chat.
+                          </p>
+                        </div>
+                        {/* Profesional Paso 3 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            3
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Acuerda tarifas sin intermediarios
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Coordina el presupuesto definitivo y la agenda técnica directamente con el cliente mediante la mensajería integrada.
+                          </p>
+                        </div>
+                        {/* Profesional Paso 4 */}
+                        <div className="relative group">
+                          <div className="absolute -left-[41px] top-0.5 w-7 h-7 rounded-lg bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-850 group-hover:border-indigo-500 dark:group-hover:border-indigo-500 transition-colors flex items-center justify-center text-xs font-black text-zinc-500 group-hover:text-indigo-600 dark:text-zinc-400 dark:group-hover:text-indigo-400 shadow-sm z-10 select-none">
+                            4
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                            Gana y conserva el 100%
+                          </h4>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                            Completa el trabajo, recibe tu dinero directamente del cliente y suma valoraciones positivas para destacar en el feed.
+                          </p>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Link
+                    href="/auth/registro"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-indigo-600/15 hover:bg-indigo-500 hover:shadow-indigo-600/25 transition-all active:scale-97 group w-full sm:w-auto text-center"
+                  >
+                    {activeRole === 'cliente' ? 'Comenzar a Contratar' : 'Registrarme como Experto'}
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Columna Derecha: Mockups dinámicos e interactivos de alta fidelidad */}
+              <div className="lg:col-span-7 flex flex-col justify-center">
+                <div className="relative bg-zinc-150/30 dark:bg-zinc-900/20 border border-zinc-200/40 dark:border-zinc-800/40 rounded-3xl p-4 sm:p-6 shadow-xl backdrop-blur-sm overflow-hidden h-[460px] flex flex-col justify-between">
+                  {/* Pestaña de Navegador Mockup */}
+                  <div className="absolute top-0 left-0 right-0 h-10 bg-zinc-200/40 dark:bg-zinc-900/60 border-b border-zinc-200/30 dark:border-zinc-850/40 flex items-center px-4 justify-between select-none">
+                    <div className="flex gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                    </div>
+                    <div className="text-xs font-extrabold text-zinc-450 dark:text-zinc-500 tracking-wider">
+                      {activeRole === 'cliente' ? 'conectapro.com/profesionales' : 'conectapro.com/muro-de-solicitudes'}
+                    </div>
+                    <div className="w-10" />
+                  </div>
+
+                  {/* Lista de Tarjetas Mockup */}
+                  <div className="mt-8 flex-1 overflow-y-auto pr-1 space-y-4 py-2 scrollbar-thin">
+                    {activeRole === 'cliente' ? (
+                      <>
+                        {/* Mockup Profesional 1 */}
+                        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/70 p-4 rounded-2xl shadow-sm flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:scale-[1.01] transition-transform duration-200">
+                          <div className="relative w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 flex items-center justify-center border border-indigo-100/30 dark:border-indigo-900/30 shrink-0 select-none">
+                            <span className="text-sm font-black text-indigo-600 dark:text-indigo-400">CM</span>
+                            <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-zinc-900 flex items-center justify-center text-[10px] text-white font-black">✓</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h5 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white truncate">Carlos Medina</h5>
+                              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100/20 dark:border-indigo-900/20">Plomero Experto</span>
+                            </div>
+                            <div className="flex items-center gap-1 mt-1">
+                              <span className="text-amber-400 text-sm">★★★★★</span>
+                              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">5.0 (48 opiniones)</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-zinc-550 dark:text-zinc-450 mt-1 truncate">
+                              10 años destapando tuberías, filtraciones y griferías en Caracas.
+                            </p>
+                          </div>
+                          <Link href="/auth/registro" className="w-full sm:w-auto shrink-0 bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors text-center">
+                            Contactar
+                          </Link>
+                        </div>
+
+                        {/* Mockup Profesional 2 */}
+                        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/70 p-4 rounded-2xl shadow-sm flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:scale-[1.01] transition-transform duration-200">
+                          <div className="relative w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 flex items-center justify-center border border-indigo-100/30 dark:border-indigo-900/30 shrink-0 select-none">
+                            <span className="text-sm font-black text-indigo-600 dark:text-indigo-400">AG</span>
+                            <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-zinc-900 flex items-center justify-center text-[10px] text-white font-black">✓</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h5 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white truncate">Ana Gómez</h5>
+                              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100/20 dark:border-indigo-900/20">Enfermera Neonatal</span>
+                            </div>
+                            <div className="flex items-center gap-1 mt-1">
+                              <span className="text-amber-400 text-sm">★★★★★</span>
+                              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">4.9 (32 opiniones)</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-zinc-550 dark:text-zinc-450 mt-1 truncate">
+                              Atención domiciliaria de recién nacidos, medicamentos y postoperatorio.
+                            </p>
+                          </div>
+                          <Link href="/auth/registro" className="w-full sm:w-auto shrink-0 bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors text-center">
+                            Contactar
+                          </Link>
+                        </div>
+
+                        {/* Mockup Profesional 3 */}
+                        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/70 p-4 rounded-2xl shadow-sm flex flex-col sm:flex-row gap-4 items-start sm:items-center hover:scale-[1.01] transition-transform duration-200">
+                          <div className="relative w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 flex items-center justify-center border border-indigo-100/30 dark:border-indigo-900/30 shrink-0 select-none">
+                            <span className="text-sm font-black text-indigo-600 dark:text-indigo-400">LP</span>
+                            <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-zinc-900 flex items-center justify-center text-[10px] text-white font-black">✓</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h5 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white truncate">Luis Pérez</h5>
+                              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100/20 dark:border-indigo-900/20">Electricista</span>
+                            </div>
+                            <div className="flex items-center gap-1 mt-1">
+                              <span className="text-amber-400 text-sm">★★★★★</span>
+                              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">4.8 (24 opiniones)</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-zinc-550 dark:text-zinc-450 mt-1 truncate">
+                              Instalaciones residenciales, tableros eléctricos y cortocircuitos.
+                            </p>
+                          </div>
+                          <Link href="/auth/registro" className="w-full sm:w-auto shrink-0 bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors text-center">
+                            Contactar
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* Mockup Solicitud 1 */}
+                        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/70 p-4 rounded-2xl shadow-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform duration-200">
+                          <div className="flex justify-between items-start gap-4">
+                            <div>
+                              <span className="text-xs font-black px-2.5 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-455 border border-rose-150/20 dark:border-rose-900/20 uppercase tracking-wider">Alta Urgencia</span>
+                              <h5 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white mt-1.5">Filtración en pared de baño principal</h5>
+                            </div>
+                            <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0">Hace 5m</span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed line-clamp-2">
+                            Pared húmeda que daña la sala de estar. Se requiere romper cerámica, diagnosticar tubería averiada y repararla.
+                          </p>
+                          <div className="flex items-center justify-between mt-1 pt-2 border-t border-zinc-100 dark:border-zinc-850/60 flex-wrap gap-2">
+                            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 select-none">
+                              <MapPin className="h-3.5 w-3.5 text-zinc-400" /> Las Mercedes, Caracas
+                            </span>
+                            <Link href="/auth/registro" className="bg-indigo-650 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-1">
+                              <Zap className="h-3.5 w-3.5" /> Postularse (1 Crédito)
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* Mockup Solicitud 2 */}
+                        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/70 p-4 rounded-2xl shadow-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform duration-200">
+                          <div className="flex justify-between items-start gap-4">
+                            <div>
+                              <span className="text-xs font-black px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-455 border border-amber-150/20 dark:border-amber-900/20 uppercase tracking-wider">Media Urgencia</span>
+                              <h5 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white mt-1.5">Instalación de ventiladores e iluminación</h5>
+                            </div>
+                            <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0">Hace 15m</span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed line-clamp-2">
+                            Se solicita electricista para montar 2 ventiladores de techo y empotrar 4 focos LED dicroicos en la sala.
+                          </p>
+                          <div className="flex items-center justify-between mt-1 pt-2 border-t border-zinc-100 dark:border-zinc-850/60 flex-wrap gap-2">
+                            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 select-none">
+                              <MapPin className="h-3.5 w-3.5 text-zinc-400" /> La Castellana, Caracas
+                            </span>
+                            <Link href="/auth/registro" className="bg-indigo-650 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-1">
+                              <Zap className="h-3.5 w-3.5" /> Postularse (1 Crédito)
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/* Mockup Solicitud 3 */}
+                        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/70 p-4 rounded-2xl shadow-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform duration-200">
+                          <div className="flex justify-between items-start gap-4">
+                            <div>
+                              <span className="text-xs font-black px-2.5 py-0.5 rounded-full bg-zinc-50 dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 border border-zinc-200/50 dark:border-zinc-850/50 uppercase tracking-wider">Baja Urgencia</span>
+                              <h5 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white mt-1.5">Cuidados de enfermería por horas</h5>
+                            </div>
+                            <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0">Hace 1h</span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed line-clamp-2">
+                            Administración de antibióticos y chequeo de signos vitales para paciente de la tercera edad postoperado.
+                          </p>
+                          <div className="flex items-center justify-between mt-1 pt-2 border-t border-zinc-100 dark:border-zinc-850/60 flex-wrap gap-2">
+                            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 select-none">
+                              <MapPin className="h-3.5 w-3.5 text-zinc-400" /> San Bernardino, Caracas
+                            </span>
+                            <Link href="/auth/registro" className="bg-indigo-650 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-1">
+                              <Zap className="h-3.5 w-3.5" /> Postularse (1 Crédito)
+                            </Link>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Sección: Muro de Solicitudes Recientes (Live Feed) */}
+        <section className="py-20 bg-white dark:bg-zinc-900 border-t border-zinc-250/20 dark:border-zinc-800/30 relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
+          
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100/30 dark:border-emerald-900/30 text-emerald-650 dark:text-emerald-400 text-xs font-black uppercase tracking-widest animate-pulse select-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                Muro en vivo
+              </div>
+              <h2 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white mt-3">
+                Solicitudes Recientes en Venezuela
               </h2>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2">
-                Selecciona tu rol para ver lo sencillo que es coordinar servicios.
+                Revisa los últimos trabajos publicados en ConectaPro. ¡Postúlate de inmediato!
               </p>
             </div>
 
-            {/* Selector de Rol */}
-            <div className="flex justify-center mb-12">
-              <div className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-2xl flex gap-1 border border-zinc-200/40 dark:border-zinc-800/40">
-                <button
-                  onClick={() => setActiveRole('cliente')}
-                  className={`px-6 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 ${
-                    activeRole === 'cliente'
-                      ? 'bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-450 shadow-sm'
-                      : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-205'
-                  }`}
-                >
-                  <Users className="h-3.5 w-3.5" />
-                  Soy Cliente
-                </button>
-                <button
-                  onClick={() => setActiveRole('profesional')}
-                  className={`px-6 py-2.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 ${
-                    activeRole === 'profesional'
-                      ? 'bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-450 shadow-sm'
-                      : 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-205'
-                  }`}
-                >
-                  <Briefcase className="h-3.5 w-3.5" />
-                  Soy Profesional
-                </button>
+            {loadingRecientes ? (
+              /* Shimmer loading state */
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[1, 2, 3].map((n) => (
+                  <div key={n} className="bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-200/40 dark:border-zinc-850/40 p-6 rounded-2xl space-y-4 animate-pulse">
+                    <div className="flex justify-between items-start">
+                      <div className="h-4 bg-zinc-200 dark:bg-zinc-850 rounded w-20" />
+                      <div className="h-3 bg-zinc-200 dark:bg-zinc-850 rounded w-10" />
+                    </div>
+                    <div className="h-5 bg-zinc-200 dark:bg-zinc-850 rounded w-5/6" />
+                    <div className="space-y-2 pt-2">
+                      <div className="h-3 bg-zinc-200 dark:bg-zinc-850 rounded w-full" />
+                      <div className="h-3 bg-zinc-200 dark:bg-zinc-850 rounded w-4/5" />
+                    </div>
+                    <div className="pt-4 border-t border-zinc-100 dark:border-zinc-900/50 flex justify-between items-center">
+                      <div className="h-3.5 bg-zinc-200 dark:bg-zinc-850 rounded w-24" />
+                      <div className="h-7 bg-zinc-200 dark:bg-zinc-850 rounded-lg w-20" />
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {recientes && recientes.length > 0 ? (
+                  recientes.map((orden) => {
+                    const date = new Date(orden.createdat);
+                    const formattedDate = isNaN(date.getTime()) 
+                      ? 'Reciente' 
+                      : new Intl.DateTimeFormat('es-VE', { 
+                          day: 'numeric', 
+                          month: 'short', 
+                          hour: 'numeric', 
+                          minute: '2-digit', 
+                          hour12: true 
+                        }).format(date);
+                    
+                    const isAlta = orden.urgencia === 'alta' || orden.urgencia === 'Alta';
+                    const isMedia = orden.urgencia === 'media' || orden.urgencia === 'Media';
 
-            {/* Timeline */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-              {activeRole === 'cliente' ? (
-                <>
-                  {/* Cliente Paso 1 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      1
+                    let categoriaNombre = 'General';
+                    if (orden.categorias) {
+                      if (Array.isArray(orden.categorias)) {
+                        categoriaNombre = orden.categorias[0]?.nombre || 'General';
+                      } else {
+                        categoriaNombre = orden.categorias.nombre || 'General';
+                      }
+                    }
+
+                    return (
+                      <div key={orden.id} className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group">
+                        <div className="space-y-4">
+                          <div className="flex justify-between items-start gap-4">
+                            <span className={`text-xs font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider select-none ${
+                              isAlta 
+                                ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-450 border-rose-100/40 dark:border-rose-900/30' 
+                                : isMedia
+                                ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-455 border-amber-100/40 dark:border-amber-900/30'
+                                : 'bg-zinc-50 dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 border-zinc-200/50 dark:border-zinc-800/50'
+                            }`}>
+                              {categoriaNombre}
+                            </span>
+                            <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0 flex items-center gap-1 select-none">
+                              <Clock className="h-3.5 w-3.5" />
+                              {formattedDate}
+                            </span>
+                          </div>
+
+                          <div>
+                            <h4 className="text-base font-bold text-zinc-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                              {orden.titulo}
+                            </h4>
+                            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-3 leading-relaxed">
+                              {orden.zona 
+                                ? `Solicitud para ${orden.titulo} en la zona de ${orden.zona}, ${orden.ciudad}.` 
+                                : `Solicitud de servicio activo de ${categoriaNombre} en ${orden.ciudad}.`}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="pt-4 mt-6 border-t border-zinc-100 dark:border-zinc-900/60 flex items-center justify-between gap-2">
+                          <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 truncate select-none">
+                            <MapPin className="h-3.5 w-3.5 text-zinc-450 shrink-0" />
+                            {orden.ciudad}{orden.zona ? `, ${orden.zona}` : ''}
+                          </span>
+                          <Link
+                            href="/auth/login"
+                            className="inline-flex items-center gap-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 text-xs font-bold transition-colors shrink-0"
+                          >
+                            Postularse
+                            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <>
+                    {/* Fallback 1: Plomería */}
+                    <div className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start gap-4">
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-455 border border-rose-100/40 dark:border-rose-900/30 uppercase tracking-wider select-none">
+                            Plomería
+                          </span>
+                          <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0 flex items-center gap-1 select-none">
+                            <Clock className="h-3.5 w-3.5" />
+                            Hace 2 horas
+                          </span>
+                        </div>
+
+                        <div>
+                          <h4 className="text-base font-bold text-zinc-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                            Reparación de tubería de 1/2 pulgada rota en pared de baño
+                          </h4>
+                          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-3 leading-relaxed">
+                            Tengo una filtración severa en el baño principal. Requiero picar la pared, detectar la rotura del tubo de agua blanca y reemplazar la sección afectada.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 mt-6 border-t border-zinc-100 dark:border-zinc-900/60 flex items-center justify-between gap-2">
+                        <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 truncate select-none">
+                          <MapPin className="h-3.5 w-3.5 text-zinc-450 shrink-0" />
+                          Baruta, Miranda
+                        </span>
+                        <Link
+                          href="/auth/login"
+                          className="inline-flex items-center gap-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 text-xs font-bold transition-colors shrink-0"
+                        >
+                          Postularse
+                          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Publica tu Solicitud</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Describe tu requerimiento (ej. reparar grifo de cocina) de forma gratuita y especifica tu ubicación.
-                    </p>
-                  </div>
-                  {/* Cliente Paso 2 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      2
+
+                    {/* Fallback 2: Electricidad */}
+                    <div className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start gap-4">
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-455 border border-amber-100/40 dark:border-amber-900/30 uppercase tracking-wider select-none">
+                            Electricidad
+                          </span>
+                          <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0 flex items-center gap-1 select-none">
+                            <Clock className="h-3.5 w-3.5" />
+                            Hace 4 horas
+                          </span>
+                        </div>
+
+                        <div>
+                          <h4 className="text-base font-bold text-zinc-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                            Cortocircuito en cocina e instalación de breakers
+                          </h4>
+                          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-3 leading-relaxed">
+                            Varios tomacorrientes de la cocina dejaron de funcionar de repente tras un fuerte olor a quemado. Necesito revisar el cableado y verificar la caja de breakers.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 mt-6 border-t border-zinc-100 dark:border-zinc-900/60 flex items-center justify-between gap-2">
+                        <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 truncate select-none">
+                          <MapPin className="h-3.5 w-3.5 text-zinc-450 shrink-0" />
+                          Chacao, Miranda
+                        </span>
+                        <Link
+                          href="/auth/login"
+                          className="inline-flex items-center gap-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 text-xs font-bold transition-colors shrink-0"
+                        >
+                          Postularse
+                          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Recibe Propuestas</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Profesionales calificados y evaluados de tu zona revisarán la orden y se postularán para ayudarte.
-                    </p>
-                  </div>
-                  {/* Cliente Paso 3 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      3
+
+                    {/* Fallback 3: Enfermería */}
+                    <div className="bg-white dark:bg-zinc-950/45 border border-zinc-200/50 dark:border-zinc-800/80 p-6 rounded-2xl hover:shadow-lg hover:border-indigo-500/20 dark:hover:border-indigo-500/10 hover:scale-[1.01] transition-all flex flex-col justify-between group">
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start gap-4">
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-zinc-50 dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 border border-zinc-200/50 dark:border-zinc-800/50 uppercase tracking-wider select-none">
+                            Enfermería
+                          </span>
+                          <span className="text-xs font-semibold text-zinc-450 dark:text-zinc-500 shrink-0 flex items-center gap-1 select-none">
+                            <Clock className="h-3.5 w-3.5" />
+                            Hace 1 día
+                          </span>
+                        </div>
+
+                        <div>
+                          <h4 className="text-base font-bold text-zinc-900 dark:text-white leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                            Cuidados domiciliarios postoperatorios para adulto mayor
+                          </h4>
+                          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-3 leading-relaxed">
+                            Se busca enfermero/a para control de signos vitales, administración de medicamentos vía endovenosa y curación diaria de herida quirúrgica tras operación de cadera.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 mt-6 border-t border-zinc-100 dark:border-zinc-900/60 flex items-center justify-between gap-2">
+                        <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 truncate select-none">
+                          <MapPin className="h-3.5 w-3.5 text-zinc-450 shrink-0" />
+                          El Hatillo, Miranda
+                        </span>
+                        <Link
+                          href="/auth/login"
+                          className="inline-flex items-center gap-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-indigo-650 dark:text-indigo-350 px-4 py-2.5 text-xs font-bold transition-colors shrink-0"
+                        >
+                          Postularse
+                          <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Chatea y Coordina</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Usa el chat de la plataforma para resolver dudas, coordinar el precio final y la hora de visita.
-                    </p>
-                  </div>
-                  {/* Cliente Paso 4 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      4
-                    </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Paga y Califica</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Una vez completado el servicio, paga directamente al experto y califica su reputación en la plataforma.
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {/* Profesional Paso 1 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      1
-                    </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Carga Créditos</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Adquiere paquetes de créditos accesibles reportando tu transferencia por Pago Móvil, Zelle o USDT.
-                    </p>
-                  </div>
-                  {/* Profesional Paso 2 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      2
-                    </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Postúlate a Trabajos</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Examina las solicitudes disponibles en tu especialidad y usa 1 crédito para aceptar e iniciar la orden.
-                    </p>
-                  </div>
-                  {/* Profesional Paso 3 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      3
-                    </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Define Detalles</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Comunícate con el cliente mediante el chat de la orden para concertar costos y agenda técnica.
-                    </p>
-                  </div>
-                  {/* Profesional Paso 4 */}
-                  <div className="relative flex flex-col items-center md:items-start text-center md:text-left bg-white dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-800/40 p-6 rounded-2xl">
-                    <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-black text-sm flex items-center justify-center mb-4 border border-indigo-100/50 dark:border-indigo-900/30">
-                      4
-                    </div>
-                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">Factura el 100%</h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">
-                      Completa el trabajo, recibe tu remuneración completa de forma directa y mejora tu reputación digital.
-                    </p>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Botón para ver todas las ofertas */}
+            <div className="flex justify-center mt-12">
+              <Link
+                href="/auth/login"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 backdrop-blur-sm hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300 text-sm font-bold shadow-sm transition-all active:scale-97 group"
+              >
+                Ver Todas las Solicitudes Activas
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
           </div>
         </section>

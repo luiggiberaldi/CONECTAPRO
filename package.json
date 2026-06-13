@@ -11,6 +11,8 @@
     "demo:clean": "node scripts/manage-demo.js clean"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.1",
     "framer-motion": "^12.40.0",
