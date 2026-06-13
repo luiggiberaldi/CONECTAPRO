@@ -63,8 +63,8 @@ export default function UsuarioDrawer({
     ? selectedUser.profesionales[0]
     : null;
 
-  const clienteProfile = isClient && selectedUser.clientes && selectedUser.clientes.length > 0
-    ? selectedUser.clientes[0]
+  const clienteProfile = isClient && selectedUser.clientes
+    ? selectedUser.clientes
     : null;
 
   let bannerGradient = 'from-zinc-700 to-zinc-900';

@@ -344,8 +344,8 @@ export default function UsuariosTable({
                   ? user.profesionales[0]
                   : null;
 
-                const clienteData = user.rol === 'cliente' && user.clientes && user.clientes.length > 0
-                  ? user.clientes[0]
+                const clienteData = user.rol === 'cliente' && user.clientes
+                  ? user.clientes
                   : null;
  
                 // Color accent bar per role/status

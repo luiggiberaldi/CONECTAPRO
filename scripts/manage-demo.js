@@ -289,6 +289,19 @@ async function seedDemoData() {
     // Actualizar fecha de creación histórica real
     const joinDate = getDateAgo(c.daysJoined);
     await supabase.from('usuarios').update({ createdat: joinDate }).eq('id', userId);
+
+    // Insertar perfil cliente
+    const { error: clientError } = await supabase.from('clientes').insert({
+      usuarioid: userId,
+      calificacionpromedio: 0,
+      totalproyectos: 0
+    });
+
+    if (clientError) {
+      console.error(`  Error al crear perfil cliente para ${c.nombre}:`, clientError);
+    } else {
+      console.log(`  ✓ Perfil cliente creado`);
+    }
   }
 
   // 4. Crear Profesionales en Auth + Perfiles en profesionales + Cargar Wallets
