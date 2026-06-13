@@ -318,30 +318,30 @@ export default function UsuariosTable({
 
       {/* 3. Listado Principal (Tabla Rediseñada) */}
       <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
-        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
+        <table className="min-w-full text-left text-xs">
+          <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-6 py-4">
+              <th scope="col" className="pl-3 pr-4 py-3.5">
                 <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Usuario</span>
               </th>
-              <th scope="col" className="px-6 py-4">
+              <th scope="col" className="px-4 py-3.5">
                 <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Rol</span>
               </th>
-              <th scope="col" className="px-6 py-4">
+              <th scope="col" className="px-4 py-3.5">
                 <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-6 py-4">
+              <th scope="col" className="px-4 py-3.5">
                 <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Profesión / Reputación</span>
               </th>
-              <th scope="col" className="px-6 py-4">
+              <th scope="col" className="px-4 py-3.5">
                 <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Estado</span>
               </th>
-              <th scope="col" className="px-6 py-4 text-right">
+              <th scope="col" className="px-4 py-3.5 text-right">
                 <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Acciones</span>
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
+          <tbody className="text-zinc-700 dark:text-zinc-300">
             {paginatedUsuarios.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-6 py-16 text-center text-zinc-400 dark:text-zinc-500">
@@ -370,25 +370,36 @@ export default function UsuariosTable({
                   ? user.profesionales[0]
                   : null;
 
+                // Color accent bar per role/status
+                const accentColor = user.estado === 'suspendido'
+                  ? 'bg-amber-400'
+                  : user.rol === 'admin'
+                  ? 'bg-rose-400'
+                  : user.rol === 'profesional'
+                  ? 'bg-emerald-400'
+                  : 'bg-indigo-400';
+
                 return (
                   <tr 
                     key={user.id} 
-                    className="hover:bg-zinc-50/40 dark:hover:bg-zinc-950/15 transition-all duration-200 group cursor-pointer"
+                    className="relative hover:bg-indigo-50/20 dark:hover:bg-indigo-950/10 transition-all duration-150 group cursor-pointer border-b border-zinc-100 dark:border-zinc-800/60 last:border-0"
                     onClick={() => setSelectedUser(user)}
                   >
                     {/* Perfil & Avatar */}
-                    <td className="px-6 py-5">
+                    <td className="pl-0 pr-4 py-3.5">
                       <div className="flex items-center gap-3">
+                        {/* Left accent border */}
+                        <div className={`w-[3px] self-stretch rounded-r-full shrink-0 ${accentColor} opacity-70 group-hover:opacity-100 transition-opacity`} />
                         {user.avatar_url ? (
                           <img
                             src={user.avatar_url}
                             alt={user.nombre}
-                            className="h-10 w-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-800 shrink-0 shadow-sm"
+                            className="h-9 w-9 rounded-full object-cover border border-zinc-200 dark:border-zinc-700 shrink-0 shadow-sm"
                             onClick={(e) => { e.stopPropagation(); setSelectedUser(user); }}
                           />
                         ) : (
                           <div 
-                            className={`h-10 w-10 rounded-full flex items-center justify-center text-xs font-black border shadow-sm shrink-0 ${
+                            className={`h-9 w-9 rounded-full flex items-center justify-center text-[11px] font-black border shadow-sm shrink-0 ${
                               user.rol === 'admin' 
                                 ? 'bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-100 dark:border-rose-900/40' 
                                 : user.rol === 'profesional'
@@ -400,11 +411,11 @@ export default function UsuariosTable({
                             {user.nombre.substring(0, 2).toUpperCase()}
                           </div>
                         )}
-                        <div className="flex flex-col text-left min-w-0 max-w-[200px] sm:max-w-xs">
-                          <span className="font-black text-zinc-900 dark:text-zinc-150 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        <div className="flex flex-col text-left min-w-0 max-w-[190px] sm:max-w-xs">
+                          <span className="font-bold text-[13px] text-zinc-900 dark:text-zinc-100 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight">
                             {user.nombre}
                           </span>
-                          <span className="text-[11px] text-zinc-400 dark:text-zinc-500 truncate leading-normal">
+                          <span className="text-[11px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5">
                             {user.email}
                           </span>
                         </div>
@@ -412,97 +423,96 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Badge Rol */}
-                    <td className="px-6 py-5 align-middle">
+                    <td className="px-4 py-3.5 align-middle">
                       {getRoleBadge(user.rol)}
                     </td>
 
                     {/* Ciudad */}
-                    <td className="px-6 py-5 align-middle font-medium text-zinc-500 dark:text-zinc-400">
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
+                    <td className="px-4 py-3.5 align-middle">
+                      <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400">
+                        <MapPin className="h-3 w-3 text-zinc-350 dark:text-zinc-550 shrink-0" />
                         <span className="truncate">
-                          {user.ciudad || <span className="italic text-zinc-400 font-normal">No especificada</span>}
+                          {user.ciudad || <span className="italic text-zinc-350 dark:text-zinc-600">—</span>}
                         </span>
                       </div>
                     </td>
 
                     {/* Detalle Profesional / Reputación */}
-                    <td className="px-6 py-5 align-middle">
+                    <td className="px-4 py-3.5 align-middle">
                       {profData ? (
-                        <div className="flex flex-col gap-1 text-left">
-                          <span className="capitalize font-extrabold text-indigo-650 dark:text-indigo-400 text-xs">
+                        <div className="flex flex-col gap-0.5 text-left">
+                          <span className="capitalize font-bold text-indigo-600 dark:text-indigo-400 text-[12px] leading-tight">
                             {profData.especialidad}
                           </span>
-                          <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 dark:text-zinc-400">
-                            <div className="flex items-center gap-0.5 text-amber-500 shrink-0">
+                          <div className="flex items-center gap-1 text-[11px]">
+                            <div className="flex items-center gap-[2px]">
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <Star 
                                   key={star} 
-                                  className={`h-3 w-3 ${star <= Math.round(profData.calificacionpromedio || 0) ? 'fill-amber-400 text-amber-400' : 'text-zinc-200 dark:text-zinc-800'}`} 
+                                  className={`h-2.5 w-2.5 ${star <= Math.round(profData.calificacionpromedio || 0) ? 'fill-amber-400 text-amber-400' : 'text-zinc-200 dark:text-zinc-700'}`} 
                                 />
                               ))}
                             </div>
-                            <span className="font-bold text-zinc-700 dark:text-zinc-300">
+                            <span className="font-semibold text-zinc-600 dark:text-zinc-400">
                               {Number(profData.calificacionpromedio).toFixed(1)}
                             </span>
-                            <span className="text-zinc-400">({profData.totaltrabajos} trab.)</span>
+                            <span className="text-zinc-400 dark:text-zinc-550">· {profData.totaltrabajos} trab.</span>
                           </div>
                         </div>
                       ) : (
-                        <span className="text-zinc-400 dark:text-zinc-650 italic">-</span>
+                        <span className="text-zinc-300 dark:text-zinc-700 text-xs">—</span>
                       )}
                     </td>
 
                     {/* Estado */}
-                    <td className="px-6 py-5 align-middle">
+                    <td className="px-4 py-3.5 align-middle">
                       {getStatusBadge(user.estado)}
                     </td>
 
-                    {/* Acciones */}
-                    <td className="px-6 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center justify-end gap-2">
+                    {/* Acciones - visible solo en hover */}
+                    <td className="px-4 py-3.5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-150 translate-x-1 group-hover:translate-x-0">
                         {/* Botón Ver Ficha */}
                         <button
                           onClick={() => setSelectedUser(user)}
-                          className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
+                          className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-indigo-600 hover:border-indigo-300 dark:hover:text-indigo-400 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-all active:scale-90"
                           title="Ver ficha de usuario"
                         >
-                          <Eye className="h-4 w-4" />
+                          <Eye className="h-3.5 w-3.5" />
                         </button>
 
-                        {/* Botón Moderación (Activar/Suspender o espaciador) */}
+                        {/* Botón Moderación */}
                         {user.rol !== 'admin' ? (
                           user.estado === 'activo' ? (
                             <button
                               onClick={() => setConfirmAction({ id: user.id, action: 'suspender', nombre: user.nombre })}
                               disabled={loadingAction === user.id}
-                              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-rose-200 dark:border-rose-950/30 text-rose-600 dark:text-rose-455 hover:bg-rose-50 dark:hover:bg-rose-950/20 hover:text-rose-700 dark:hover:text-rose-300 transition-all active:scale-95 disabled:opacity-50"
+                              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-rose-200 dark:border-rose-900/40 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-700 dark:hover:text-rose-300 hover:border-rose-300 transition-all active:scale-90 disabled:opacity-40"
                               title="Suspender usuario"
                             >
                               {loadingAction === user.id ? (
                                 <Loader size="sm" />
                               ) : (
-                                <UserX className="h-4 w-4" />
+                                <UserX className="h-3.5 w-3.5" />
                               )}
                             </button>
                           ) : (
                             <button
                               onClick={() => setConfirmAction({ id: user.id, action: 'activar', nombre: user.nombre })}
                               disabled={loadingAction === user.id}
-                              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-950/30 text-emerald-600 dark:text-emerald-450 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all active:scale-95 disabled:opacity-50"
+                              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-900/40 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-700 dark:hover:text-emerald-300 hover:border-emerald-300 transition-all active:scale-90 disabled:opacity-40"
                               title="Reactivar usuario"
                             >
                               {loadingAction === user.id ? (
                                 <Loader size="sm" />
                               ) : (
-                                <UserCheck className="h-4 w-4" />
+                                <UserCheck className="h-3.5 w-3.5" />
                               )}
                             </button>
                           )
                         ) : (
-                          // Botón invisible para alinear perfectamente la columna de acciones
-                          <div className="invisible p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 shrink-0" aria-hidden="true">
-                            <UserX className="h-4 w-4" />
+                          <div className="invisible p-1.5 rounded-lg border border-transparent shrink-0">
+                            <UserX className="h-3.5 w-3.5" />
                           </div>
                         )}
                       </div>
