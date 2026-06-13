@@ -370,26 +370,25 @@ export default function UsuariosTable({
                   ? user.profesionales[0]
                   : null;
 
-                // Color accent bar per role/status
-                const accentColor = user.estado === 'suspendido'
-                  ? 'bg-amber-400'
+                // Accent color for left border per role/status
+                const accentBorder = user.estado === 'suspendido'
+                  ? '#f59e0b'
                   : user.rol === 'admin'
-                  ? 'bg-rose-400'
+                  ? '#f87171'
                   : user.rol === 'profesional'
-                  ? 'bg-emerald-400'
-                  : 'bg-indigo-400';
+                  ? '#34d399'
+                  : '#818cf8';
 
                 return (
                   <tr 
                     key={user.id} 
                     className="relative hover:bg-indigo-50/20 dark:hover:bg-indigo-950/10 transition-all duration-150 group cursor-pointer border-b border-zinc-100 dark:border-zinc-800/60 last:border-0"
+                    style={{ borderLeft: `3px solid ${accentBorder}` }}
                     onClick={() => setSelectedUser(user)}
                   >
                     {/* Perfil & Avatar */}
-                    <td className="pl-0 pr-4 py-3.5">
+                    <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
-                        {/* Left accent border */}
-                        <div className={`w-[3px] self-stretch rounded-r-full shrink-0 ${accentColor} opacity-70 group-hover:opacity-100 transition-opacity`} />
                         {user.avatar_url ? (
                           <img
                             src={user.avatar_url}
@@ -469,9 +468,9 @@ export default function UsuariosTable({
                       {getStatusBadge(user.estado)}
                     </td>
 
-                    {/* Acciones - visible solo en hover */}
+                    {/* Acciones - siempre visibles, realzadas en hover */}
                     <td className="px-4 py-3.5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-150 translate-x-1 group-hover:translate-x-0">
+                      <div className="flex items-center justify-end gap-1.5 opacity-50 group-hover:opacity-100 transition-all duration-150">
                         {/* Botón Ver Ficha */}
                         <button
                           onClick={() => setSelectedUser(user)}
