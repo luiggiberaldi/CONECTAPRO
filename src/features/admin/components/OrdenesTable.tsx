@@ -101,14 +101,14 @@ export default function OrdenesTable({
   const getUrgencyBadge = (urgencia: string) => {
     if (urgencia === 'hoy') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border uppercase tracking-wider bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-900/30">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold border uppercase tracking-wider bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-900/30">
           <Clock className="h-3 w-3 animate-pulse" />
           Urgente
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border uppercase tracking-wider bg-zinc-50 text-zinc-600 border-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:border-zinc-700">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold border uppercase tracking-wider bg-zinc-50 text-zinc-600 border-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:border-zinc-700">
         Esta semana
       </span>
     );
@@ -118,7 +118,7 @@ export default function OrdenesTable({
     switch (estado) {
       case 'pendiente':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black border uppercase tracking-wider bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900/30">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9.5px] font-bold border uppercase tracking-wider bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900/30">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
@@ -128,7 +128,7 @@ export default function OrdenesTable({
         );
       case 'en_proceso':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black border uppercase tracking-wider bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-455 dark:border-amber-900/30">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9.5px] font-bold border uppercase tracking-wider bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/20 dark:text-amber-455 dark:border-amber-900/30">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
@@ -138,15 +138,15 @@ export default function OrdenesTable({
         );
       case 'completada':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black border uppercase tracking-wider bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-455 dark:border-emerald-900/30">
-            <CheckCircle2 className="h-3.5 w-3.5" />
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold border uppercase tracking-wider bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-455 dark:border-emerald-900/30">
+            <CheckCircle2 className="h-3 w-3" />
             Completada
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black border uppercase tracking-wider bg-zinc-50 text-zinc-500 border-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:border-zinc-700">
-            <ShieldAlert className="h-3.5 w-3.5" />
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold border uppercase tracking-wider bg-zinc-50 text-zinc-500 border-zinc-200 dark:bg-zinc-800/40 dark:text-zinc-400 dark:border-zinc-700">
+            <ShieldAlert className="h-3 w-3" />
             Cancelada
           </span>
         );
@@ -266,10 +266,10 @@ export default function OrdenesTable({
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[1000px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <table className="w-full table-fixed min-w-[920px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-4 py-4 w-[22%]">
+              <th scope="col" className="px-4 py-4 w-[24%]">
                 <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Orden / Categoría</span>
               </th>
               <th scope="col" className="px-4 py-4 w-[18%]">
@@ -278,17 +278,16 @@ export default function OrdenesTable({
               <th scope="col" className="px-4 py-4 w-[18%]">
                 <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesional</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[14%]">
+              <th scope="col" className="px-2 py-4 w-[13%]">
                 <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[11%]">
+              <th scope="col" className="px-2 py-4 w-[11%]">
                 <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Urgencia</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[11%]">
+              <th scope="col" className="px-2 py-4 w-[11%]">
                 <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[6%] text-right">
-                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Detalle</span>
+              <th scope="col" className="px-2 py-4 w-[5%] text-right">
               </th>
             </tr>
           </thead>
@@ -386,7 +385,7 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Ubicación */}
-                  <td className="px-4 py-5 font-medium text-zinc-500 dark:text-zinc-400">
+                  <td className="px-2 py-5 font-medium text-zinc-500 dark:text-zinc-400">
                     <div className="flex items-center gap-1.5 min-w-0">
                       <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
                       <span className="block truncate max-w-[140px] text-xs" title={`${orden.ciudad}, ${orden.zona}`}>
@@ -396,17 +395,17 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Urgencia */}
-                  <td className="px-4 py-5 align-middle">
+                  <td className="px-2 py-5 align-middle">
                     {getUrgencyBadge(orden.urgencia)}
                   </td>
 
                   {/* Estado */}
-                  <td className="px-4 py-5 align-middle">
+                  <td className="px-2 py-5 align-middle">
                     {getStatusBadge(orden.estado)}
                   </td>
 
                   {/* Detalles Acción */}
-                  <td className="px-4 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                  <td className="px-2 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => setSelectedOrden(orden)}
                       className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
