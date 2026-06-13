@@ -21,7 +21,9 @@ import {
   FilterX, 
   Star,
   Copy,
-  Check
+  Check,
+  Activity,
+  Sliders
 } from 'lucide-react';
 import CustomSelect, { SelectOption } from '@/components/ui/CustomSelect';
 import dynamic from 'next/dynamic';
@@ -245,7 +247,7 @@ export default function UsuariosTable({
               Buscar Usuario
             </label>
             <div className="relative w-full">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
+              <Search className="absolute left-[24px] top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
               <input
                 type="text"
                 value={searchQuery}
@@ -254,7 +256,7 @@ export default function UsuariosTable({
                   setCurrentPage(1);
                 }}
                 placeholder="Buscar por nombre o correo..."
-                className="w-full pl-12 pr-9 py-2.5 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full pl-[56px] pr-9 py-2.5 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               />
               {searchQuery && (
                 <button 
@@ -315,16 +317,28 @@ export default function UsuariosTable({
       </div>
 
       {/* 3. Listado Principal (Tabla Rediseñada) */}
-      <div className="overflow-x-auto bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
+      <div className="overflow-x-auto overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm transition-all duration-300">
         <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
-          <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
+          <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-6 py-4">Usuario</th>
-              <th scope="col" className="px-6 py-4">Rol</th>
-              <th scope="col" className="px-6 py-4">Ubicación</th>
-              <th scope="col" className="px-6 py-4">Profesión / Reputación</th>
-              <th scope="col" className="px-6 py-4">Estado</th>
-              <th scope="col" className="px-6 py-4 text-right">Acciones</th>
+              <th scope="col" className="px-6 py-4">
+                <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Usuario</span>
+              </th>
+              <th scope="col" className="px-6 py-4">
+                <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Rol</span>
+              </th>
+              <th scope="col" className="px-6 py-4">
+                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Ubicación</span>
+              </th>
+              <th scope="col" className="px-6 py-4">
+                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Profesión / Reputación</span>
+              </th>
+              <th scope="col" className="px-6 py-4">
+                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Estado</span>
+              </th>
+              <th scope="col" className="px-6 py-4 text-right">
+                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" /> Acciones</span>
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
