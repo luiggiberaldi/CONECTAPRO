@@ -76,17 +76,17 @@ export default function UsuarioDrawer({
   const getStatusBadge = (estado: string) => {
     if (estado === 'suspendido') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30">
+        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-400 dark:border-rose-900/30">
           <ShieldAlert className="h-3 w-3" />
           Suspendido
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-450 dark:border-emerald-900/30">
-        <span className="relative flex h-1.5 w-1.5 shrink-0">
+      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black border bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-450 dark:border-emerald-900/30">
+        <span className="relative flex h-2 w-2 shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
         Activo
       </span>
@@ -111,7 +111,7 @@ export default function UsuarioDrawer({
             </span>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg border border-zinc-150 dark:border-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-500 hover:text-zinc-700 transition-colors"
+              className="p-2 rounded-lg border border-zinc-150 dark:border-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-500 hover:text-zinc-700 transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
@@ -138,7 +138,7 @@ export default function UsuarioDrawer({
                 )}
                 
                 {/* Status Indicator Dot */}
-                <span className="absolute bottom-0 right-0 block h-4.5 w-4.5 rounded-full ring-2 ring-white dark:ring-zinc-950 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center">
+                <span className="absolute bottom-0 right-0 block h-5 w-5 rounded-full ring-2 ring-white dark:ring-zinc-950 bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center">
                   {selectedUser.estado === 'activo' ? (
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -151,12 +151,12 @@ export default function UsuarioDrawer({
               </div>
 
               <div>
-                <h3 className="text-lg font-black text-zinc-900 dark:text-zinc-55">{selectedUser.nombre}</h3>
-                <p className="text-xs text-zinc-400 dark:text-zinc-550 mt-0.5">{selectedUser.email}</p>
+                <h3 className="text-lg font-black text-zinc-900 dark:text-zinc-100">{selectedUser.nombre}</h3>
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">{selectedUser.email}</p>
               </div>
               
               <div className="flex items-center gap-2 mt-1">
-                <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
                   isAdmin 
                     ? 'bg-zinc-150 text-zinc-700 border border-zinc-250 dark:bg-zinc-900 dark:text-zinc-400 dark:border-zinc-800' 
                     : isProfessional
@@ -172,15 +172,15 @@ export default function UsuarioDrawer({
 
             {/* Bento Grid de Detalles */}
             <div className="space-y-3 px-6">
-              <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-555 flex items-center gap-1.5">
-                <Activity className="h-3.5 w-3.5" /> Detalles de Cuenta
+              <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-500 flex items-center gap-2">
+                <Activity className="h-4 w-4" /> Detalles de Cuenta
               </h4>
 
               <div className="grid grid-cols-2 gap-3">
                 {/* Ubicación */}
                 <div className="p-3 bg-blue-50/20 dark:bg-blue-950/10 border border-blue-100/10 dark:border-blue-950/20 rounded-2xl flex flex-col gap-1">
-                  <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-450">
-                    <MapPin className="h-3.5 w-3.5" />
+                  <div className="flex items-center gap-2 text-blue-600 dark:text-blue-450">
+                    <MapPin className="h-4 w-4" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">Ubicación</span>
                   </div>
                   <span className="text-xs font-extrabold text-zinc-750 dark:text-zinc-300 truncate">
@@ -190,8 +190,8 @@ export default function UsuarioDrawer({
 
                 {/* Fecha de Registro */}
                 <div className="p-3 bg-amber-50/20 dark:bg-amber-950/10 border border-amber-100/10 dark:border-amber-950/20 rounded-2xl flex flex-col gap-1">
-                  <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-450">
-                    <Calendar className="h-3.5 w-3.5" />
+                  <div className="flex items-center gap-2 text-amber-600 dark:text-amber-450">
+                    <Calendar className="h-4 w-4" />
                     <span className="text-[9px] font-bold uppercase tracking-wider">Registro</span>
                   </div>
                   <span className="text-xs font-extrabold text-zinc-750 dark:text-zinc-300">
@@ -200,16 +200,16 @@ export default function UsuarioDrawer({
                 </div>
 
                 {/* ID de Usuario (Full width) */}
-                <div className="col-span-2 p-3.5 bg-zinc-50/80 dark:bg-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl flex flex-col gap-1.5">
+                <div className="col-span-2 p-4 bg-zinc-50/80 dark:bg-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800/80 rounded-2xl flex flex-col gap-2">
                   <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">ID de Usuario</span>
-                  <div className="flex items-center justify-between gap-2 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-1.5">
+                  <div className="flex items-center justify-between gap-2 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-1">
                     <span className="font-mono text-[9px] text-zinc-500 truncate select-all">{selectedUser.id}</span>
                     <button 
                       onClick={() => handleCopyId(selectedUser.id)}
-                      className="text-zinc-400 hover:text-indigo-650 dark:hover:text-indigo-400 p-0.5 shrink-0 transition-transform active:scale-90"
+                      className="text-zinc-400 hover:text-indigo-655 dark:hover:text-indigo-400 p-1 shrink-0 transition-transform active:scale-90"
                       title="Copiar ID"
                     >
-                      {copiedId ? <Check className="h-3.5 w-3.5 text-emerald-550" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copiedId ? <Check className="h-4 w-4 text-emerald-550" /> : <Copy className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
@@ -218,20 +218,20 @@ export default function UsuarioDrawer({
 
             {/* Ficha Profesional Adicional */}
             {profProfile && (
-              <div className="mx-6 p-4 bg-gradient-to-br from-indigo-50/5 to-purple-50/5 dark:from-zinc-900/50 dark:to-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl space-y-3.5 shadow-sm">
-                <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-550 border-b border-zinc-100 dark:border-zinc-800 pb-1.5 flex items-center gap-1.5">
-                  <Briefcase className="h-3.5 w-3.5" /> Perfil Profesional
+              <div className="mx-6 p-4 bg-gradient-to-br from-indigo-50/5 to-purple-50/5 dark:from-zinc-900/50 dark:to-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl space-y-4 shadow-sm">
+                <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-550 border-b border-zinc-100 dark:border-zinc-800 pb-2 flex items-center gap-2">
+                  <Briefcase className="h-4 w-4" /> Perfil Profesional
                 </h4>
 
-                <div className="grid grid-cols-2 gap-3.5 text-xs">
-                  <div className="flex flex-col gap-0.5">
+                <div className="grid grid-cols-2 gap-4 text-xs">
+                  <div className="flex flex-col gap-1">
                     <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Especialidad</span>
                     <span className="font-extrabold text-indigo-650 dark:text-indigo-400 capitalize">
                       {profProfile.especialidad}
                     </span>
                   </div>
 
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col gap-1">
                     <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Calificación</span>
                     <div className="flex items-center gap-1">
                       <span className="font-black text-zinc-800 dark:text-zinc-200">
@@ -243,7 +243,7 @@ export default function UsuarioDrawer({
                             key={i}
                             className={`h-3 w-3 ${
                               i < Math.round(profProfile.calificacionpromedio)
-                                ? 'fill-amber-400 text-amber-400'
+                                ? 'fill-amber-400 text-amber-450'
                                 : 'text-zinc-200 dark:text-zinc-700'
                             }`}
                           />
@@ -252,14 +252,14 @@ export default function UsuarioDrawer({
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-0.5 col-span-2">
+                  <div className="flex flex-col gap-1 col-span-2">
                     <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Reputación y Servicios</span>
-                    <div className="flex items-center justify-between mt-0.5">
+                    <div className="flex items-center justify-between mt-1">
                       <span className="font-extrabold text-zinc-700 dark:text-zinc-300">
                         {profProfile.totaltrabajos} servicios completados
                       </span>
                       {/* Badge de Nivel */}
-                      <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider ${
+                      <span className={`px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider ${
                         profProfile.totaltrabajos >= 15
                           ? 'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400'
                           : profProfile.totaltrabajos >= 5
@@ -281,15 +281,15 @@ export default function UsuarioDrawer({
             {/* Ficha Cliente Adicional */}
             {isClient && (
               <div className="mx-6 p-4 bg-gradient-to-br from-purple-50/5 to-indigo-50/5 dark:from-zinc-900/50 dark:to-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl space-y-3 shadow-sm">
-                <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-550 border-b border-zinc-100 dark:border-zinc-800 pb-1.5 flex items-center gap-1.5">
-                  <User className="h-3.5 w-3.5" /> Perfil Contratante
+                <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-550 border-b border-zinc-100 dark:border-zinc-800 pb-2 flex items-center gap-2">
+                  <User className="h-4 w-4" /> Perfil Contratante
                 </h4>
                 <div className="flex items-center justify-between text-xs py-1">
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col gap-1">
                     <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Tipo de Cuenta</span>
                     <span className="font-extrabold text-purple-650 dark:text-purple-400">Cliente / Contratador</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-400 font-extrabold text-[9px] uppercase border border-indigo-100/30 dark:border-indigo-900/30">
+                  <span className="px-2 py-1 rounded bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-400 font-extrabold text-[9px] uppercase border border-indigo-100/30 dark:border-indigo-900/30">
                     Contratante Activo
                   </span>
                 </div>
@@ -303,8 +303,8 @@ export default function UsuarioDrawer({
           {!isAdmin ? (
             selectedUser.estado === 'activo' ? (
               <div className="space-y-3">
-                <div className="flex items-start gap-2 p-3 rounded-xl border border-rose-100 bg-rose-50/20 text-rose-800 dark:border-rose-950/30 dark:bg-rose-950/10 dark:text-rose-400 text-[11px] leading-relaxed">
-                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-500 animate-pulse" />
+                <div className="flex items-start gap-2 p-3 rounded-xl border border-rose-100 bg-rose-50/20 text-rose-800 dark:border-rose-950/30 dark:bg-rose-950/10 dark:text-rose-455 text-[11px] leading-relaxed">
+                  <AlertCircle className="h-4 w-4 shrink-0 mt-1 text-rose-500 animate-pulse" />
                   <span>
                     Suspender esta cuenta impedirá que el usuario acceda al sistema, realice postulaciones o cree nuevas órdenes de servicio.
                   </span>
@@ -312,7 +312,7 @@ export default function UsuarioDrawer({
                 <button
                   onClick={() => onActionClick('suspender')}
                   disabled={loadingAction === selectedUser.id}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black text-white bg-rose-600 hover:bg-rose-500 hover:shadow-lg hover:shadow-rose-500/10 active:scale-98 transition-all disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-black text-white bg-rose-600 hover:bg-rose-500 hover:shadow-lg hover:shadow-rose-500/10 active:scale-98 transition-all disabled:opacity-50"
                 >
                   {loadingAction === selectedUser.id ? (
                     <Loader size="sm" />
@@ -326,8 +326,8 @@ export default function UsuarioDrawer({
               </div>
             ) : (
               <div className="space-y-3">
-                <div className="flex items-start gap-2 p-3 rounded-xl border border-emerald-100 bg-emerald-50/20 text-emerald-800 dark:border-emerald-950/30 dark:bg-emerald-950/10 dark:text-emerald-450 text-[11px] leading-relaxed">
-                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-emerald-500" />
+                <div className="flex items-start gap-2 p-3 rounded-xl border border-emerald-100 bg-emerald-50/20 text-emerald-800 dark:border-emerald-950/30 dark:bg-emerald-950/10 dark:text-emerald-455 text-[11px] leading-relaxed">
+                  <AlertCircle className="h-4 w-4 shrink-0 mt-1 text-emerald-500" />
                   <span>
                     Reactivar esta cuenta le restituirá todos los privilegios del sistema con el mismo correo, saldo de créditos y datos de historial.
                   </span>
@@ -335,7 +335,7 @@ export default function UsuarioDrawer({
                 <button
                   onClick={() => onActionClick('activar')}
                   disabled={loadingAction === selectedUser.id}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black text-white bg-emerald-600 hover:bg-emerald-500 hover:shadow-lg hover:shadow-emerald-500/10 active:scale-98 transition-all disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-black text-white bg-emerald-600 hover:bg-emerald-500 hover:shadow-lg hover:shadow-emerald-500/10 active:scale-98 transition-all disabled:opacity-50"
                 >
                   {loadingAction === selectedUser.id ? (
                     <Loader size="sm" />
@@ -349,9 +349,9 @@ export default function UsuarioDrawer({
               </div>
             )
           ) : (
-            <div className="flex flex-col items-center text-center gap-2.5 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-550 dark:text-zinc-400 shadow-sm">
+            <div className="flex flex-col items-center text-center gap-3 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-550 dark:text-zinc-400 shadow-sm">
               <ShieldAlert className="h-5 w-5 text-indigo-650 dark:text-indigo-400" />
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <p className="font-extrabold text-xs text-zinc-855 dark:text-zinc-200">Cuenta Administrativa Protegida</p>
                 <p className="text-[10px] text-zinc-400">No es posible moderar cuentas de administradores.</p>
               </div>

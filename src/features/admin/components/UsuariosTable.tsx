@@ -123,7 +123,7 @@ export default function UsuariosTable({
   const getStatusBadge = (estado: string) => {
     if (estado === 'suspendido') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-900/30">
+        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-black border bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-900/30">
           <ShieldAlert className="h-3 w-3" />
           Suspendido
         </span>
@@ -140,21 +140,21 @@ export default function UsuariosTable({
     switch (rol) {
       case 'admin':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border uppercase tracking-wider bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-900/30">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black border uppercase tracking-wider bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/20 dark:text-rose-455 dark:border-rose-900/30">
             <Shield className="h-3 w-3" />
             Admin
           </span>
         );
       case 'profesional':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border uppercase tracking-wider bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-455 dark:border-emerald-900/30">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black border uppercase tracking-wider bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/20 dark:text-emerald-455 dark:border-emerald-900/30">
             <Briefcase className="h-3 w-3" />
             Profesional
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black border uppercase tracking-wider bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-900/30">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black border uppercase tracking-wider bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/20 dark:text-indigo-400 dark:border-indigo-900/30">
             <User className="h-3 w-3" />
             Cliente
           </span>
@@ -215,7 +215,7 @@ export default function UsuariosTable({
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-2xl p-5 shadow-sm space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end w-full">
           {/* Búsqueda */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
               Buscar Usuario
             </label>
@@ -229,7 +229,7 @@ export default function UsuariosTable({
                   setCurrentPage(1);
                 }}
                 placeholder="Buscar por nombre o correo..."
-                className="w-full pl-10 pr-10 py-2.5 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
+                className="w-full pl-10 pr-10 py-2 border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/70 rounded-xl text-xs hover:border-zinc-300 dark:hover:border-zinc-750 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"
               />
               {searchQuery && (
                 <button 
@@ -243,7 +243,7 @@ export default function UsuariosTable({
           </div>
 
           {/* Select de Roles */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
               Filtrar por Rol
             </label>
@@ -259,7 +259,7 @@ export default function UsuariosTable({
           </div>
 
           {/* Select de Estados */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             <label className="text-[11px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
               Filtrar por Estado
             </label>
@@ -280,7 +280,7 @@ export default function UsuariosTable({
           <div className="flex justify-end pt-2 border-t border-zinc-100 dark:border-zinc-800">
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 px-4 py-2 text-xs font-black text-zinc-600 dark:text-zinc-350 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/20 dark:hover:text-rose-455 transition-all active:scale-95"
+              className="flex items-center gap-1 px-4 py-2 text-xs font-black text-zinc-600 dark:text-zinc-350 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/20 dark:hover:text-rose-455 transition-all active:scale-95"
             >
               <FilterX className="h-4 w-4" />
               Limpiar todos los filtros
@@ -295,23 +295,23 @@ export default function UsuariosTable({
           <table className="w-full table-fixed min-w-[950px] text-left text-xs">
           <thead className="bg-zinc-50/80 dark:bg-zinc-950/30 text-[10px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="pr-4 py-3.5 w-[28%]" style={{ paddingLeft: '24px' }}>
-                <span className="flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Usuario</span>
+              <th scope="col" className="pr-4 py-4 w-[28%]" style={{ paddingLeft: '24px' }}>
+                <span className="flex items-center gap-1"><Users className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Usuario</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[14%]">
-                <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Rol</span>
+              <th scope="col" className="px-4 py-4 w-[14%]">
+                <span className="flex items-center gap-1"><Shield className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Rol</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[14%]">
-                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
+              <th scope="col" className="px-4 py-4 w-[14%]">
+                <span className="flex items-center gap-1"><MapPin className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[20%]">
-                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesión / Reputación</span>
+              <th scope="col" className="px-4 py-4 w-[20%]">
+                <span className="flex items-center gap-1"><Briefcase className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Profesión / Reputación</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[12%]">
-                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
+              <th scope="col" className="px-4 py-4 w-[12%]">
+                <span className="flex items-center gap-1"><Activity className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="px-4 py-3.5 w-[12%] text-right">
-                <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Acciones</span>
+              <th scope="col" className="px-4 py-4 w-[12%] text-right">
+                <span className="flex items-center justify-end gap-1"><Sliders className="h-4 w-4 text-zinc-400 dark:text-zinc-550" /> Acciones</span>
               </th>
             </tr>
           </thead>
@@ -361,7 +361,7 @@ export default function UsuariosTable({
                   >
                     {/* Perfil & Avatar — border-left como accent bar */}
                     <td 
-                      className={`pr-4 py-3.5 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}
+                      className={`pr-4 py-4 border-l-[3px] ${accentColor.replace('bg-', 'border-')} group-hover:border-opacity-100 border-opacity-60 transition-all duration-150`}
                       style={{ paddingLeft: '24px' }}
                     >
                       <div className="flex items-center gap-3">
@@ -390,7 +390,7 @@ export default function UsuariosTable({
                           <span className="block truncate font-bold text-[13px] text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-tight" title={user.nombre}>
                             {user.nombre}
                           </span>
-                          <span className="block truncate text-[11px] text-zinc-400 dark:text-zinc-550 mt-0.5" title={user.email}>
+                          <span className="block truncate text-[11px] text-zinc-400 dark:text-zinc-550 mt-1" title={user.email}>
                             {user.email}
                           </span>
                         </div>
@@ -398,13 +398,13 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Badge Rol */}
-                    <td className="px-4 py-3.5 align-middle">
+                    <td className="px-4 py-4 align-middle">
                       {getRoleBadge(user.rol)}
                     </td>
 
                     {/* Ciudad */}
-                    <td className="px-4 py-3.5 align-middle">
-                      <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
+                    <td className="px-4 py-4 align-middle">
+                      <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 min-w-0">
                         <MapPin className="h-3 w-3 text-zinc-350 dark:text-zinc-550 shrink-0" />
                         <span className="block truncate" title={user.ciudad || ''}>
                           {user.ciudad || <span className="italic text-zinc-350 dark:text-zinc-600">—</span>}
@@ -413,9 +413,9 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Detalle Profesional / Reputación */}
-                    <td className="px-4 py-3.5 align-middle">
+                    <td className="px-4 py-4 align-middle">
                       {profData ? (
-                        <div className="flex flex-col gap-0.5 text-left">
+                        <div className="flex flex-col gap-1 text-left">
                           <span className="capitalize font-bold text-indigo-600 dark:text-indigo-400 text-[12px] leading-tight">
                             {profData.especialidad}
                           </span>
@@ -424,7 +424,7 @@ export default function UsuariosTable({
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <Star 
                                   key={star} 
-                                  className={`h-2.5 w-2.5 ${star <= Math.round(profData.calificacionpromedio || 0) ? 'fill-amber-400 text-amber-400' : 'text-zinc-200 dark:text-zinc-700'}`} 
+                                  className={`h-3 w-3 ${star <= Math.round(profData.calificacionpromedio || 0) ? 'fill-amber-400 text-amber-400' : 'text-zinc-200 dark:text-zinc-700'}`} 
                                 />
                               ))}
                             </div>
@@ -440,20 +440,20 @@ export default function UsuariosTable({
                     </td>
 
                     {/* Estado */}
-                    <td className="px-4 py-3.5 align-middle">
+                    <td className="px-4 py-4 align-middle">
                       {getStatusBadge(user.estado)}
                     </td>
 
                     {/* Acciones - visible solo en hover */}
-                    <td className="px-4 py-3.5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex items-center justify-end gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity duration-150">
+                    <td className="px-4 py-4 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                      <div className="flex items-center justify-end gap-2 opacity-60 group-hover:opacity-100 transition-opacity duration-150">
                         {/* Botón Ver Ficha */}
                         <button
                           onClick={() => setSelectedUser(user)}
-                          className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-indigo-600 hover:border-indigo-300 dark:hover:text-indigo-400 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-all active:scale-90"
+                          className="p-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-indigo-600 hover:border-indigo-300 dark:hover:text-indigo-400 dark:hover:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-all active:scale-90"
                           title="Ver ficha de usuario"
                         >
-                          <Eye className="h-3.5 w-3.5" />
+                          <Eye className="h-4 w-4" />
                         </button>
 
                         {/* Botón Moderación */}
@@ -462,26 +462,26 @@ export default function UsuariosTable({
                             <button
                               onClick={() => setConfirmAction({ id: user.id, action: 'suspender', nombre: user.nombre })}
                               disabled={loadingAction === user.id}
-                              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-rose-200 dark:border-rose-900/40 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-700 dark:hover:text-rose-300 hover:border-rose-300 transition-all active:scale-90 disabled:opacity-40"
+                              className="inline-flex items-center justify-center p-2 rounded-lg border border-rose-200 dark:border-rose-900/40 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-700 dark:hover:text-rose-300 hover:border-rose-300 transition-all active:scale-90 disabled:opacity-40"
                               title="Suspender usuario"
                             >
                               {loadingAction === user.id ? (
                                 <Loader size="sm" />
                               ) : (
-                                <UserX className="h-3.5 w-3.5" />
+                                <UserX className="h-4 w-4" />
                               )}
                             </button>
                           ) : (
                             <button
                               onClick={() => setConfirmAction({ id: user.id, action: 'activar', nombre: user.nombre })}
                               disabled={loadingAction === user.id}
-                              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-900/40 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-700 dark:hover:text-emerald-300 hover:border-emerald-300 transition-all active:scale-90 disabled:opacity-40"
+                              className="inline-flex items-center justify-center p-2 rounded-lg border border-emerald-200 dark:border-emerald-900/40 text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-700 dark:hover:text-emerald-300 hover:border-emerald-300 transition-all active:scale-90 disabled:opacity-40"
                               title="Reactivar usuario"
                             >
                               {loadingAction === user.id ? (
                                 <Loader size="sm" />
                               ) : (
-                                <UserCheck className="h-3.5 w-3.5" />
+                                <UserCheck className="h-4 w-4" />
                               )}
                             </button>
                           )
@@ -505,7 +505,7 @@ export default function UsuariosTable({
           <span className="text-zinc-500 font-medium">
             Mostrando {startIndex + 1}-{Math.min(startIndex + pageSize, usuariosFiltrados.length)} de {usuariosFiltrados.length} usuarios
           </span>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
