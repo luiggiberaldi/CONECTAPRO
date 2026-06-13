@@ -930,6 +930,24 @@ async function seedDemoData() {
       diasAtras: 73
     },
 
+    // Orden 6: Alejandro <=> Nelson
+    {
+      ordenid: ordenesMap.o6,
+      calificadorpor: clientesMap[`alejandro.silva${DEMO_SUFFIX}`],
+      calificadoa: profesionalesMap[`nelson.perez${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Instalación de tomacorrientes rápida y sin contratiempos. Las lámparas de la barra desayunadora quedaron bellísimas.',
+      diasAtras: 58
+    },
+    {
+      ordenid: ordenesMap.o6,
+      calificadorpor: profesionalesMap[`nelson.perez${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`alejandro.silva${DEMO_SUFFIX}`],
+      estrellas: 4,
+      comentario: 'El cliente suministró lámparas de buena calidad. Todo el proceso fue bastante transparente. Recomendado.',
+      diasAtras: 58
+    },
+
     // Orden 7: Gabriela <=> Carmen
     {
       ordenid: ordenesMap.o7,
@@ -948,6 +966,24 @@ async function seedDemoData() {
       diasAtras: 48
     },
 
+    // Orden 8: Luis <=> Carlos
+    {
+      ordenid: ordenesMap.o8,
+      calificadorpor: clientesMap[`luis.martinez${DEMO_SUFFIX}`],
+      calificadoa: profesionalesMap[`carlos.medina${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Limpieza profunda del tanque subterráneo. Todo quedó super limpio e higienizado. Muy recomendado.',
+      diasAtras: 40
+    },
+    {
+      ordenid: ordenesMap.o8,
+      calificadorpor: profesionalesMap[`carlos.medina${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`luis.martinez${DEMO_SUFFIX}`],
+      estrellas: 4,
+      comentario: 'Contratante amable. El acceso al sótano fue rápido y nos facilitó la toma de corriente para la hidrolavadora.',
+      diasAtras: 40
+    },
+
     // Orden 9: Ana <=> Francisco
     {
       ordenid: ordenesMap.o9,
@@ -956,6 +992,32 @@ async function seedDemoData() {
       estrellas: 5,
       comentario: 'Francisco instaló el monomando de la cocina de manera impecable. Trajo sus propias herramientas y adaptó los racores de cobre de forma prolija.',
       diasAtras: 27
+    },
+    {
+      ordenid: ordenesMap.o9,
+      calificadorpor: profesionalesMap[`francisco.blanco${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`ana.rodriguez${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Excelente comunicación y pago inmediato por transferencia. Totalmente recomendada como contratante.',
+      diasAtras: 27
+    },
+
+    // Orden 10: Pedro <=> Daniel
+    {
+      ordenid: ordenesMap.o10,
+      calificadorpor: clientesMap[`pedro.castillo${DEMO_SUFFIX}`],
+      calificadoa: profesionalesMap[`daniel.vargas${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Daniel colocó los reflectores en el jardín rápidamente. Funciona perfectamente el sensor. Profesional recomendado.',
+      diasAtras: 21
+    },
+    {
+      ordenid: ordenesMap.o10,
+      calificadorpor: profesionalesMap[`daniel.vargas${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`pedro.castillo${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Pedro fue muy atento, el trabajo se hizo rápido y las indicaciones de montaje fueron muy claras.',
+      diasAtras: 21
     },
 
     // Orden 11: Elena <=> Laura
@@ -966,6 +1028,68 @@ async function seedDemoData() {
       estrellas: 5,
       comentario: 'Super recomendada. Las curaciones diarias fueron hechas con un alto estándar de asepsia y técnica quirúrgica. La cicatrización va excelente.',
       diasAtras: 13
+    },
+    {
+      ordenid: ordenesMap.o11,
+      calificadorpor: profesionalesMap[`laura.gil${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`elena.rojas${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Elena es una excelente contratante, muy cuidadosa y responsable con los requerimientos médicos del paciente.',
+      diasAtras: 13
+    },
+
+    // Orden 12: Miguel <=> Nelson
+    {
+      ordenid: ordenesMap.o12,
+      calificadorpor: clientesMap[`miguel.delgado${DEMO_SUFFIX}`],
+      calificadoa: profesionalesMap[`nelson.perez${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Nelson balanceó el tablero general de breakers. Ahora podemos encender los aires sin problemas. Profesional altamente técnico.',
+      diasAtras: 3
+    },
+    {
+      ordenid: ordenesMap.o12,
+      calificadorpor: profesionalesMap[`nelson.perez${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`miguel.delgado${DEMO_SUFFIX}`],
+      estrellas: 4,
+      comentario: 'Todo bien con Miguel. Mostró buena disposición para coordinar el horario de corte de energía para el balanceo.',
+      diasAtras: 3
+    },
+
+    // Orden 13: Maria <=> Andres
+    {
+      ordenid: ordenesMap.o13,
+      calificadorpor: clientesMap[`maria.gomez${DEMO_SUFFIX}`],
+      calificadoa: profesionalesMap[`andres.castro${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Andrés sustituyó la bomba de agua del edificio rápidamente. Volvimos a tener agua el mismo día. Gran plomero.',
+      diasAtras: 7
+    },
+    {
+      ordenid: ordenesMap.o13,
+      calificadorpor: profesionalesMap[`andres.castro${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`maria.gomez${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Maria coordinó muy bien el acceso con la junta de condominio. Excelente comunicación.',
+      diasAtras: 7
+    },
+
+    // Orden 14: Luis <=> Jose
+    {
+      ordenid: ordenesMap.o14,
+      calificadorpor: clientesMap[`luis.martinez${DEMO_SUFFIX}`],
+      calificadoa: profesionalesMap[`jose.rodriguez${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Instalación impecable del calentador eléctrico de agua. Hizo las conexiones de termofusión perfectas. Todo al 100%.',
+      diasAtras: 5
+    },
+    {
+      ordenid: ordenesMap.o14,
+      calificadorpor: profesionalesMap[`jose.rodriguez${DEMO_SUFFIX}`],
+      calificadoa: clientesMap[`luis.martinez${DEMO_SUFFIX}`],
+      estrellas: 5,
+      comentario: 'Un contratante muy amable y serio en el trato. Pago inmediato y ambiente laboral cómodo.',
+      diasAtras: 5
     }
   ];
 
