@@ -268,23 +268,23 @@ export default function OrdenesTable({
           <table className="w-full table-fixed min-w-[850px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-4 py-4 w-[23%]">
-                <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Orden / Categoría</span>
-              </th>
               <th scope="col" className="px-4 py-4 w-[18%]">
-                <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Cliente</span>
+                <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-55" /> Orden / Categoría</span>
               </th>
-              <th scope="col" className="px-4 py-4 w-[18%]">
-                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesional</span>
+              <th scope="col" className="px-4 py-4 w-[20%]">
+                <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-55" /> Cliente</span>
               </th>
-              <th scope="col" className="px-2 py-4 w-[14%]">
-                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
+              <th scope="col" className="px-4 py-4 w-[20%]">
+                <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-55" /> Profesional</span>
+              </th>
+              <th scope="col" className="px-2 py-4 w-[15%]">
+                <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-55" /> Ubicación</span>
               </th>
               <th scope="col" className="px-2 py-4 w-[11%]">
-                <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Urgencia</span>
+                <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-55" /> Urgencia</span>
               </th>
               <th scope="col" className="px-2 py-4 w-[10%]">
-                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
+                <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-55" /> Estado</span>
               </th>
               <th scope="col" className="pr-4 pl-2 py-4 w-[6%] text-right">
               </th>
@@ -325,7 +325,7 @@ export default function OrdenesTable({
                   <td className="px-4 py-5 max-w-xs">
                     <div className="flex flex-col text-left min-w-0">
                       <div className="relative group/title inline-block max-w-full">
-                        <span className="block truncate font-black text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-650 dark:group-hover:text-indigo-400 transition-colors">
+                        <span className="block truncate font-semibold text-xs text-zinc-900 dark:text-zinc-150 group-hover:text-indigo-655 dark:group-hover:text-indigo-400 transition-colors">
                           {orden.titulo}
                         </span>
                         {/* Tooltip Premium Glassmorphic */}
@@ -341,7 +341,7 @@ export default function OrdenesTable({
                           <div className="absolute top-full left-5 -mt-1 border-4 border-transparent border-t-zinc-950/95 dark:border-t-zinc-900/95" />
                         </div>
                       </div>
-                      <span className="inline-flex self-start mt-1.5 px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-indigo-50/70 border border-indigo-150 text-indigo-650 dark:bg-indigo-950/30 dark:text-indigo-400 dark:border-indigo-900/35">
+                      <span className="text-[10px] font-bold text-zinc-450 dark:text-zinc-500 uppercase tracking-wider mt-0.5">
                         {orden.categoria?.nombre || 'Servicio'}
                       </span>
                     </div>
