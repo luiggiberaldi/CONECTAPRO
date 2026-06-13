@@ -63,6 +63,10 @@ export default function UsuarioDrawer({
     ? selectedUser.profesionales[0]
     : null;
 
+  const clienteProfile = isClient && selectedUser.clientes && selectedUser.clientes.length > 0
+    ? selectedUser.clientes[0]
+    : null;
+
   let bannerGradient = 'from-zinc-700 to-zinc-900';
   let bannerText = 'ADMINISTRADOR';
   if (isProfessional) {
@@ -280,19 +284,73 @@ export default function UsuarioDrawer({
 
             {/* Ficha Cliente Adicional */}
             {isClient && (
-              <div className="mx-6 p-4 bg-gradient-to-br from-purple-50/5 to-indigo-50/5 dark:from-zinc-900/50 dark:to-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl space-y-3 shadow-sm">
+              <div className="mx-6 p-4 bg-gradient-to-br from-purple-50/5 to-indigo-50/5 dark:from-zinc-900/50 dark:to-zinc-900/50 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl space-y-4 shadow-sm">
                 <h4 className="text-[10px] font-black uppercase tracking-wider text-zinc-400 dark:text-zinc-550 border-b border-zinc-100 dark:border-zinc-800 pb-2 flex items-center gap-2">
                   <User className="h-4 w-4" /> Perfil Contratante
                 </h4>
-                <div className="flex items-center justify-between text-xs py-1">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Tipo de Cuenta</span>
-                    <span className="font-extrabold text-purple-650 dark:text-purple-400">Cliente / Contratador</span>
+                {clienteProfile ? (
+                  <div className="grid grid-cols-2 gap-4 text-xs">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Tipo de Cuenta</span>
+                      <span className="font-extrabold text-purple-650 dark:text-purple-400">
+                        Cliente
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Reputación</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-black text-zinc-800 dark:text-zinc-200">
+                          {Number(clienteProfile.calificacionpromedio).toFixed(1)}
+                        </span>
+                        <div className="flex text-amber-400">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-3 w-3 ${
+                                i < Math.round(clienteProfile.calificacionpromedio)
+                                  ? 'fill-amber-400 text-amber-450'
+                                  : 'text-zinc-200 dark:text-zinc-700'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1 col-span-2">
+                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Proyectos Creados</span>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="font-extrabold text-zinc-700 dark:text-zinc-300">
+                          {clienteProfile.totalproyectos} proyectos publicados
+                        </span>
+                        <span className={`px-2 py-1 rounded text-[9px] font-black uppercase tracking-wider ${
+                          clienteProfile.totalproyectos >= 10
+                            ? 'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400'
+                            : clienteProfile.totalproyectos >= 3
+                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400'
+                            : 'bg-zinc-100 text-zinc-650 dark:bg-zinc-900 dark:text-zinc-400'
+                        }`}>
+                          {clienteProfile.totalproyectos >= 10
+                            ? 'Inversionista'
+                            : clienteProfile.totalproyectos >= 3
+                            ? 'Frecuente'
+                            : 'Nuevo'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <span className="px-2 py-1 rounded bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-400 font-extrabold text-[9px] uppercase border border-indigo-100/30 dark:border-indigo-900/30">
-                    Contratante Activo
-                  </span>
-                </div>
+                ) : (
+                  <div className="flex items-center justify-between text-xs py-1">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">Tipo de Cuenta</span>
+                      <span className="font-extrabold text-purple-650 dark:text-purple-400">Cliente / Contratador</span>
+                    </div>
+                    <span className="px-2 py-1 rounded bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-400 font-extrabold text-[9px] uppercase border border-indigo-100/30 dark:border-indigo-900/30">
+                      Contratante Activo
+                    </span>
+                  </div>
+                )}
               </div>
             )}
           </div>

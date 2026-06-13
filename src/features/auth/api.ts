@@ -55,6 +55,16 @@ export async function registrarUsuario(payload: RegistroPayload): Promise<AuthRe
         });
       
       if (profError) throw profError;
+    } else if (rol === 'cliente' && data.user) {
+      const { error: clientError } = await supabaseBrowser
+        .from('clientes')
+        .insert({
+          usuarioid: data.user.id,
+          calificacionpromedio: 0,
+          totalproyectos: 0,
+        });
+      
+      if (clientError) throw clientError;
     }
     
     if (data?.user?.id) {

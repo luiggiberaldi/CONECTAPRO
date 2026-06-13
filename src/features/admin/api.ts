@@ -167,7 +167,7 @@ export async function getTodosUsuarios(): Promise<AdminUsuario[] | null> {
   try {
     const { data, error } = await supabaseBrowser
       .from('usuarios')
-      .select('*, profesionales(especialidad, calificacionpromedio, totaltrabajos)')
+      .select('*, profesionales(especialidad, calificacionpromedio, totaltrabajos), clientes(calificacionpromedio, totalproyectos)')
       .order('nombre', { ascending: true });
 
     if (error) throw error;

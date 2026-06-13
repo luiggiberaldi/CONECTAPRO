@@ -35,5 +35,9 @@ export interface AdminUsuario extends Usuario {
     calificacionpromedio: number;
     totaltrabajos: number;
   }[] | null;
+  clientes?: {
+    calificacionpromedio: number;
+    totalproyectos: number;
+  }[] | null;
 }
 export type OrdenFilterEstado = 'todos' | 'pendiente' | 'en_proceso' | 'completada' | 'cancelada';

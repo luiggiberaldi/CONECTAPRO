@@ -343,6 +343,10 @@ export default function UsuariosTable({
                 const profData = user.rol === 'profesional' && user.profesionales && user.profesionales.length > 0
                   ? user.profesionales[0]
                   : null;
+
+                const clienteData = user.rol === 'cliente' && user.clientes && user.clientes.length > 0
+                  ? user.clientes[0]
+                  : null;
  
                 // Color accent bar per role/status
                 const accentColor = user.estado === 'suspendido'
@@ -432,6 +436,26 @@ export default function UsuariosTable({
                               {Number(profData.calificacionpromedio).toFixed(1)}
                             </span>
                             <span className="text-zinc-400 dark:text-zinc-550">· {profData.totaltrabajos} trab.</span>
+                          </div>
+                        </div>
+                      ) : clienteData ? (
+                        <div className="flex flex-col gap-1 text-left">
+                          <span className="capitalize font-bold text-indigo-650 dark:text-indigo-400 text-[12px] leading-tight">
+                            Cliente
+                          </span>
+                          <div className="flex items-center gap-1 text-[11px]">
+                            <div className="flex items-center gap-[2px]">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <Star 
+                                  key={star} 
+                                  className={`h-3 w-3 ${star <= Math.round(clienteData.calificacionpromedio || 0) ? 'fill-amber-400 text-amber-400' : 'text-zinc-200 dark:text-zinc-700'}`} 
+                                />
+                              ))}
+                            </div>
+                            <span className="font-semibold text-zinc-600 dark:text-zinc-400">
+                              {Number(clienteData.calificacionpromedio).toFixed(1)}
+                            </span>
+                            <span className="text-zinc-400 dark:text-zinc-550">· {clienteData.totalproyectos} proy.</span>
                           </div>
                         </div>
                       ) : (
