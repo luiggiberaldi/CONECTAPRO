@@ -356,3 +356,15 @@ Registro histórico de decisiones de arquitectura, reglas de negocio, resolució
   - **Responsividad Móvil:** Menú lateral tipo hamburger que se activa en móviles mostrando todos los links de navegación filtrados por rol.
   - **Optimización de interacciones:** Detección de clics externos para cerrar automáticamente todos los dropdowns y submenús.
 * **Validación realizada:** Compilación y linting de Next.js exitosos con `npm run build`.
+
+### [style] Rediseño del Panel de Control por Ficha de Usuario estilo Workana
+* **Decisión:** Sustituir los antiguos encabezados genéricos del panel de control de clientes y profesionales por fichas de perfil de usuario personalizadas estilo Workana, mejorando la presentación visual y enriqueciendo los datos mostrados.
+* **Archivos modificados:**
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(cliente)/cliente/ordenes/page.tsx)
+  - [page.tsx](file:///c:/Users/luigg/Desktop/conectapro/src/app/(profesional)/profesional/ordenes/page.tsx)
+* **Detalles:**
+  - **Ficha de Profesional:** Integra foto de avatar (o iniciales si no posee), promedio de calificación con estrellas interactivas, cantidad total de trabajos completados, saldo de wallet, cantidad de proyectos activos en curso (con tooltip explicativo) y un botón de acción rápida para buscar trabajo.
+  - **Billetera Colapsable (Profesional):** Añadido un desplegable detallado de finanzas con el acumulado histórico de créditos cargados y utilizados, junto a un link de redirección directa a la wallet.
+  - **Ficha de Cliente:** Muestra foto de avatar, reputación promedio calculada dinámicamente en base a las calificaciones recibidas de profesionales, total de proyectos activos publicados, y un botón de acción rápida para publicar un nuevo proyecto.
+  - **Estética premium:** Uso de fondos cálidos off-white/beige (`#fdfcf9`) con bordes atenuados, diseño totalmente responsivo y micro-interacciones pulidas.
+* **Validación realizada:** Verificación de tipos de TypeScript y compilación de producción exitosa con `npm run build` sin errores.
