@@ -67,23 +67,23 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
     <div className="space-y-4">
       <div className="bg-white/75 dark:bg-zinc-900/75 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <table className="w-full table-fixed min-w-[1150px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/75 dark:bg-zinc-950/40 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider">
             <tr>
-              <th scope="col" className="px-6 py-4 w-[22%]">Profesional</th>
-              <th scope="col" className="px-6 py-4 w-[11%]">Paquete</th>
-              <th scope="col" className="px-6 py-4 w-[12%]">Monto (USD)</th>
-              <th scope="col" className="px-6 py-4 w-[13%]">Método</th>
-              <th scope="col" className="px-6 py-4 w-[12%]">Referencia</th>
-              <th scope="col" className="px-6 py-4 w-[11%]">Fecha</th>
-              <th scope="col" className="px-6 py-4 w-[11%]">Soporte</th>
-              <th scope="col" className="px-6 py-4 w-[8%] text-right">Acciones</th>
+              <th scope="col" className="px-4 py-4 w-[22%]">Profesional</th>
+              <th scope="col" className="px-4 py-4 w-[11%]">Paquete</th>
+              <th scope="col" className="px-4 py-4 w-[12%]">Monto (USD)</th>
+              <th scope="col" className="px-4 py-4 w-[13%]">Método</th>
+              <th scope="col" className="px-4 py-4 w-[12%]">Referencia</th>
+              <th scope="col" className="px-4 py-4 w-[11%]">Fecha</th>
+              <th scope="col" className="px-4 py-4 w-[11%]">Soporte</th>
+              <th scope="col" className="px-4 py-4 w-[8%] text-right">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-150 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
             {paginatedRecargas.length === 0 ? (
               <tr>
-                <td colSpan={8} className="px-6 py-12 text-center text-zinc-400 dark:text-zinc-500">
+                <td colSpan={8} className="px-4 py-12 text-center text-zinc-400 dark:text-zinc-500">
                   <div className="flex flex-col items-center justify-center gap-2">
                     <AlertCircle className="h-6 w-6 text-zinc-300" />
                     <span>No hay solicitudes de recarga pendientes de revisión.</span>
@@ -93,7 +93,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
             ) : (
               paginatedRecargas.map((recarga) => (
                 <tr key={recarga.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-950/20 transition-colors">
-                  <td className="px-6 py-4 font-medium text-zinc-900 dark:text-zinc-150">
+                  <td className="px-4 py-4 font-medium text-zinc-900 dark:text-zinc-150">
                     <div className="flex items-center gap-2.5">
                       <div className="h-7 w-7 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-450 border border-zinc-200 dark:border-zinc-800">
                         <User className="h-3.5 w-3.5" />
@@ -104,13 +104,13 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 font-bold text-indigo-600 dark:text-indigo-400">
+                  <td className="px-4 py-4 font-bold text-indigo-600 dark:text-indigo-400">
                     {recarga.paquete} cr.
                   </td>
-                  <td className="px-6 py-4 font-medium">
+                  <td className="px-4 py-4 font-medium">
                     ${Number(recarga.montousd).toFixed(2)}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-4">
                     {recarga.metodopago === 'pagomovil' && (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black border bg-emerald-50 text-emerald-700 border-emerald-250 dark:bg-emerald-950/20 dark:text-emerald-400 dark:border-emerald-900/30">
                         Pago Móvil
@@ -127,16 +127,16 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 font-mono font-medium text-xs text-zinc-500 dark:text-zinc-400">
+                  <td className="px-4 py-4 font-mono font-medium text-xs text-zinc-500 dark:text-zinc-400">
                     {recarga.referencia}
                   </td>
-                  <td className="px-6 py-4 text-zinc-400">
+                  <td className="px-4 py-4 text-zinc-400">
                     <span className="inline-flex items-center gap-1 font-semibold">
                       <Calendar className="h-3 w-3" />
                       {new Date(recarga.createdat).toLocaleDateString('es-VE')}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-4">
                     <button
                       onClick={() => handleOpenViewer(recarga)}
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-indigo-200/60 dark:border-indigo-900/40 text-indigo-650 dark:text-indigo-400 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/30 font-bold transition-all active:scale-95"
@@ -145,7 +145,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       Ver Captura
                     </button>
                   </td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-4 py-4 text-right">
                     <div className="inline-flex items-center gap-1.5">
                       <button
                         onClick={() => setConfirmAction({ id: recarga.id, type: 'aprobar' })}
@@ -158,7 +158,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       <button
                         onClick={() => setConfirmAction({ id: recarga.id, type: 'rechazar' })}
                         disabled={loadingAction === recarga.id}
-                        className="p-1.5 rounded-lg border border-rose-200 dark:border-rose-950/30 bg-rose-50/50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-450 hover:bg-rose-100 dark:hover:hover:bg-rose-950/50 transition-colors"
+                        className="p-1.5 rounded-lg border border-rose-200 dark:border-rose-950/30 bg-rose-50/50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-455 hover:bg-rose-100 dark:hover:hover:bg-rose-950/50 transition-colors"
                         title="Rechazar Recarga"
                       >
                         <X className="h-3.5 w-3.5" />

@@ -266,28 +266,28 @@ export default function OrdenesTable({
 
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
         <div className="overflow-x-auto w-full">
-          <table className="w-full table-fixed min-w-[950px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
+          <table className="w-full table-fixed min-w-[1150px] divide-y divide-zinc-200 dark:divide-zinc-800 text-left text-xs">
           <thead className="bg-zinc-50/50 dark:bg-zinc-950/20 text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-wider border-b border-zinc-200 dark:border-zinc-800">
             <tr>
-              <th scope="col" className="px-6 py-4 w-[22%]">
+              <th scope="col" className="px-4 py-4 w-[22%]">
                 <span className="flex items-center gap-1.5"><ClipboardList className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Orden / Categoría</span>
               </th>
-              <th scope="col" className="px-6 py-4 w-[18%]">
+              <th scope="col" className="px-4 py-4 w-[18%]">
                 <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Cliente</span>
               </th>
-              <th scope="col" className="px-6 py-4 w-[18%]">
+              <th scope="col" className="px-4 py-4 w-[18%]">
                 <span className="flex items-center gap-1.5"><Briefcase className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Profesional</span>
               </th>
-              <th scope="col" className="px-6 py-4 w-[14%]">
+              <th scope="col" className="px-4 py-4 w-[14%]">
                 <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Ubicación</span>
               </th>
-              <th scope="col" className="px-6 py-4 w-[11%]">
+              <th scope="col" className="px-4 py-4 w-[11%]">
                 <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Urgencia</span>
               </th>
-              <th scope="col" className="px-6 py-4 w-[11%]">
+              <th scope="col" className="px-4 py-4 w-[11%]">
                 <span className="flex items-center gap-1.5"><Activity className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Estado</span>
               </th>
-              <th scope="col" className="px-6 py-4 w-[6%] text-right">
+              <th scope="col" className="px-4 py-4 w-[6%] text-right">
                 <span className="flex items-center justify-end gap-1.5"><Sliders className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550" /> Detalle</span>
               </th>
             </tr>
@@ -295,7 +295,7 @@ export default function OrdenesTable({
           <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60 text-zinc-700 dark:text-zinc-300">
             {paginatedOrdenes.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-6 py-16 text-center text-zinc-400 dark:text-zinc-500">
+                <td colSpan={7} className="px-4 py-16 text-center text-zinc-400 dark:text-zinc-550">
                   <div className="flex flex-col items-center justify-center gap-3 max-w-sm mx-auto">
                     <div className="h-12 w-12 rounded-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 flex items-center justify-center text-zinc-300">
                       <Inbox className="h-6 w-6" />
@@ -325,7 +325,7 @@ export default function OrdenesTable({
                   onClick={() => setSelectedOrden(orden)}
                 >
                   {/* Título & Categoría */}
-                  <td className="px-6 py-5 max-w-xs">
+                  <td className="px-4 py-5 max-w-xs">
                     <div className="flex flex-col text-left">
                       <span className="font-black text-zinc-900 dark:text-zinc-150 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" title={orden.titulo}>
                         {orden.titulo}
@@ -337,7 +337,7 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Cliente */}
-                  <td className="px-6 py-5">
+                  <td className="px-4 py-5">
                     <div className="flex items-center gap-2.5">
                       {orden.cliente?.avatar_url ? (
                         <img
@@ -358,7 +358,7 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Profesional */}
-                  <td className="px-6 py-5">
+                  <td className="px-4 py-5">
                     {orden.profesional ? (
                       <div className="flex items-center gap-2.5">
                         {orden.profesional.avatar_url ? (
@@ -386,7 +386,7 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Ubicación */}
-                  <td className="px-6 py-5 font-medium text-zinc-500 dark:text-zinc-400">
+                  <td className="px-4 py-5 font-medium text-zinc-500 dark:text-zinc-400">
                     <div className="flex items-center gap-1.5">
                       <MapPin className="h-3.5 w-3.5 text-zinc-400 shrink-0" />
                       <span className="truncate max-w-[140px] text-xs">
@@ -396,17 +396,17 @@ export default function OrdenesTable({
                   </td>
 
                   {/* Urgencia */}
-                  <td className="px-6 py-5 align-middle">
+                  <td className="px-4 py-5 align-middle">
                     {getUrgencyBadge(orden.urgencia)}
                   </td>
 
                   {/* Estado */}
-                  <td className="px-6 py-5 align-middle">
+                  <td className="px-4 py-5 align-middle">
                     {getStatusBadge(orden.estado)}
                   </td>
 
                   {/* Detalles Acción */}
-                  <td className="px-6 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
+                  <td className="px-4 py-5 align-middle text-right" onClick={(e) => e.stopPropagation()}>
                     <button
                       onClick={() => setSelectedOrden(orden)}
                       className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-500 hover:text-indigo-600 hover:border-indigo-200 dark:hover:text-indigo-400 dark:hover:border-indigo-900/60 hover:bg-indigo-50/20 dark:hover:bg-indigo-950/25 transition-all"
