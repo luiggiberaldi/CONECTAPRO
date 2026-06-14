@@ -9,7 +9,7 @@ interface WalletBalanceProps {
 
 export default function WalletBalance({ saldo, totalcargado, totalusado }: WalletBalanceProps) {
   return (
-    <div className="bg-gradient-to-br from-indigo-600 via-indigo-650 to-violet-700 text-white rounded-2xl p-6 shadow-md border border-indigo-500/10">
+    <div className="bg-gradient-to-br from-indigo-600 via-indigo-650 to-violet-700 text-white rounded-2xl p-4 sm:p-6 shadow-md border border-indigo-500/10">
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs font-semibold uppercase tracking-wider text-indigo-150">
           Balance Disponible

@@ -85,7 +85,7 @@ export default function Navbar() {
                   width={150}
                   height={28}
                   priority
-                  className="h-7 w-auto object-contain dark:brightness-110"
+                  className="h-[18px] sm:h-[28px] w-auto object-contain dark:brightness-110"
                 />
               </Link>
             </div>
@@ -166,9 +166,9 @@ export default function Navbar() {
           </div>
 
           {/* Menú de Iconos y Dropdowns (Derecha) - Estilo Workana */}
-          <div className="flex items-center gap-1.5 sm:gap-3">
+          <div className="flex items-center gap-1 sm:gap-3">
             {/* Buscador Extensible */}
-            <div className="relative">
+            <div className="relative hidden sm:block">
               <button
                 onClick={() => {
                   setIsSearchExpanded(!isSearchExpanded);
@@ -206,7 +206,7 @@ export default function Navbar() {
                   setIsProfileOpen(false);
                   setIsSearchExpanded(false);
                 }}
-                className={`p-2 rounded-xl relative transition-all duration-200 ${
+                className={`p-1.5 sm:p-2 rounded-xl relative transition-all duration-200 ${
                   isNotificationsOpen 
                     ? 'text-indigo-600 bg-indigo-50 dark:bg-indigo-950/35 dark:text-indigo-400' 
                     : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900'
@@ -243,7 +243,7 @@ export default function Navbar() {
                   setIsProfileOpen(false);
                   setIsSearchExpanded(false);
                 }}
-                className={`p-2 rounded-xl relative transition-all duration-200 ${
+                className={`p-1.5 sm:p-2 rounded-xl relative transition-all duration-200 ${
                   isMessagesOpen 
                     ? 'text-indigo-600 bg-indigo-50 dark:bg-indigo-950/35 dark:text-indigo-400' 
                     : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900'
@@ -278,7 +278,7 @@ export default function Navbar() {
                   setIsMessagesOpen(false);
                   setIsSearchExpanded(false);
                 }}
-                className="flex items-center gap-1.5 focus:outline-none p-1 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                className="flex items-center gap-1 sm:gap-1.5 focus:outline-none p-1 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
                 {usuario.avatar_url ? (
                   <img
@@ -287,11 +287,11 @@ export default function Navbar() {
                     className="h-8 w-8 rounded-full object-cover border border-zinc-200 dark:border-zinc-800 shadow-sm"
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/60 flex items-center justify-center text-indigo-700 dark:text-indigo-400 font-black text-md shadow-sm">
+                  <div className="h-8 w-8 rounded-full bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/60 flex items-center justify-center text-indigo-750 dark:text-indigo-400 font-black text-md shadow-sm">
                     {usuario.nombre.substring(0, 2).toUpperCase()}
                   </div>
                 )}
-                <ChevronDown className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" />
+                <ChevronDown className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-550 hidden sm:block" />
               </button>
 
               {isProfileOpen && (
@@ -355,7 +355,7 @@ export default function Navbar() {
                   setIsSearchExpanded(false);
                   setIsProfileOpen(false);
                 }}
-                className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-855 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900 transition-colors"
+                className="p-1 rounded-xl text-zinc-500 hover:text-zinc-855 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900 transition-colors"
               >
                 {isMobileMenuOpen ? <X className="h-5.5 w-5.5" /> : <Menu className="h-5.5 w-5.5" />}
               </button>
