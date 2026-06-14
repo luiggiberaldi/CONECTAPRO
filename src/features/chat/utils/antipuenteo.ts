@@ -11,52 +11,63 @@ export function detectarTelefono(texto: string): boolean {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, ""); // Quita acentos (á->a, é->e, etc.)
 
-  // 2. Remover el conector "y" cuando está como palabra sola para unificar números compuestos (ej: noventa y tres -> noventa tres)
+  // 2. Remover los conectores "y" o "i" cuando están como palabra sola para unificar números compuestos (ej: noventa y tres -> noventa tres)
   textoProcesado = textoProcesado.replace(/\by\b/g, '');
+  textoProcesado = textoProcesado.replace(/\bi\b/g, ''); // en caso de simplificaciones y -> i
 
-  // 3. Diccionario de números escritos en palabras en español
+  // 3. Normalización fonética para neutralizar deliberadas faltas de ortografía (ej: doze -> dose, kuatro -> cuatro)
+  textoProcesado = textoProcesado
+    .replace(/z/g, 's')              // z -> s (doze -> dose, trez -> tres, zinco -> sinco)
+    .replace(/c([ei])/g, 's$1')      // c antes de e/i -> s (doce -> dose, cero -> sero)
+    .replace(/v/g, 'b')              // v -> b (nueve -> nuebe, veinte -> beinte)
+    .replace(/k/g, 'c')              // k -> c (kuatro -> cuatro)
+    .replace(/qu/g, 'c')             // qu -> c (quince -> cince/sinse)
+    .replace(/y/g, 'i')              // y -> i (treynta -> treinta)
+    .replace(/sh/g, 'ch')            // sh -> ch (osho -> ocho)
+    .replace(/x/g, 'ch');            // x -> ch (oxo -> ocho)
+
+  // 4. Diccionario de números escritos en palabras en español (representados en su forma fonética simplificada)
   const palabrasNumeros: { [key: string]: string } = {
-    cero: '0',
+    sero: '0',
     uno: '1',
     una: '1',
     dos: '2',
     tres: '3',
     cuatro: '4',
-    cinco: '5',
+    sinco: '5',
     seis: '6',
     siete: '7',
     ocho: '8',
-    nueve: '9',
-    diez: '10',
-    once: '11',
-    doce: '12',
-    trece: '13',
-    catorce: '14',
-    quince: '15',
-    dieciseis: '16',
-    diecisiete: '17',
-    dieciocho: '18',
-    diecinueve: '19',
-    veinte: '20',
-    veintiuno: '21',
-    veintidos: '22',
-    veintidós: '22',
-    veintitres: '23',
-    veintitrés: '23',
-    veinticuatro: '24',
-    veinticinco: '25',
-    veintiseis: '26',
-    veintiséis: '26',
-    veintisiete: '27',
-    veintiocho: '28',
-    veintinueve: '29',
+    nuebe: '9',
+    dies: '10',
+    onse: '11',
+    dose: '12',
+    trese: '13',
+    catorse: '14',
+    quinse: '15',
+    sinse: '15',     // quince -> cince -> sinse
+    diesiseis: '16',
+    diesisiete: '17',
+    diesiocho: '18',
+    diesinuebe: '19',
+    beinte: '20',
+    beintiuno: '21',
+    beintidos: '22',
+    beintitres: '23',
+    beinticuatro: '24',
+    beinticinco: '25',
+    beintiseis: '26',
+    beintisiete: '27',
+    beintiocho: '28',
+    beintinuebe: '29',
     treinta: '30',
     cuarenta: '40',
     cincuenta: '50',
+    sincuenta: '50',
     sesenta: '60',
     setenta: '70',
     ochenta: '80',
-    noventa: '90',
+    nobenta: '90',
   };
 
   // Reemplazar las palabras por dígitos, empezando por las más largas para no dañar palabras compuestas
