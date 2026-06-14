@@ -42,29 +42,27 @@ export async function registrarUsuario(payload: RegistroPayload): Promise<AuthRe
     });
     if (error) throw error;
     
-    // 2. Si el rol es profesional, y el registro fue exitoso, insertamos en public.profesionales
-    if (rol === 'profesional' && data.user) {
-      const { error: profError } = await supabaseBrowser
-        .from('profesionales')
-        .insert({
-          usuarioid: data.user.id,
-          especialidad: especialidad || '',
-          descripcion: descripcion || '',
-          anyosexperiencia: Number(anyosexperiencia) || 0,
-          ciudad: ciudad || '',
-        });
+    // 2. Completamos la creación del perfil llamando a nuestra API con privilegios de service role (evitando violaciones RLS)
+    if (data.user) {
+      const response = await fetch('/api/auth/completar-registro', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: data.user.id,
+          rol,
+          especialidad,
+          descripcion,
+          anyosexperiencia,
+          ciudad,
+        }),
+      });
       
-      if (profError) throw profError;
-    } else if (rol === 'cliente' && data.user) {
-      const { error: clientError } = await supabaseBrowser
-        .from('clientes')
-        .insert({
-          usuarioid: data.user.id,
-          calificacionpromedio: 0,
-          totalproyectos: 0,
-        });
-      
-      if (clientError) throw clientError;
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.message || 'Error al completar los detalles de perfil del usuario.');
+      }
     }
     
     if (data?.user?.id) {
