@@ -1,5 +1,6 @@
 import React from 'react';
 import { Wallet, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
+import { useBCV } from '@/hooks/useBCV';
 
 interface WalletBalanceProps {
   saldo: number;
@@ -8,6 +9,9 @@ interface WalletBalanceProps {
 }
 
 export default function WalletBalance({ saldo, totalcargado, totalusado }: WalletBalanceProps) {
+  const formatBs = useBCV((state) => state.formatBs);
+  const saldoUsd = saldo * 1.20;
+  
   return (
     <div className="bg-gradient-to-br from-indigo-600 via-indigo-650 to-violet-700 text-white rounded-2xl p-4 sm:p-6 shadow-md border border-indigo-500/10">
       <div className="flex items-center justify-between mb-4">
@@ -19,12 +23,17 @@ export default function WalletBalance({ saldo, totalcargado, totalusado }: Walle
         </div>
       </div>
 
-      <div className="flex items-baseline gap-2 mb-6">
-        <span className="text-4xl font-extrabold tracking-tight">
-          {saldo}
-        </span>
-        <span className="text-xs font-semibold text-indigo-200">
-          {saldo === 1 ? 'crédito' : 'créditos'}
+      <div className="flex flex-col gap-0.5 mb-6">
+        <div className="flex items-baseline gap-2">
+          <span className="text-4xl font-extrabold tracking-tight">
+            {saldo}
+          </span>
+          <span className="text-xs font-semibold text-indigo-200">
+            {saldo === 1 ? 'crédito' : 'créditos'}
+          </span>
+        </div>
+        <span className="text-[10px] font-bold text-indigo-200 block">
+          ≈ ${saldoUsd.toFixed(2)} USD / {formatBs(saldoUsd)}
         </span>
       </div>
 

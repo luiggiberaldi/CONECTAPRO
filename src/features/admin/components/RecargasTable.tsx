@@ -5,6 +5,7 @@ import { AdminRecarga } from '../types';
 import { Eye, Check, X, AlertCircle, Calendar, User, ChevronLeft, ChevronRight, Copy, FileText, ImageOff, CreditCard, Clock, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useBCV } from '@/hooks/useBCV';
 const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
 
 interface RecargasTableProps {
@@ -15,6 +16,8 @@ interface RecargasTableProps {
 }
 
 export default function RecargasTable({ recargas, onAprobar, onRechazar, loadingAction }: RecargasTableProps) {
+  const formatBs = useBCV((state) => state.formatBs);
+  
   // Paginación
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -120,7 +123,12 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                     {recarga.paquete} cr.
                   </td>
                   <td className="px-4 py-4 font-medium">
-                    ${Number(recarga.montousd).toFixed(2)}
+                    <div className="flex flex-col text-left">
+                      <span>${Number(recarga.montousd).toFixed(2)}</span>
+                      <span className="text-[10px] text-zinc-500 dark:text-zinc-450 mt-0.5 font-bold">
+                        ≈ {formatBs(Number(recarga.montousd))}
+                      </span>
+                    </div>
                   </td>
                   <td className="px-4 py-4">
                     {recarga.metodopago === 'pagomovil' && (
@@ -281,7 +289,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                       <span className="text-[10px] uppercase font-bold text-zinc-450 dark:text-zinc-500 tracking-wider">Verificación de Transacción</span>
                       <div className="mt-3 space-y-2 text-xs font-medium text-zinc-650 dark:text-zinc-400">
                         <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Referencia de Pago:</span><span className="font-mono text-zinc-850 dark:text-zinc-150 font-bold">{selectedRecarga.referencia}</span></div>
-                        <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Monto Reportado:</span><span className="text-zinc-850 dark:text-zinc-150 font-bold">${Number(selectedRecarga.montousd).toFixed(2)} USD</span></div>
+                        <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-550">Monto Reportado:</span><span className="text-zinc-850 dark:text-zinc-150 font-bold">${Number(selectedRecarga.montousd).toFixed(2)} USD (≈ {formatBs(Number(selectedRecarga.montousd))})</span></div>
                         <div className="flex justify-between"><span className="text-zinc-400 dark:text-zinc-500">Paquete Adquirido:</span><span className="text-indigo-600 dark:text-indigo-400 font-black">{selectedRecarga.paquete} Créditos</span></div>
                       </div>
                     </div>
@@ -385,7 +393,7 @@ export default function RecargasTable({ recargas, onAprobar, onRechazar, loading
                 <p className="text-sm font-black text-indigo-600 dark:text-indigo-400 mt-1">
                   +{selectedRecarga.paquete} Créditos
                   <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-550 ml-2">
-                    (${Number(selectedRecarga.montousd).toFixed(2)} USD)
+                    (${Number(selectedRecarga.montousd).toFixed(2)} USD / ≈ {formatBs(Number(selectedRecarga.montousd))})
                   </span>
                 </p>
               </div>

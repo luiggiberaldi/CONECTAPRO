@@ -3,6 +3,7 @@ import { CreditCard, Upload, AlertCircle, ArrowRight } from 'lucide-react';
 import Loader from '@/components/shared/Loader';
 import { getPrecioPaquete } from '@/lib/constants';
 import Image from 'next/image';
+import { useBCV } from '@/hooks/useBCV';
 
 interface RecargaFormProps {
   paquete: number | null;
@@ -15,6 +16,8 @@ interface RecargaFormProps {
 }
 
 export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormProps) {
+  const formatBs = useBCV((state) => state.formatBs);
+  const rate = useBCV((state) => state.rate);
   const [metodo, setMetodo] = useState<'pagomovil' | 'zelle' | 'usdt'>('pagomovil');
   const [referencia, setReferencia] = useState('');
   const [capturaFile, setCapturaFile] = useState<File | null>(null);
@@ -99,8 +102,11 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
         </div>
         <div className="text-right">
           <span className="text-[10px] text-zinc-400 block">Total a Pagar</span>
-          <span className="text-sm font-black text-indigo-650 dark:text-indigo-400">
+          <span className="text-sm font-black text-indigo-650 dark:text-indigo-400 block">
             ${montousd.toFixed(2)} USD
+          </span>
+          <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 block mt-0.5">
+            ≈ {formatBs(montousd)}
           </span>
         </div>
       </div>
@@ -147,6 +153,9 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Banco:</span> Banesco (0134)</div>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">Teléfono:</span> 0412-5551234</div>
               <div><span className="font-semibold text-zinc-800 dark:text-zinc-250">RIF:</span> J-45678901-2</div>
+              <div className="mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-800/80 text-[11px] font-black text-indigo-600 dark:text-indigo-400">
+                Monto a transferir: {formatBs(montousd)}
+              </div>
             </>
           )}
           {metodo === 'zelle' && (
@@ -170,7 +179,7 @@ export default function RecargaForm({ paquete, onSubmit, loading }: RecargaFormP
             Información importante de recarga:
           </h5>
           <ul className="list-disc pl-4 text-xs text-amber-700/90 dark:text-amber-400/80 space-y-1 font-medium">
-            {metodo === 'pagomovil' && <li><strong>Pago Móvil:</strong> Calcule el monto en Bs. a la tasa oficial del BCV del día.</li>}
+            {metodo === 'pagomovil' && <li><strong>Pago Móvil:</strong> Transfiere exactamente <strong>{formatBs(montousd)}</strong> a la tasa BCV oficial de <strong>Bs. {rate.toFixed(2)}</strong>.</li>}
             {metodo === 'zelle' && <li><strong>Zelle:</strong> Indique su nombre y apellido en la descripción del Zelle.</li>}
             {metodo === 'usdt' && <li><strong>Cripto (USDT):</strong> Envíe exactamente la cantidad neta libre de comisiones de red.</li>}
           </ul>

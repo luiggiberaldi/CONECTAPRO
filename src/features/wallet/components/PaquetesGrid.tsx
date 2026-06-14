@@ -1,5 +1,6 @@
 import React from 'react';
 import { CircleDollarSign, Check, Zap } from 'lucide-react';
+import { useBCV } from '@/hooks/useBCV';
 
 interface Paquete {
   creditos: number;
@@ -40,6 +41,7 @@ const PAQUETES: Paquete[] = [
 ];
 
 export default function PaquetesGrid({ paqueteSeleccionado, onSelect }: PaquetesGridProps) {
+  const formatBs = useBCV((state) => state.formatBs);
   return (
     <div className="space-y-4">
       <div>
@@ -110,6 +112,9 @@ export default function PaquetesGrid({ paqueteSeleccionado, onSelect }: Paquetes
                   )}
                   <span className="text-base font-black text-zinc-900 dark:text-zinc-100 block">
                     ${pkg.precio.toFixed(2)} <span className="text-[10px] font-normal text-zinc-450">USD</span>
+                  </span>
+                  <span className="text-[9px] font-bold text-zinc-500 dark:text-zinc-400 block mt-0.5">
+                    ≈ {formatBs(pkg.precio)}
                   </span>
                 </div>
               </div>

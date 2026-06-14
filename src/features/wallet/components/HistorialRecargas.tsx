@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Recarga } from '@/types';
 import { CreditCard, Calendar, Eye, ArrowLeft, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { useBCV } from '@/hooks/useBCV';
 
 interface HistorialRecargasProps {
   recargas: Recarga[] | null;
@@ -10,6 +11,7 @@ interface HistorialRecargasProps {
 const ROWS_PER_PAGE = 10;
 
 export default function HistorialRecargas({ recargas }: HistorialRecargasProps) {
+  const formatBs = useBCV((state) => state.formatBs);
   const [currentPage, setCurrentPage] = useState(1);
   const [verCapturaUrl, setVerCapturaUrl] = useState<string | null>(null);
 
@@ -89,7 +91,12 @@ export default function HistorialRecargas({ recargas }: HistorialRecargasProps) 
                   {recarga.paquete}
                 </td>
                 <td className="px-4 py-2.5 whitespace-nowrap text-right text-[11px] font-bold text-zinc-900 dark:text-zinc-100">
-                  ${Number(recarga.montousd).toFixed(2)}
+                  <div className="flex flex-col items-end">
+                    <span>${Number(recarga.montousd).toFixed(2)}</span>
+                    <span className="text-[9px] font-bold text-zinc-500 dark:text-zinc-450 mt-0.5">
+                      ≈ {formatBs(Number(recarga.montousd))}
+                    </span>
+                  </div>
                 </td>
                 <td className="px-4 py-2.5 whitespace-nowrap text-center">
                   <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold border capitalize ${getStatusBadgeClass(recarga.estado)}`}>

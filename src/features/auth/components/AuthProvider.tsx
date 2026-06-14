@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { supabaseBrowser } from '@/lib/supabase';
 import { useAuthStore, obtenerUsuarioPerfil } from '../hooks/useAuth';
 import Image from 'next/image';
+import { useBCV } from '@/hooks/useBCV';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -11,6 +12,11 @@ interface AuthProviderProps {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const { setSession, setLoading, setInitialized, initialized } = useAuthStore();
+  const fetchRate = useBCV((state) => state.fetchRate);
+
+  useEffect(() => {
+    fetchRate();
+  }, [fetchRate]);
 
   useEffect(() => {
     let active = true;

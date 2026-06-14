@@ -860,12 +860,12 @@ export default function Home() {
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-lg font-bold text-white">¿Necesitas ayuda en casa?</h4>
-                    <p className="text-xs text-indigo-200/80 leading-relaxed">
+                    <p className="text-xs text-zinc-300 leading-relaxed">
                       Encuentra al profesional ideal para solucionar fallas en minutos sin pagar de más.
                     </p>
                   </div>
                   {/* Checklist */}
-                  <ul className="space-y-2.5 text-xs text-indigo-200/90 font-medium pt-2">
+                  <ul className="space-y-2.5 text-xs text-zinc-200 font-medium pt-2">
                     <li className="flex items-center gap-2">
                       <span className="text-indigo-400 font-bold">✓</span> Publica solicitudes 100% gratis
                     </li>
@@ -895,12 +895,12 @@ export default function Home() {
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-lg font-bold text-white">¿Ofreces tus servicios?</h4>
-                    <p className="text-xs text-indigo-200/80 leading-relaxed">
+                    <p className="text-xs text-zinc-300 leading-relaxed">
                       Postúlate a ofertas de trabajo en tu ciudad y expande tu cartera de clientes de inmediato.
                     </p>
                   </div>
                   {/* Checklist */}
-                  <ul className="space-y-2.5 text-xs text-indigo-200/90 font-medium pt-2">
+                  <ul className="space-y-2.5 text-xs text-zinc-200 font-medium pt-2">
                     <li className="flex items-center gap-2">
                       <span className="text-indigo-400 font-bold">✓</span> Quédate con el 100% de tus ingresos
                     </li>

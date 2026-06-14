@@ -6,6 +6,7 @@ import { useOrdenes } from '@/features/ordenes/hooks/useOrdenes';
 import { useWallet } from '@/features/wallet';
 import { OrdenCard } from '@/features/ordenes';
 import { supabaseBrowser } from '@/lib/supabase';
+import { useBCV } from '@/hooks/useBCV';
 import { 
   RefreshCw, 
   Inbox, 
@@ -23,6 +24,7 @@ import Link from 'next/link';
 type TabType = 'disponibles' | 'asignados';
 
 export default function ProfesionalOrdenesPage() {
+  const formatBs = useBCV((state) => state.formatBs);
   const { usuario } = useAuth();
   const { ordenes, loading, cargarOrdenesDisponibles, cargarOrdenesAsignadas } = useOrdenes();
   const [activeTab, setActiveTab] = useState<TabType>('disponibles');
@@ -177,10 +179,13 @@ export default function ProfesionalOrdenesPage() {
             {/* Saldo y Proyectos en Curso */}
             <div className="flex items-center gap-8 md:gap-12">
               <div className="flex flex-col">
-                <span className="text-lg font-black text-zinc-900 dark:text-zinc-55">
+                <span className="text-lg font-black text-zinc-900 dark:text-zinc-55 leading-none">
                   {saldo} {saldo === 1 ? 'crédito' : 'créditos'}
                 </span>
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 font-bold">
+                <span className="text-[9px] font-black text-zinc-450 dark:text-zinc-500 mt-1">
+                  ≈ ${(saldo * 1.20).toFixed(2)} USD / {formatBs(saldo * 1.20)}
+                </span>
+                <span className="text-xs text-zinc-500 dark:text-zinc-400 font-bold mt-1">
                   Saldo actual
                 </span>
               </div>
