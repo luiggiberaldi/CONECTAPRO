@@ -43,17 +43,53 @@ export default function ChatWindow({
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setInputMsg(val);
-    // Verificar si contiene números telefónicos
-    setWarningActivo(detectarTelefono(val));
+
+    // Verificar acumulado con historial para advertir en tiempo real
+    let textoAcumulado = val.trim();
+    const ahora = new Date();
+    
+    for (let i = mensajes.length - 1; i >= 0; i--) {
+      const msg = mensajes[i];
+      if (msg.autorid !== usuarioId || msg.tipo !== 'texto') {
+        break;
+      }
+      const msgFecha = new Date(msg.createdat);
+      const diffMinutos = (ahora.getTime() - msgFecha.getTime()) / (1000 * 60);
+      if (diffMinutos > 5) {
+        break;
+      }
+      textoAcumulado = msg.contenido + " " + textoAcumulado;
+    }
+
+    setWarningActivo(detectarTelefono(textoAcumulado));
   };
 
   // Enviar mensaje
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (detectarTelefono(inputMsg)) {
-      toast.error('No está permitido compartir números de teléfono por motivos de seguridad.');
+    
+    // Verificar acumulado con historial antes de enviar
+    let textoAcumulado = inputMsg.trim();
+    const ahora = new Date();
+    
+    for (let i = mensajes.length - 1; i >= 0; i--) {
+      const msg = mensajes[i];
+      if (msg.autorid !== usuarioId || msg.tipo !== 'texto') {
+        break;
+      }
+      const msgFecha = new Date(msg.createdat);
+      const diffMinutos = (ahora.getTime() - msgFecha.getTime()) / (1000 * 60);
+      if (diffMinutos > 5) {
+        break;
+      }
+      textoAcumulado = msg.contenido + " " + textoAcumulado;
+    }
+
+    if (detectarTelefono(textoAcumulado)) {
+      toast.error('No está permitido compartir números de teléfono por motivos de seguridad, incluso en mensajes fraccionados.');
       return;
     }
+
     if (!inputMsg.trim() || enviando || ordenEstado !== 'en_proceso') return;
 
     setEnviando(true);
