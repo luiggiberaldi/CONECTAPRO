@@ -34,7 +34,7 @@ export default function NoCreditsModal({
             <X className="h-4.5 w-4.5" />
           </button>
 
-          <div className="p-3 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
+          <div className="p-3 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl w-fit mb-3.5 shadow-inner">
             <AlertTriangle className="h-7 w-7 text-status-warning" style={{ color: '#FBBF24' }} />
           </div>
           

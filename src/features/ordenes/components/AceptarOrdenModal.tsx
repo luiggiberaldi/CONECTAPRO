@@ -40,7 +40,7 @@ export default function AceptarOrdenModal({
             <X className="h-4.5 w-4.5" />
           </button>
 
-          <div className="p-3 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
+          <div className="p-3 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl w-fit mb-3.5 shadow-inner">
             <Coins className="h-7 w-7 text-status-warning" style={{ color: '#F59E0B' }} />
           </div>
           
