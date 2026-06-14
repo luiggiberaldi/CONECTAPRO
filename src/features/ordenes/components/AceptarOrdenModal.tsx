@@ -41,19 +41,20 @@ export default function AceptarOrdenModal({
           <div className="absolute top-[-50%] left-[-20%] w-[140%] h-[140%] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
-            <Coins className="h-7 w-7 text-indigo-200" />
+            <Coins className="h-7 w-7 text-amber-400" />
           </div>
           
           <h3 className="text-xl font-black tracking-tight">
             ¿Aceptar esta orden de servicio?
           </h3>
-          <p className="text-xs text-indigo-150 mt-1 max-w-[280px]">
+          <p className="text-xs text-indigo-100 mt-1 max-w-[280px]">
             Conéctate de manera segura y directa para coordinar los detalles del trabajo.
           </p>
         </div>
 
         {/* Contenido principal */}
-        <div className="p-6 space-y-6 overflow-y-auto flex-1">
+        <div className="p-6 pb-10 space-y-6 overflow-y-auto flex-1">
+
           
           {/* Rejilla de comparación de saldo / créditos */}
           <div className="bg-zinc-50 dark:bg-zinc-950/30 border border-zinc-100 dark:border-zinc-850/60 rounded-2xl p-4">
