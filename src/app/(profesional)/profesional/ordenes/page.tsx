@@ -210,16 +210,6 @@ export default function ProfesionalOrdenesPage() {
               >
                 <RefreshCw className={`h-4.5 w-4.5 ${loading ? 'animate-spin' : ''}`} />
               </button>
-              
-              <button
-                onClick={() => {
-                  setActiveTab('disponibles');
-                  setCurrentPage(1);
-                }}
-                className="px-5 py-2.5 rounded-full text-xs font-black text-white bg-indigo-600 hover:bg-indigo-500 active:scale-98 transition-all shadow-sm"
-              >
-                Busca trabajo
-              </button>
             </div>
           </div>
         </div>
