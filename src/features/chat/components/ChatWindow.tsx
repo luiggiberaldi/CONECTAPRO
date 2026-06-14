@@ -44,10 +44,12 @@ export default function ChatWindow({
     const val = e.target.value;
     setInputMsg(val);
 
-    // Verificar acumulado con historial para advertir en tiempo real
+    // Obtener historial y acumulado
+    let historial = "";
     let textoAcumulado = val.trim();
     const ahora = new Date();
     
+    const msgConctados: string[] = [];
     for (let i = mensajes.length - 1; i >= 0; i--) {
       const msg = mensajes[i];
       if (msg.autorid !== usuarioId || msg.tipo !== 'texto') {
@@ -58,20 +60,32 @@ export default function ChatWindow({
       if (diffMinutos > 5) {
         break;
       }
-      textoAcumulado = msg.contenido + " " + textoAcumulado;
+      msgConctados.unshift(msg.contenido);
+    }
+    
+    historial = msgConctados.join(" ");
+    if (historial) {
+      textoAcumulado = historial + " " + textoAcumulado;
     }
 
-    setWarningActivo(detectarTelefono(textoAcumulado));
+    const nuevoTieneTelefono = detectarTelefono(val.trim());
+    const acumuladoTieneTelefono = detectarTelefono(textoAcumulado);
+    const historialTieneTelefono = detectarTelefono(historial);
+
+    const bloquear = nuevoTieneTelefono || (acumuladoTieneTelefono && !historialTieneTelefono);
+    setWarningActivo(bloquear);
   };
 
   // Enviar mensaje
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Verificar acumulado con historial antes de enviar
+    // Obtener historial y acumulado antes de enviar
+    let historial = "";
     let textoAcumulado = inputMsg.trim();
     const ahora = new Date();
     
+    const msgConctados: string[] = [];
     for (let i = mensajes.length - 1; i >= 0; i--) {
       const msg = mensajes[i];
       if (msg.autorid !== usuarioId || msg.tipo !== 'texto') {
@@ -82,10 +96,21 @@ export default function ChatWindow({
       if (diffMinutos > 5) {
         break;
       }
-      textoAcumulado = msg.contenido + " " + textoAcumulado;
+      msgConctados.unshift(msg.contenido);
+    }
+    
+    historial = msgConctados.join(" ");
+    if (historial) {
+      textoAcumulado = historial + " " + textoAcumulado;
     }
 
-    if (detectarTelefono(textoAcumulado)) {
+    const nuevoTieneTelefono = detectarTelefono(inputMsg.trim());
+    const acumuladoTieneTelefono = detectarTelefono(textoAcumulado);
+    const historialTieneTelefono = detectarTelefono(historial);
+
+    const bloquear = nuevoTieneTelefono || (acumuladoTieneTelefono && !historialTieneTelefono);
+
+    if (bloquear) {
       toast.error('No está permitido compartir números de teléfono por motivos de seguridad, incluso en mensajes fraccionados.');
       return;
     }
