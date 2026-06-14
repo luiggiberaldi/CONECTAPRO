@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { ShieldCheck } from 'lucide-react';
 import Loader from '@/components/shared/Loader';
 import dynamic from 'next/dynamic';
-const ConfirmModal = dynamic(() => import('@/components/shared/ConfirmModal'));
+const AceptarOrdenModal = dynamic(() => import('./AceptarOrdenModal'));
+const NoCreditsModal = dynamic(() => import('./NoCreditsModal'));
 
 interface AceptarOrdenButtonProps {
   ordenid: string;
@@ -104,30 +105,23 @@ export default function AceptarOrdenButton({
       </button>
 
       {/* MODAL DE CONFIRMACIÓN DE COMPRA/ACEPTACIÓN (Saldo suficiente) */}
-      <ConfirmModal
+      <AceptarOrdenModal
         isOpen={isConfirmOpen}
         onClose={() => setIsConfirmOpen(false)}
         onConfirm={handleConfirmAccept}
-        title="¿Aceptar esta orden de servicio?"
-        description={`Se descontará 1 crédito de tu billetera prepago. Tu saldo actual es de ${saldo} crédito(s). Una vez aceptada, tendrás acceso inmediato al chat interno y a los datos de contacto.`}
-        confirmText="Aceptar y Descontar 1 Crédito"
-        cancelText="Volver"
+        saldo={saldo || 0}
         loading={actionLoading}
       />
 
       {/* MODAL DE ADVERTENCIA DE CRÉDITOS INSUFICIENTES (Saldo < 1) */}
-      <ConfirmModal
+      <NoCreditsModal
         isOpen={isNoCreditsOpen}
         onClose={() => setIsNoCreditsOpen(false)}
         onConfirm={() => {
           setIsNoCreditsOpen(false);
           router.push('/profesional/wallet');
         }}
-        title="Créditos Insuficientes"
-        description={`Necesitas al menos 1 crédito para aceptar este trabajo. Tu saldo actual es de ${saldo} créditos. Por favor realiza una recarga en tu billetera.`}
-        confirmText="Ir a Recargar Wallet"
-        cancelText="Entendido"
-        type="danger"
+        saldo={saldo || 0}
       />
     </>
   );
