@@ -20,7 +20,7 @@ export default function NoCreditsModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-slide-in relative">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl w-full max-w-md max-h-[calc(100vh-2rem)] flex flex-col overflow-hidden shadow-2xl animate-slide-in relative">
         
         {/* Botón de cerrar */}
         <button
@@ -31,7 +31,7 @@ export default function NoCreditsModal({
         </button>
 
         {/* Banner de alerta con gradiente naranja/rosa */}
-        <div className="relative bg-gradient-to-br from-amber-500 via-rose-500 to-rose-600 px-6 py-7 text-white text-center flex flex-col items-center">
+        <div className="relative bg-gradient-to-br from-amber-500 via-rose-500 to-rose-600 px-6 py-7 text-white text-center flex flex-col items-center flex-shrink-0">
           <div className="absolute top-[-50%] left-[-20%] w-[140%] h-[140%] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
@@ -47,7 +47,7 @@ export default function NoCreditsModal({
         </div>
 
         {/* Contenido principal */}
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 overflow-y-auto flex-1">
           
           {/* Métrica de saldo */}
           <div className="bg-zinc-50 dark:bg-zinc-950/30 border border-zinc-100 dark:border-zinc-850/60 rounded-2xl p-5 text-center">

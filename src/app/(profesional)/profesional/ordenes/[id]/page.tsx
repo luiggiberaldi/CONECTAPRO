@@ -202,12 +202,11 @@ export default function ProfesionalOrdenDetallePage() {
               />
             )}
           </div>
-
           {/* Lado Derecho: Acciones o Detalles del Cliente */}
           <div className="space-y-6">
             {estado === 'pendiente' && profesional && (
-              <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-zinc-150 dark:border-zinc-800/80 rounded-2xl p-6 shadow-sm">
-                <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide mb-4">
+              <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800/80 rounded-2xl p-6 shadow-sm">
+                <h3 className="text-xs font-bold text-zinc-850 dark:text-zinc-200 uppercase tracking-wide mb-4">
                   Acción requerida
                 </h3>
                 <p className="text-xs text-zinc-650 dark:text-zinc-400 mb-4 leading-relaxed">
