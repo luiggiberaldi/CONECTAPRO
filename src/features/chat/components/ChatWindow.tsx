@@ -3,6 +3,7 @@ import { useChat } from '../hooks/useChat';
 import { detectarTelefono } from '../utils/antipuenteo';
 import { Send, AlertTriangle, MessageSquare, Clock, User, Info } from 'lucide-react';
 import Loader from '@/components/shared/Loader';
+import { toast } from '@/hooks/use-toast';
 
 interface ChatWindowProps {
   ordenId: string;
@@ -49,6 +50,10 @@ export default function ChatWindow({
   // Enviar mensaje
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (detectarTelefono(inputMsg)) {
+      toast.error('No está permitido compartir números de teléfono por motivos de seguridad.');
+      return;
+    }
     if (!inputMsg.trim() || enviando || ordenEstado !== 'en_proceso') return;
 
     setEnviando(true);
@@ -191,12 +196,12 @@ export default function ChatWindow({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Alerta Anti-Puenteo */}
+      {/* Alerta Anti-Puenteo Bloqueante */}
       {warningActivo && (
-        <div className="px-4 py-2.5 bg-amber-50/95 dark:bg-amber-950/40 border-t border-amber-200 dark:border-amber-900/50 flex items-start gap-2 animate-fadeIn">
-          <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-500 flex-shrink-0 mt-0.5" />
-          <div className="text-[10px] text-amber-800 dark:text-amber-400 leading-relaxed font-semibold">
-            Alerta: Compartir teléfonos o datos de contacto antes de completar el trabajo incumple los términos de servicio y anula las garantías de ConectaPro.
+        <div className="px-4 py-2.5 bg-rose-50/95 dark:bg-rose-950/20 border-t border-rose-200 dark:border-rose-900/40 flex items-start gap-2 animate-fadeIn">
+          <AlertTriangle className="h-4 w-4 text-rose-500 flex-shrink-0 mt-0.5" />
+          <div className="text-[10px] text-rose-800 dark:text-rose-450 leading-relaxed font-bold">
+            Mensaje bloqueado: No está permitido compartir números de teléfono o datos de contacto externos por políticas de seguridad. Elimina el número para poder enviar.
           </div>
         </div>
       )}
@@ -217,17 +222,23 @@ export default function ChatWindow({
           }
           className={`flex-1 max-h-20 min-h-[38px] rounded-xl px-3 py-2 text-xs bg-white dark:bg-zinc-800 border focus:outline-none focus:ring-1 transition-all resize-none text-zinc-950 dark:text-zinc-100 leading-normal ${
             warningActivo
-              ? 'border-amber-400 focus:border-amber-500 focus:ring-amber-400/50'
+              ? 'border-rose-400 dark:border-rose-500/60 focus:border-rose-500 focus:ring-rose-500/50'
               : 'border-zinc-200 dark:border-zinc-700 focus:border-indigo-500 focus:ring-indigo-500/50'
           } disabled:bg-zinc-100 dark:disabled:bg-zinc-800/40 disabled:text-zinc-400`}
         />
         <button
           type="submit"
-          disabled={!inputMsg.trim() || enviando || esChatDeshabilitado}
-          className="h-[38px] w-[38px] rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center flex-shrink-0 shadow-sm transition-all active:scale-95 disabled:bg-zinc-200 dark:disabled:bg-zinc-800 disabled:text-zinc-450"
+          disabled={!inputMsg.trim() || warningActivo || enviando || esChatDeshabilitado}
+          className={`h-[38px] w-[38px] rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm transition-all active:scale-95 ${
+            warningActivo
+              ? 'bg-rose-500/10 text-rose-500 dark:bg-rose-500/20 border border-rose-500/30 dark:border-rose-500/20 cursor-not-allowed'
+              : 'bg-indigo-600 hover:bg-indigo-500 text-white disabled:bg-zinc-200 dark:disabled:bg-zinc-800 disabled:text-zinc-450'
+          }`}
         >
           {enviando ? (
             <Loader size="sm" />
+          ) : warningActivo ? (
+            <AlertTriangle className="h-4 w-4" />
           ) : (
             <Send className="h-4 w-4" />
           )}
