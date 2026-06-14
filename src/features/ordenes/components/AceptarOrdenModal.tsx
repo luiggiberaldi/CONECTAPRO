@@ -144,6 +144,9 @@ export default function AceptarOrdenModal({
 
           </div>
 
+          {/* Espaciador inferior para garantizar margen antes del divisor del footer */}
+          <div className="h-2" />
+
         </div>
 
         {/* Acciones del pie de página */}
