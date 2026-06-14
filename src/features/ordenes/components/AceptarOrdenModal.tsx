@@ -27,30 +27,31 @@ export default function AceptarOrdenModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in">
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl w-full max-w-md max-h-[calc(100vh-2rem)] flex flex-col overflow-hidden shadow-2xl animate-slide-in relative">
         
-        {/* Botón de cerrar */}
-        <button
-          onClick={onClose}
-          disabled={loading}
-          className="absolute top-4 right-4 p-1.5 rounded-full text-zinc-455 hover:text-zinc-650 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors z-10"
-        >
-          <X className="h-4.5 w-4.5" />
-        </button>
-
         {/* Banner con gradiente premium y glow */}
-        <div className="relative bg-gradient-to-br from-indigo-600 via-indigo-650 to-purple-650 px-6 py-7 text-white text-center flex flex-col items-center flex-shrink-0">
-          <div className="absolute top-[-50%] left-[-20%] w-[140%] h-[140%] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative bg-gradient-to-br from-indigo-800 via-indigo-850 to-indigo-900 px-6 py-7 text-white text-center flex flex-col items-center flex-shrink-0">
+          <div className="absolute top-[-50%] left-[-20%] w-[140%] h-[140%] rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: 'rgba(99, 102, 241, 0.15)' }} />
           
-          <div className="p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
-            <Coins className="h-7 w-7 text-amber-400" />
+          {/* Botón de cerrar */}
+          <button
+            onClick={onClose}
+            disabled={loading}
+            className="absolute top-4 right-4 p-1.5 rounded-full text-zinc-300 hover:text-white hover:bg-white hover:bg-opacity-10 transition-colors z-10"
+          >
+            <X className="h-4.5 w-4.5" />
+          </button>
+
+          <div className="p-3 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
+            <Coins className="h-7 w-7 text-status-warning" style={{ color: '#F59E0B' }} />
           </div>
           
-          <h3 className="text-xl font-black tracking-tight">
+          <h3 className="text-xl font-black tracking-tight text-white">
             ¿Aceptar esta orden de servicio?
           </h3>
           <p className="text-xs text-indigo-100 mt-1 max-w-[280px]">
             Conéctate de manera segura y directa para coordinar los detalles del trabajo.
           </p>
         </div>
+
 
         {/* Contenido principal */}
         <div className="p-6 pb-10 space-y-6 overflow-y-auto flex-1">

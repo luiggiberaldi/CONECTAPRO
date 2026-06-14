@@ -22,29 +22,30 @@ export default function NoCreditsModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/60 backdrop-blur-sm animate-fade-in">
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 rounded-3xl w-full max-w-md max-h-[calc(100vh-2rem)] flex flex-col overflow-hidden shadow-2xl animate-slide-in relative">
         
-        {/* Botón de cerrar */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-full text-zinc-400 hover:text-zinc-650 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors z-10"
-        >
-          <X className="h-4.5 w-4.5" />
-        </button>
-
         {/* Banner de alerta con gradiente naranja/rosa */}
-        <div className="relative bg-gradient-to-br from-amber-500 via-rose-500 to-rose-600 px-6 py-7 text-white text-center flex flex-col items-center flex-shrink-0">
-          <div className="absolute top-[-50%] left-[-20%] w-[140%] h-[140%] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative bg-gradient-to-br from-rose-500 via-rose-600 to-rose-650 px-6 py-7 text-white text-center flex flex-col items-center flex-shrink-0">
+          <div className="absolute top-[-50%] left-[-20%] w-[140%] h-[140%] rounded-full blur-3xl pointer-events-none" style={{ backgroundColor: 'rgba(244, 63, 94, 0.15)' }} />
           
-          <div className="p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
-            <AlertTriangle className="h-7 w-7 text-amber-300" />
+          {/* Botón de cerrar */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-1.5 rounded-full text-zinc-300 hover:text-white hover:bg-white hover:bg-opacity-10 transition-colors z-10"
+          >
+            <X className="h-4.5 w-4.5" />
+          </button>
+
+          <div className="p-3 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl w-fit mb-3.5 shadow-inner animate-pulse-glow">
+            <AlertTriangle className="h-7 w-7 text-status-warning" style={{ color: '#FBBF24' }} />
           </div>
           
-          <h3 className="text-xl font-black tracking-tight">
+          <h3 className="text-xl font-black tracking-tight text-white">
             Créditos Insuficientes
           </h3>
-          <p className="text-xs text-rose-50 mt-1 max-w-[280px]">
+          <p className="text-xs text-zinc-100 mt-1 max-w-[280px]">
             No cuentas con suficientes créditos en tu billetera para aceptar este trabajo.
           </p>
         </div>
+
 
         {/* Contenido principal */}
         <div className="p-6 pb-10 space-y-6 overflow-y-auto flex-1">
