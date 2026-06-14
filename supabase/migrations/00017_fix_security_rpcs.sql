@@ -1,5 +1,7 @@
--- 00010_rpc_aceptar_orden.sql
+-- 00017_fix_security_rpcs.sql
+-- Optimización de ciberseguridad en funciones RPC críticas
 
+-- 1. Redefinir aceptar_orden con validación de identidad (auth.uid)
 create or replace function public.aceptar_orden(p_ordenid uuid, p_profesionalid uuid)
 returns json as $$
 declare
@@ -62,5 +64,54 @@ begin
   );
 
   return json_build_object('success', true, 'message', '¡Orden aceptada exitosamente!');
+end;
+$$ language plpgsql security definer;
+
+
+-- 2. Redefinir aprobar_recarga con validación de rol de admin en JWT
+create or replace function public.aprobar_recarga(p_recargaid uuid)
+returns json as $$
+declare
+  v_profesionalid uuid;
+  v_paquete integer;
+  v_estado text;
+begin
+  -- Control de acceso: Verificar que el invocador posea el rol 'admin'
+  if (coalesce(auth.jwt() -> 'user_metadata' ->> 'rol', '') <> 'admin') then
+    return json_build_object('success', false, 'message', 'Acción no autorizada. Requiere rol de administrador.');
+  end if;
+
+  -- 1. Obtener datos de la recarga
+  select profesionalid, paquete, estado
+  into v_profesionalid, v_paquete, v_estado
+  from public.recargas
+  where id = p_recargaid;
+
+  if not found then
+    return json_build_object('success', false, 'message', 'Recarga no encontrada.');
+  end if;
+
+  -- 2. Validar que esté pendiente
+  if v_estado <> 'pendiente' then
+    return json_build_object('success', false, 'message', 'La recarga ya fue procesada anteriormente.');
+  end if;
+
+  -- 3. Actualizar la recarga a aprobada
+  update public.recargas
+  set estado = 'aprobada', aprobadoat = now()
+  where id = p_recargaid;
+
+  -- 4. Sumar los créditos al wallet del profesional
+  insert into public.wallet (profesionalid, saldo, totalcargado, totalusado)
+  values (v_profesionalid, v_paquete, v_paquete, 0)
+  on conflict (profesionalid) do update
+  set saldo = public.wallet.saldo + v_paquete,
+      totalcargado = public.wallet.totalcargado + v_paquete,
+      updatedat = now();
+
+  return json_build_object('success', true, 'message', 'Recarga aprobada exitosamente y créditos abonados.');
+exception
+  when others then
+    return json_build_object('success', false, 'message', SQLERRM);
 end;
 $$ language plpgsql security definer;

@@ -7,6 +7,11 @@ declare
   v_paquete integer;
   v_estado text;
 begin
+  -- Control de acceso: Verificar que el invocador posea el rol 'admin'
+  if (coalesce(auth.jwt() -> 'user_metadata' ->> 'rol', '') <> 'admin') then
+    return json_build_object('success', false, 'message', 'Acción no autorizada. Requiere rol de administrador.');
+  end if;
+
   -- 1. Obtener datos de la recarga
   select profesionalid, paquete, estado
   into v_profesionalid, v_paquete, v_estado

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createServiceRoleClient } from '@/lib/supabase';
+import { createServiceRoleClient, supabaseServer } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
@@ -10,6 +10,17 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { success: false, message: 'Faltan parámetros obligatorios (userId o rol).' },
         { status: 400 }
+      );
+    }
+
+    // Validar sesión del usuario
+    const sessionClient = supabaseServer();
+    const { data: { user }, error: authError } = await sessionClient.auth.getUser();
+
+    if (authError || !user || user.id !== userId) {
+      return NextResponse.json(
+        { success: false, message: 'No autorizado. La sesión activa no coincide con el identificador del usuario.' },
+        { status: 403 }
       );
     }
 
