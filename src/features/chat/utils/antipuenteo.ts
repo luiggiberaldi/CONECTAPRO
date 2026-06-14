@@ -23,7 +23,7 @@ export interface ResultadoAnalisis {
   mensajeUsuario?: string;
 }
 
-const MENSAJES_RAZON: Record<RazonBloqueo, string> = {
+export const MENSAJES_RAZON: Record<RazonBloqueo, string> = {
   telefono:
     'No está permitido compartir números de teléfono. Toda coordinación debe hacerse dentro de la plataforma.',
   email:

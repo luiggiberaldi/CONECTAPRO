@@ -1,6 +1,7 @@
 import { supabaseBrowser } from '@/lib/supabase';
 import { toast } from '@/hooks/use-toast';
 import { Mensaje } from '@/types';
+import { MENSAJES_RAZON } from './utils/antipuenteo';
 
 export type RazonReporte = 'puenteo' | 'spam' | 'acoso' | 'otro';
 
@@ -22,6 +23,19 @@ export async function getMensajes(ordenid: string): Promise<Mensaje[] | null> {
     toast.error((error as Error).message);
     return null;
   }
+}
+
+function obtenerMensajeAmigable(error: unknown): string {
+  if (!error) return 'Ocurrió un error al enviar el mensaje.';
+  const msg = typeof error === 'object' && error !== null && 'message' in error
+    ? String((error as { message: unknown }).message)
+    : '';
+
+  if (msg.includes('ANTIPUENTEO:telefono')) return MENSAJES_RAZON.telefono;
+  if (msg.includes('ANTIPUENTEO:email')) return MENSAJES_RAZON.email;
+  if (msg.includes('ANTIPUENTEO:url')) return MENSAJES_RAZON.url;
+  if (msg.includes('ANTIPUENTEO:red_social')) return MENSAJES_RAZON.red_social;
+  return msg || 'Ocurrió un error al enviar el mensaje.';
 }
 
 /**
@@ -49,7 +63,7 @@ export async function enviarMensaje(
     return data as Mensaje;
   } catch (error) {
     console.error('[enviarMensaje]', error);
-    toast.error((error as Error).message);
+    toast.error(obtenerMensajeAmigable(error));
     return null;
   }
 }
