@@ -98,11 +98,6 @@ export default function Navbar() {
                     href="/cliente/ordenes"
                     className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
                   >
-                    Buscar profesionales
-                  </Link>                  <Link
-                    href="/cliente/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
-                  >
                     Mis solicitudes
                   </Link>
 
@@ -118,12 +113,6 @@ export default function Navbar() {
 
               {rol === 'profesional' && (
                 <>
-                  <Link
-                    href="/profesional/ordenes"
-                    className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
-                  >
-                    Busca trabajo
-                  </Link>
                   <Link
                     href="/profesional/ordenes"
                     className="px-3.5 py-2 rounded-xl text-md font-bold text-zinc-600 hover:bg-zinc-50 dark:text-zinc-350 dark:hover:bg-zinc-900 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
@@ -385,13 +374,6 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
               >
-                Buscar profesionales
-              </Link>
-              <Link
-                href="/cliente/ordenes"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-              >
                 Mis solicitudes
               </Link>
 
@@ -408,13 +390,6 @@ export default function Navbar() {
 
           {rol === 'profesional' && (
             <>
-              <Link
-                href="/profesional/ordenes"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-xl text-md font-bold text-zinc-750 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
-              >
-                Busca trabajo
-              </Link>
               <Link
                 href="/profesional/ordenes"
                 onClick={() => setIsMobileMenuOpen(false)}
